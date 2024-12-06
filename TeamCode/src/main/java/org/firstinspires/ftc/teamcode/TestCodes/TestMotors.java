@@ -53,6 +53,9 @@ public class TestMotors extends OpMode {
         leftArm.setDirection(DcMotorSimple.Direction.FORWARD);
         rightArm.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        leftS.setDirection(Servo.Direction.FORWARD);
+        rightS.setDirection(Servo.Direction.REVERSE);
+
 
     }
     @Override
@@ -66,6 +69,7 @@ public class TestMotors extends OpMode {
         double rightArmPower    = 0.0;
         double intakePower      = 0.0;
         double intakeWheelPower = 0.0;
+        double servoPosition    = 0.5;
 
         // Testing if all 4 drivetrain motors drive at a same speed for same power
 
@@ -101,14 +105,17 @@ public class TestMotors extends OpMode {
 
         if (gamepad2.a)
         {
-            leftArmPower = 0.3;
-            rightArmPower = 0.3;
+            leftArmPower = 0.75;
+            rightArmPower = 0.75;
         }
-        else
+
+        if (gamepad2.left_bumper)
         {
-            leftArmPower = 0.0;
-            rightArmPower = 0.0;
+            leftS.setPosition(servoPosition);
+            rightS.setPosition(servoPosition);
         }
+
+
 /*
         if (gamepad2.b)
         {
@@ -120,7 +127,7 @@ public class TestMotors extends OpMode {
         }
 
  */
-
+/*
         if (gamepad2.x)
         {
             leftS.setPosition(0.8);
@@ -138,6 +145,8 @@ public class TestMotors extends OpMode {
         {
             rightS.setPosition(0.2);
         }
+
+ */
 /*
         if (gamepad2.left_bumper)
         {
