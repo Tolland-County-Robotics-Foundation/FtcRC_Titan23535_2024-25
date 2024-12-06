@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.TestCodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
@@ -12,49 +13,52 @@ public class TestMotors extends OpMode {
 
     // Drivetrain: 4 Dc Motors
 
-    private DcMotor leftFrontDrive = null;
+    private DcMotor leftFrontDrive  = null;
     private DcMotor rightFrontDrive = null;
-    private DcMotor leftBackDrive = null;
-    private DcMotor rightBackDrive = null;
+    private DcMotor leftBackDrive   = null;
+    private DcMotor rightBackDrive  = null;
 
     // Linear Slide: 2 Dc Motors & 2 Servo Motors
 
-    private DcMotor leftArm = null;
+    private DcMotor leftArm  = null;
     private DcMotor rightArm = null;
-    private Servo leftS = null;
-    private Servo rightS = null;
+    private Servo leftS      = null;
+    private Servo rightS     = null;
 
     // Intake: 2 Dc Motors:
 
-    private DcMotor intake = null;
+    private DcMotor intake      = null;
     private DcMotor intakeWheel = null;
 
     // Creating variables to store power data for each motors
 
-    double leftFrontPower  = 0.0;
-    double rightFrontPower = 0.0;
-    double leftBackPower   = 0.0;
-    double rightBackPower  = 0.0;
-    double leftArmPower = 0.0;
-    double rightArmPower = 0.0;
-    double intakePower = 0.0;
+    double leftFrontPower   = 0.0;
+    double rightFrontPower  = 0.0;
+    double leftBackPower    = 0.0;
+    double rightBackPower   = 0.0;
+    double leftArmPower     = 0.0;
+    double rightArmPower    = 0.0;
+    double intakePower      = 0.0;
     double intakeWheelPower = 0.0;
 
     @Override
     public void init()
     {
-        leftFrontDrive = hardwareMap.get(DcMotor.class,"leftFront");
+        leftFrontDrive  = hardwareMap.get(DcMotor.class,"leftFront");
         rightFrontDrive = hardwareMap.get(DcMotor.class,"rightFront");
-        leftBackDrive = hardwareMap.get(DcMotor.class,"leftBack");
-        rightBackDrive = hardwareMap.get(DcMotor.class,"rightBack");
+        leftBackDrive   = hardwareMap.get(DcMotor.class,"leftBack");
+        rightBackDrive  = hardwareMap.get(DcMotor.class,"rightBack");
 
-        leftArm = hardwareMap.get(DcMotor.class,"leftArm");
+        leftArm  = hardwareMap.get(DcMotor.class,"leftArm");
         rightArm = hardwareMap.get(DcMotor.class,"rightArm");
-        leftS = hardwareMap.get(Servo.class,"leftS");
-        rightS = hardwareMap.get(Servo.class,"rightS");
+        leftS    = hardwareMap.get(Servo.class,"leftS");
+        rightS   = hardwareMap.get(Servo.class,"rightS");
 
-        intake = hardwareMap.get(DcMotor.class,"intake");
+        intake      = hardwareMap.get(DcMotor.class,"intake");
         intakeWheel = hardwareMap.get(DcMotor.class,"intakeWheel");
+
+        leftArm.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightArm.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
     }
@@ -127,6 +131,16 @@ public class TestMotors extends OpMode {
         else
         {
             rightS.setPosition(0.2);
+        }
+
+        if (gamepad2.left_bumper)
+        {
+            intakePower = 0.5;
+        }
+
+        if (gamepad2.right_bumper)
+        {
+            intakeWheelPower = 0.5;
         }
 
         // Setting the power of the motors
