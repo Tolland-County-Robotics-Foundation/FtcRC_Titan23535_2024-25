@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.AdiTestCode;
+package org.firstinspires.ftc.teamcode.TestCodes;
 
 import static android.os.SystemClock.sleep;
 import com.qualcomm.robotcore.hardware.DcMotor;
