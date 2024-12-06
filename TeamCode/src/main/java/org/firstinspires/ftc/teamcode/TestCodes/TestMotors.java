@@ -69,7 +69,7 @@ public class TestMotors extends OpMode {
         double rightArmPower    = 0.0;
         double intakePower      = 0.0;
         double intakeWheelPower = 0.0;
-        double servoPosition    = 0.5;
+        double servoPosition    = 0.0;
 
         // Testing if all 4 drivetrain motors drive at a same speed for same power
 
@@ -82,6 +82,8 @@ public class TestMotors extends OpMode {
         }
 
         // Test Motor Connections
+
+        // Drivetrain
 
         if (gamepad1.x)
         {
@@ -103,6 +105,8 @@ public class TestMotors extends OpMode {
             rightBackPower = 0.5;
         }
 
+        // Arm
+
         if (gamepad2.a)
         {
             leftArmPower = 0.75;
@@ -111,8 +115,15 @@ public class TestMotors extends OpMode {
 
         if (gamepad2.left_bumper)
         {
-            leftS.setPosition(servoPosition);
-            rightS.setPosition(servoPosition);
+            if (servoPosition > 1.0)
+            {
+                servoPosition = servoPosition - 0.5;
+            }
+
+            else
+            {
+                servoPosition = servoPosition + 0.5;
+            }
         }
 
 
@@ -154,6 +165,8 @@ public class TestMotors extends OpMode {
         }
 
  */
+        //intake
+
         intakePower = gamepad2.left_trigger - gamepad2.right_trigger;
 
         if (gamepad2.right_bumper)
@@ -170,6 +183,8 @@ public class TestMotors extends OpMode {
 
         leftArm.setPower(leftArmPower);
         rightArm.setPower(rightArmPower);
+        leftS.setPosition(servoPosition);
+        rightS.setPosition(servoPosition);
 
         intake.setPower(intakePower);
         intakeWheel.setPower(intakeWheelPower);
