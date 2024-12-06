@@ -32,14 +32,7 @@ public class TestMotors extends OpMode {
 
     // Creating variables to store power data for each motors
 
-    double leftFrontPower   = 0.0;
-    double rightFrontPower  = 0.0;
-    double leftBackPower    = 0.0;
-    double rightBackPower   = 0.0;
-    double leftArmPower     = 0.0;
-    double rightArmPower    = 0.0;
-    double intakePower      = 0.0;
-    double intakeWheelPower = 0.0;
+
 
     @Override
     public void init()
@@ -65,6 +58,15 @@ public class TestMotors extends OpMode {
     @Override
     public void loop()
     {
+        double leftFrontPower   = 0.0;
+        double rightFrontPower  = 0.0;
+        double leftBackPower    = 0.0;
+        double rightBackPower   = 0.0;
+        double leftArmPower     = 0.0;
+        double rightArmPower    = 0.0;
+        double intakePower      = 0.0;
+        double intakeWheelPower = 0.0;
+
         // Testing if all 4 drivetrain motors drive at a same speed for same power
 
         if (gamepad1.left_bumper)
@@ -100,12 +102,14 @@ public class TestMotors extends OpMode {
         if (gamepad2.a)
         {
             leftArmPower = 0.3;
+            rightArmPower = 0.3;
         }
         else
         {
             leftArmPower = 0.0;
+            rightArmPower = 0.0;
         }
-
+/*
         if (gamepad2.b)
         {
             rightArmPower = 0.3;
@@ -114,6 +118,8 @@ public class TestMotors extends OpMode {
         {
             rightArmPower = 0.0;
         }
+
+ */
 
         if (gamepad2.x)
         {
@@ -132,11 +138,14 @@ public class TestMotors extends OpMode {
         {
             rightS.setPosition(0.2);
         }
-
+/*
         if (gamepad2.left_bumper)
         {
             intakePower = 0.5;
         }
+
+ */
+        intakePower = gamepad2.left_trigger - gamepad2.right_trigger;
 
         if (gamepad2.right_bumper)
         {
