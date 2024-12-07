@@ -54,7 +54,7 @@ public class FullBoard {
         rightS = BlocksOpModeCompanion.hardwareMap.get(Servo.class, "rightS");
         rightS.setDirection(Servo.Direction.REVERSE);
         //Intake
-        intakeWheel = BlocksOpModeCompanion.hardwareMap.get(DcMotor.class, "intake");
+        intakeWheel = BlocksOpModeCompanion.hardwareMap.get(DcMotor.class, "intakeWheel");
         intakeWheel.setDirection(DcMotorSimple.Direction.FORWARD);
         intake = BlocksOpModeCompanion.hardwareMap.get(DcMotor.class, "intake");
         intake.setDirection(DcMotorSimple.Direction.FORWARD);

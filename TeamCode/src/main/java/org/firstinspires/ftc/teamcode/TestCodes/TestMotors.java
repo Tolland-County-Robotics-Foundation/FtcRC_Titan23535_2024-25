@@ -42,6 +42,7 @@ public class TestMotors extends OpMode {
         leftBackDrive   = hardwareMap.get(DcMotor.class,"leftBack");
         rightBackDrive  = hardwareMap.get(DcMotor.class,"rightBack");
 
+
         leftArm  = hardwareMap.get(DcMotor.class,"leftArm");
         rightArm = hardwareMap.get(DcMotor.class,"rightArm");
         leftS    = hardwareMap.get(Servo.class,"leftS");
@@ -49,6 +50,7 @@ public class TestMotors extends OpMode {
 
         intake      = hardwareMap.get(DcMotor.class,"intake");
         intakeWheel = hardwareMap.get(DcMotor.class,"intakeWheel");
+
 
         leftArm.setDirection(DcMotorSimple.Direction.FORWARD);
         rightArm.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -127,7 +129,7 @@ public class TestMotors extends OpMode {
         }
 
 
-/*
+
         if (gamepad2.b)
         {
             rightArmPower = 0.3;
@@ -137,8 +139,8 @@ public class TestMotors extends OpMode {
             rightArmPower = 0.0;
         }
 
- */
-/*
+
+
         if (gamepad2.x)
         {
             leftS.setPosition(0.8);
@@ -157,14 +159,11 @@ public class TestMotors extends OpMode {
             rightS.setPosition(0.2);
         }
 
- */
-/*
         if (gamepad2.left_bumper)
         {
-            intakePower = 0.5;
+            intakePower = 1;
         }
 
- */
         //intake
 
         intakePower = gamepad2.left_trigger - gamepad2.right_trigger;
