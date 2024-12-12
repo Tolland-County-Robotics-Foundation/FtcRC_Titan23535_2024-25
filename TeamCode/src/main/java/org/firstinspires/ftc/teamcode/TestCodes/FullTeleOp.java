@@ -52,14 +52,14 @@ public class FullTeleOp extends OpMode {
         //Linear Slide
         {
             double liftPower = gamepad2.left_stick_y;
-            double turn = gamepad2.right_stick_x;
-            double turnPower = 0.0;
+            double turn = gamepad2.right_stick_y;
+            double turnPower = 0.5;
 
             if (turn > 0) {
-                turnPower = turnPower + 0.2;
+                turnPower = turnPower + 0.1;
             }
             if (turn < 0) {
-                turnPower = turnPower - 0.2;
+                turnPower = turnPower - 0.1;
             }
 
             board.leftArm.setPower(liftPower);
