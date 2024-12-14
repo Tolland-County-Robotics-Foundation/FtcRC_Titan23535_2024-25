@@ -53,6 +53,11 @@ public class TestMotors extends OpMode {
         intake      = hardwareMap.get(DcMotor.class,"intake");
         intakeWheel = hardwareMap.get(DcMotor.class,"intakeWheel");
 
+        leftFrontDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightFrontDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+
 
         leftArm.setDirection(DcMotorSimple.Direction.FORWARD);
         rightArm.setDirection(DcMotorSimple.Direction.REVERSE);
