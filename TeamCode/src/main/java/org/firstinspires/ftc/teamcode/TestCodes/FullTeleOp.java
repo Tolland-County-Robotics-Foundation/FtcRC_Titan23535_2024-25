@@ -117,7 +117,10 @@ public class FullTeleOp extends OpMode {
             }
             telemetry.addData("Block count", blocks.length);
             for (HuskyLens.Block block : blocks) {
-                telemetry.addData("Block", block.toString());
+                String blockString = block.toString();
+                Character idChar = blockString.charAt(4);
+                Integer id = Integer.parseInt(String.valueOf(idChar));
+                telemetry.addData("ID", id);
             }
         }
     }
