@@ -16,13 +16,13 @@ public class FullTeleOp extends OpMode {
         board.init(hardwareMap);
         //Husky Lens
         board.husky.selectAlgorithm(HuskyLens.Algorithm.TAG_RECOGNITION);
-        telemetry.addData("Are you on the Red Alliance or the Blue Alliance?", "Left on D-Pad for Red, right on D-Pad for Blue");
+        telemetry.addData("Are you on the Red Alliance or the Blue Alliance?", "Left trigger for Red, right trigger for Blue");
         while (true) {
-            if (gamepad1.dpad_left) {
+            if (gamepad1.left_trigger > 0.1) {
                 redSpy = true;
                 break;
             }
-            if (gamepad1.dpad_right) {
+            if (gamepad1.right_trigger > 0.1) {
                 redSpy = false;
                 break;
             }
@@ -74,29 +74,29 @@ public class FullTeleOp extends OpMode {
                 turnPower = turnPower - 0.1;
             }
 
-            board.leftArm.setPower(liftPower);
-            board.rightArm.setPower(liftPower);
+            board.leftSlide.setPower(liftPower);
+            board.rightSlide.setPower(liftPower);
 
-            board.leftS.setPosition(turnPower);
-            board.rightS.setPosition(turnPower);
+            board.leftBasket.setPosition(turnPower);
+            board.rightBasket.setPosition(turnPower);
         }
         //Intake
         {
             float leftTrig = gamepad2.left_trigger;
             float rightTrig = gamepad2.right_trigger;
             if (leftTrig > 0 && rightTrig <= 0) {
-                board.intake.setPower(leftTrig);
+                board.intakeArm.setPower(leftTrig);
             } else if (rightTrig > 0 && leftTrig <= 0) {
-                board.intake.setPower(rightTrig);
+                board.intakeArm.setPower(rightTrig);
             } else {
-                board.intake.setPower(0);
+                board.intakeArm.setPower(0);
             }
             if (gamepad2.left_bumper) { // Out
-                board.intake.setPower(-0.7);
+                board.intakeArm.setPower(-0.7);
             } else if (gamepad2.right_bumper) { // In
-                board.intake.setPower(0.7);
+                board.intakeArm.setPower(0.7);
             } else {
-                board.intake.setPower(0);
+                board.intakeArm.setPower(0);
             }
         }
         //Color Sensor

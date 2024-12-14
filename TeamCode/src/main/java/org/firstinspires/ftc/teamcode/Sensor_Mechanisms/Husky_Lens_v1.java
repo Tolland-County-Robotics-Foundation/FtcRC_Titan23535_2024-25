@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.Sensor_Mechanisms;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.hardware.dfrobot.HuskyLens;
 
 public class Husky_Lens_v1 {
@@ -21,5 +20,6 @@ public class Husky_Lens_v1 {
         Character idChar = blockString.charAt(4);
         return Integer.parseInt(String.valueOf(idChar));
     }
+
 
 }

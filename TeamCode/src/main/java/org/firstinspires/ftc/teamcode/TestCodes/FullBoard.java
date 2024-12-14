@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import com.qualcomm.hardware.dfrobot.HuskyLens;
+import org.openftc.apriltag.AprilTagPose;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 
 public class FullBoard {
@@ -22,13 +23,12 @@ public class FullBoard {
     DcMotor rightBack;
     DcMotor rightFront;
     //Linear Slide
-    DcMotor leftArm;
-    DcMotor rightArm;
-    Servo leftS;
-    Servo rightS;
+    DcMotor leftSlide;
+    DcMotor rightSlide;
+    Servo leftBasket;
+    Servo rightBasket;
     //Intake
-
-    DcMotor intake;
+    DcMotor intakeArm;
     Servo intakeClaw;
     //Color Sensor
     ColorSensor color;
@@ -38,7 +38,7 @@ public class FullBoard {
     //Husky Lens
     HuskyLens husky;
     //REV Blinkin
-    RevBlinkinLedDriver blinkin;
+    //RevBlinkinLedDriver blinkin;
     public void init (HardwareMap hardwareMap) {
         //Drivetrain
         leftFront = hardwareMap.dcMotor.get("leftFront");
@@ -50,19 +50,19 @@ public class FullBoard {
         rightFront = hardwareMap.dcMotor.get("rightFront");
         rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
         //Linear Slide
-        leftArm = hardwareMap.dcMotor.get("leftArm");
-        leftArm.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightArm = hardwareMap.dcMotor.get("rightArm");
-        rightArm.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftS = hardwareMap.servo.get("leftS");
-        leftS.setDirection(Servo.Direction.FORWARD);
-        rightS = hardwareMap.servo.get("rightS");
-        rightS.setDirection(Servo.Direction.REVERSE);
+        leftSlide = hardwareMap.dcMotor.get("leftArm");
+        leftSlide.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightSlide = hardwareMap.dcMotor.get("rightArm");
+        rightSlide.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftBasket = hardwareMap.servo.get("leftBasket");
+        leftBasket.setDirection(Servo.Direction.FORWARD);
+        rightBasket = hardwareMap.servo.get("rightBasket");
+        rightBasket.setDirection(Servo.Direction.REVERSE);
         //Intake
         intakeClaw = hardwareMap.servo.get("intakeWheel");
         intakeClaw.setDirection(Servo.Direction.FORWARD);
-        intake = hardwareMap.dcMotor.get("intake");
-        intake.setDirection(DcMotorSimple.Direction.FORWARD);
+        intakeArm = hardwareMap.dcMotor.get("intake");
+        intakeArm.setDirection(DcMotorSimple.Direction.FORWARD);
         //Color Sensor
         color = hardwareMap.get(ColorSensor.class, "color");
         distance = hardwareMap.get(DistanceSensor.class, "color");
@@ -110,21 +110,21 @@ public class FullBoard {
         rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
-    public void armRotate(double position) {
-        leftS.setPosition(position);
-        rightS.setPosition(position);
+    public void claw(double position) {
+        leftBasket.setPosition(position);
+        rightBasket.setPosition(position);
     }
-    public void basket(Integer duration, double speed) {
-        leftArm.setPower(speed);
-        rightArm.setPower(speed);
+    public void raiseSlide(Integer duration, double speed) {
+        leftSlide.setPower(speed);
+        rightSlide.setPower(speed);
         sleep(duration);
-        leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
-    public void intake(Integer duration, double speed) {
-        intake.setPower(speed);
+    public void intakeLift(Integer duration, double speed) {
+        intakeArm.setPower(speed);
         sleep(duration);
-        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     //Color Sensor
     public int getAmountRed() {
@@ -175,5 +175,9 @@ public class FullBoard {
         String blockString = blocks.toString();
         Character idChar = blockString.charAt(4);
         return Integer.parseInt(String.valueOf(idChar));
+    }
+
+    public void aprilTagRecenter() {
+
     }
 }
