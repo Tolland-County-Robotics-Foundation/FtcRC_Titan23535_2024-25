@@ -10,11 +10,23 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @TeleOp
 public class FullTeleOp extends OpMode {
     FullBoard board = new FullBoard();
+    Boolean redSpy;
 
     public void init() {
         board.init(hardwareMap);
         //Husky Lens
         board.husky.selectAlgorithm(HuskyLens.Algorithm.TAG_RECOGNITION);
+        telemetry.addData("Are you on the Red Alliance or the Blue Alliance?", "Left trigger for Red, right trigger for Blue");
+        while (true) {
+            if (gamepad1.left_trigger > 0.1) {
+                redSpy = true;
+                break;
+            }
+            if (gamepad1.right_trigger > 0.1) {
+                redSpy = false;
+                break;
+            }
+        }
     }
 
     public void loop() {
@@ -62,29 +74,29 @@ public class FullTeleOp extends OpMode {
                 turnPower = turnPower - 0.1;
             }
 
-            board.leftArm.setPower(liftPower);
-            board.rightArm.setPower(liftPower);
+            board.leftSlide.setPower(liftPower);
+            board.rightSlide.setPower(liftPower);
 
-            board.leftS.setPosition(turnPower);
-            board.rightS.setPosition(turnPower);
+            board.leftBasket.setPosition(turnPower);
+            board.rightBasket.setPosition(turnPower);
         }
         //Intake
         {
             float leftTrig = gamepad2.left_trigger;
             float rightTrig = gamepad2.right_trigger;
             if (leftTrig > 0 && rightTrig <= 0) {
-                board.intake.setPower(leftTrig);
+                board.intakeArm.setPower(leftTrig);
             } else if (rightTrig > 0 && leftTrig <= 0) {
-                board.intake.setPower(rightTrig);
+                board.intakeArm.setPower(rightTrig);
             } else {
-                board.intake.setPower(0);
+                board.intakeArm.setPower(0);
             }
             if (gamepad2.left_bumper) { // Out
-                board.intake.setPower(-0.7);
+                board.intakeArm.setPower(-0.7);
             } else if (gamepad2.right_bumper) { // In
-                board.intake.setPower(0.7);
+                board.intakeArm.setPower(0.7);
             } else {
-                board.intake.setPower(0);
+                board.intakeArm.setPower(0);
             }
         }
         //Color Sensor
@@ -94,31 +106,12 @@ public class FullTeleOp extends OpMode {
             telemetry.addData("Amount green", board.getAmountGreen());
             telemetry.addData("Distance CM", board.getDistance(DistanceUnit.CM));
             telemetry.addData("Distance IN", board.getDistance(DistanceUnit.INCH));
-            double red = board.getAmountRed();
-            double blue = board.getAmountBlue();
-            double yellow = board.getAmountGreen() - 50;
-            if (board.getDistance(DistanceUnit.INCH) < 2.5) {
-                if (red > 100 && red > blue && red > yellow) {
-                    telemetry.addData("Block Color", "RED");
-                } else if (blue > 100 && blue > red && blue > yellow) {
-                    telemetry.addData("Block Color", "BLUE");
-                } else if (yellow > 100 && yellow > blue && yellow > red) {
-                    telemetry.addData("Block Color", "YELLOW");
-                }
-            }
+            String color = board.blockColor();
+            board.blockCheck(color, redSpy);
         }
         //Touch Sensor
         telemetry.addData("TouchPressed", board.isTouchSensorPressed());
         //Husky Lens
-        {
-            HuskyLens.Block[] blocks = board.husky.blocks();
-            if (blocks.length > 0) {
-                HuskyLens.Block[] id = board.husky.blocks();
-            }
-            telemetry.addData("Block count", blocks.length);
-            for (HuskyLens.Block block : blocks) {
-                telemetry.addData("Block", block.toString());
-            }
-        }
+        Integer id = board.getId();
     }
 }
