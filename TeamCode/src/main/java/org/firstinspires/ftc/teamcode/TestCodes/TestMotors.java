@@ -30,7 +30,9 @@ public class TestMotors extends OpMode {
     private DcMotor intake      = null;
     private DcMotor intakeWheel = null;
 
-    // Creating variables to store power data for each motors
+    // Create a variable to store the position of a servo motor
+
+    double servoPosition = 0.0;
 
 
 
@@ -69,7 +71,7 @@ public class TestMotors extends OpMode {
         double rightArmPower    = 0.0;
         double intakePower      = 0.0;
         double intakeWheelPower = 0.0;
-        double servoPosition    = 0.0;
+
 
         // Testing if all 4 drivetrain motors drive at a same speed for same power
 
@@ -117,12 +119,12 @@ public class TestMotors extends OpMode {
         {
             if (servoPosition > 1.0)
             {
-                servoPosition = servoPosition - 0.5;
+                servoPosition = servoPosition - 0.2;
             }
 
             else
             {
-                servoPosition = servoPosition + 0.5;
+                servoPosition = servoPosition + 0.2;
             }
         }
 
