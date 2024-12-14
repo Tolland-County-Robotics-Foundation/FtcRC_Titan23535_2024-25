@@ -73,9 +73,9 @@ public class FullTeleOp extends OpMode {
             float leftTrig = gamepad2.left_trigger;
             float rightTrig = gamepad2.right_trigger;
             if (leftTrig > 0 && rightTrig <= 0) {
-                board.intakeWheel.setPower(leftTrig);
+                board.intake.setPower(leftTrig);
             } else if (rightTrig > 0 && leftTrig <= 0) {
-                board.intakeWheel.setPower(rightTrig);
+                board.intake.setPower(rightTrig);
             } else {
                 board.intake.setPower(0);
             }
