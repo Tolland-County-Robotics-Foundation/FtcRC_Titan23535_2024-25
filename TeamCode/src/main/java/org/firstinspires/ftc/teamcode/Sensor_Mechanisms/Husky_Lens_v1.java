@@ -12,5 +12,14 @@ public class Husky_Lens_v1 {
         husky.selectAlgorithm(HuskyLens.Algorithm.TAG_RECOGNITION);
     }
 
+    public Integer getId() {
+        HuskyLens.Block[] blocks = husky.blocks(0);
+        if (blocks.length > 0) {
+            HuskyLens.Block[] id = husky.blocks();
+        }
+        String blockString = blocks.toString();
+        Character idChar = blockString.charAt(4);
+        return Integer.parseInt(String.valueOf(idChar));
+    }
 
 }
