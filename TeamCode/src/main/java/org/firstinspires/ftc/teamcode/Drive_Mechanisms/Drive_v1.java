@@ -18,10 +18,14 @@ public class Drive_v1 {
 
     public void init(HardwareMap hardwareMap)
     {
+
+        //Hardware mapping
         leftFrontDrive = hardwareMap.get(DcMotor.class,"leftFront");
         rightFrontDrive = hardwareMap.get(DcMotor.class,"rightFront");
         leftBackDrive = hardwareMap.get(DcMotor.class,"leftBack");
         rightBackDrive = hardwareMap.get(DcMotor.class,"rightBack");
+
+        // Setting the direction
         leftFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -32,7 +36,7 @@ public class Drive_v1 {
     public void setDriveMotorPower(double forward, double right, double rotate, double cap)
     {
 
-// Drivetrain
+        // Drivetrain
 
         double leftFrontPower = 0.0;
         double leftBackPower = 0.0;
