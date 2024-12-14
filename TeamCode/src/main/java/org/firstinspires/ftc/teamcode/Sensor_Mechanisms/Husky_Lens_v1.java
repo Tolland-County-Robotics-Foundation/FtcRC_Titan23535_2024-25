@@ -9,6 +9,7 @@ public class Husky_Lens_v1 {
 
     public void init(HardwareMap hardwareMap) {
         husky = hardwareMap.get(HuskyLens.class, "husky");
+        husky.selectAlgorithm(HuskyLens.Algorithm.TAG_RECOGNITION);
     }
 
 

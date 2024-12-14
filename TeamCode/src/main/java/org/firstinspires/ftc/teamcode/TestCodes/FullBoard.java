@@ -71,6 +71,7 @@ public class FullBoard {
         touch.setMode(DigitalChannel.Mode.INPUT);
         //Husky Lens
         husky = hardwareMap.get(HuskyLens.class, "husky");
+        husky.selectAlgorithm(HuskyLens.Algorithm.TAG_RECOGNITION);
         //REV Blinkin
         //blinkin = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");
     }
@@ -164,5 +165,15 @@ public class FullBoard {
     //Touch Sensor
     public boolean isTouchSensorPressed() {
         return !touch.getState();
+    }
+    //Husky Lens
+    public Integer getId() {
+        HuskyLens.Block[] blocks = husky.blocks(0);
+        if (blocks.length > 0) {
+            HuskyLens.Block[] id = husky.blocks();
+        }
+        String blockString = blocks.toString();
+        Character idChar = blockString.charAt(4);
+        return Integer.parseInt(String.valueOf(idChar));
     }
 }
