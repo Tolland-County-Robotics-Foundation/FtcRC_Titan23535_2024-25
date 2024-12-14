@@ -1,15 +1,20 @@
 package org.firstinspires.ftc.teamcode.TestCodes;
 
 import static android.os.SystemClock.sleep;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.hardware.dfrobot.HuskyLens;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+import com.qualcomm.hardware.dfrobot.HuskyLens;
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+
 public class FullBoard {
     //Drivetrain
     DcMotor leftFront;
@@ -24,7 +29,7 @@ public class FullBoard {
     //Intake
 
     DcMotor intake;
-    DcMotor intakeWheel;
+    Servo intakeClaw;
     //Color Sensor
     ColorSensor color;
     DistanceSensor distance;
@@ -32,7 +37,8 @@ public class FullBoard {
     DigitalChannel touch;
     //Husky Lens
     HuskyLens husky;
-
+    //REV Blinkin
+    RevBlinkinLedDriver blinkin;
     public void init (HardwareMap hardwareMap) {
         //Drivetrain
         leftFront = hardwareMap.dcMotor.get("leftFront");
@@ -53,8 +59,8 @@ public class FullBoard {
         rightS = hardwareMap.servo.get("rightS");
         rightS.setDirection(Servo.Direction.REVERSE);
         //Intake
-        intakeWheel = hardwareMap.dcMotor.get("intakeWheel");
-        intakeWheel.setDirection(DcMotorSimple.Direction.FORWARD);
+        intakeClaw = hardwareMap.servo.get("intakeWheel");
+        intakeClaw.setDirection(Servo.Direction.FORWARD);
         intake = hardwareMap.dcMotor.get("intake");
         intake.setDirection(DcMotorSimple.Direction.FORWARD);
         //Color Sensor
@@ -65,6 +71,8 @@ public class FullBoard {
         touch.setMode(DigitalChannel.Mode.INPUT);
         //Husky Lens
         husky = hardwareMap.get(HuskyLens.class, "husky");
+        //REV Blinkin
+        //blinkin = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");
     }
 
     //Function Commands (For Autonomous)
@@ -126,6 +134,29 @@ public class FullBoard {
     }
     public int getAmountGreen() {
         return color.green();
+    }
+    public String blockColor() {
+        double red = getAmountRed();
+        double blue = getAmountBlue();
+        double yellow = getAmountGreen() - 50;
+        if (getDistance(DistanceUnit.INCH) < 2.5) {
+            if (red > 100 && red > blue && red > yellow) {
+                return (String) "red";
+            } else if (blue > 100 && blue > red && blue > yellow) {
+                return (String) "blue";
+            } else if (yellow > 100 && yellow > blue && yellow > red) {
+                return (String) "yellow";
+            }
+        }
+        return null;
+    }
+    public void blockCheck(String color, Boolean redSpy) {
+        if (redSpy && color == "blue") {
+            intakeClaw.setPosition(0);
+        }
+        if (!redSpy && color == "red") {
+            intakeClaw.setPosition(0);
+        }
     }
     public double getDistance(DistanceUnit du) {
         return distance.getDistance(du);
