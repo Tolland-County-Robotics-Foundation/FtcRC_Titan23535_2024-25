@@ -3,15 +3,22 @@ package org.firstinspires.ftc.teamcode.Sensor_Mechanisms;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Color_Sensor_v1 {
   ColorSensor color;
+  DistanceSensor distance;
 
-  public void init (HardwareMap hardwareMap) {
+    public void init (HardwareMap hardwareMap) {
     color = hardwareMap.get(ColorSensor.class, "color");
-  }
-  
-  public int getAmountRed() {
+    distance = hardwareMap.get(DistanceSensor.class, "color");
+    }
+
+    public double getDistance(DistanceUnit du) {
+        return distance.getDistance(du);
+    }
+    public int getAmountRed() {
         return color.red();
     }
     public int getAmountBlue() {
@@ -34,13 +41,5 @@ public class Color_Sensor_v1 {
             }
         }
         return null;
-    }
-    public void blockCheck(String color, Boolean redSpy) {
-        if (redSpy && color == "blue") {
-            intakeClaw.setPosition(0);
-        }
-        if (!redSpy && color == "red") {
-            intakeClaw.setPosition(0);
-        }
     }
 }
