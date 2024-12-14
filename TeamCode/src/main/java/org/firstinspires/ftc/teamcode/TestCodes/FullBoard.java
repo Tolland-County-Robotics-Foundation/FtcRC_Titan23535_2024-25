@@ -1,16 +1,20 @@
 package org.firstinspires.ftc.teamcode.TestCodes;
 
 import static android.os.SystemClock.sleep;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.hardware.dfrobot.HuskyLens;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
-import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+import com.qualcomm.hardware.dfrobot.HuskyLens;
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+
 public class FullBoard {
     //Drivetrain
     DcMotor leftFront;
@@ -25,47 +29,50 @@ public class FullBoard {
     //Intake
 
     DcMotor intake;
-    DcMotor intakeWheel;
+    Servo intakeClaw;
     //Color Sensor
-    private ColorSensor color;
-    private DistanceSensor distance;
+    ColorSensor color;
+    DistanceSensor distance;
     //Touch Sensor
-    private DigitalChannel touch;
+    DigitalChannel touch;
     //Husky Lens
     HuskyLens husky;
-
+    //REV Blinkin
+    RevBlinkinLedDriver blinkin;
     public void init (HardwareMap hardwareMap) {
         //Drivetrain
-        leftFront = BlocksOpModeCompanion.hardwareMap.get(DcMotor.class, "leftFront");
+        leftFront = hardwareMap.dcMotor.get("leftFront");
         leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftBack = BlocksOpModeCompanion.hardwareMap.get(DcMotor.class, "leftBack");
+        leftBack = hardwareMap.dcMotor.get("leftBack");
         leftBack.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightBack = BlocksOpModeCompanion.hardwareMap.get(DcMotor.class, "rightBack");
+        rightBack = hardwareMap.dcMotor.get("rightBack");
         rightBack.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightFront = BlocksOpModeCompanion.hardwareMap.get(DcMotor.class, "rightFront");
+        rightFront = hardwareMap.dcMotor.get("rightFront");
         rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
         //Linear Slide
-        leftArm = BlocksOpModeCompanion.hardwareMap.get(DcMotor.class, "leftArm");
+        leftArm = hardwareMap.dcMotor.get("leftArm");
         leftArm.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightArm = BlocksOpModeCompanion.hardwareMap.get(DcMotor.class, "rightArm");
+        rightArm = hardwareMap.dcMotor.get("rightArm");
         rightArm.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftS = BlocksOpModeCompanion.hardwareMap.get(Servo.class, "leftS");
+        leftS = hardwareMap.servo.get("leftS");
         leftS.setDirection(Servo.Direction.FORWARD);
-        rightS = BlocksOpModeCompanion.hardwareMap.get(Servo.class, "rightS");
+        rightS = hardwareMap.servo.get("rightS");
         rightS.setDirection(Servo.Direction.REVERSE);
         //Intake
-        intakeWheel = BlocksOpModeCompanion.hardwareMap.get(DcMotor.class, "intakeWheel");
-        intakeWheel.setDirection(DcMotorSimple.Direction.FORWARD);
-        intake = BlocksOpModeCompanion.hardwareMap.get(DcMotor.class, "intake");
+        intakeClaw = hardwareMap.servo.get("intakeWheel");
+        intakeClaw.setDirection(Servo.Direction.FORWARD);
+        intake = hardwareMap.dcMotor.get("intake");
         intake.setDirection(DcMotorSimple.Direction.FORWARD);
         //Color Sensor
-        color = BlocksOpModeCompanion.hardwareMap.get(ColorSensor.class, "color");
-        distance = BlocksOpModeCompanion.hardwareMap.get(DistanceSensor.class, "color");
+        color = hardwareMap.get(ColorSensor.class, "color");
+        distance = hardwareMap.get(DistanceSensor.class, "color");
         //Touch Sensor
-        touch = BlocksOpModeCompanion.hardwareMap.get(DigitalChannel.class, "touch");
+        touch = hardwareMap.get(DigitalChannel.class, "touch");
         touch.setMode(DigitalChannel.Mode.INPUT);
         //Husky Lens
-        husky = BlocksOpModeCompanion.hardwareMap.get(HuskyLens.class, "husky");
+        husky = hardwareMap.get(HuskyLens.class, "husky");
+        //REV Blinkin
+        //blinkin = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");
     }
 
     //Function Commands (For Autonomous)
@@ -80,7 +87,7 @@ public class FullBoard {
         rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
-    /*public void driveSide(Integer duration, double speed) {
+     /*public void driveSide(Integer duration, double speed) {
         leftFront.setPower(-speed);
         leftBack.setPower(-speed);
         rightBack.setPower(speed);
@@ -127,6 +134,29 @@ public class FullBoard {
     }
     public int getAmountGreen() {
         return color.green();
+    }
+    public String blockColor() {
+        double red = getAmountRed();
+        double blue = getAmountBlue();
+        double yellow = getAmountGreen() - 50;
+        if (getDistance(DistanceUnit.INCH) < 2.5) {
+            if (red > 100 && red > blue && red > yellow) {
+                return (String) "red";
+            } else if (blue > 100 && blue > red && blue > yellow) {
+                return (String) "blue";
+            } else if (yellow > 100 && yellow > blue && yellow > red) {
+                return (String) "yellow";
+            }
+        }
+        return null;
+    }
+    public void blockCheck(String color, Boolean redSpy) {
+        if (redSpy && color == "blue") {
+            intakeClaw.setPosition(0);
+        }
+        if (!redSpy && color == "red") {
+            intakeClaw.setPosition(0);
+        }
     }
     public double getDistance(DistanceUnit du) {
         return distance.getDistance(du);
