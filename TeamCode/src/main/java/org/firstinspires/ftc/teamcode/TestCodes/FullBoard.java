@@ -15,8 +15,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.hardware.dfrobot.HuskyLens;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 
-import java.util.Arrays;
-
 public class FullBoard {
     //Drivetrain
     DcMotor leftFront;
@@ -166,15 +164,5 @@ public class FullBoard {
     //Touch Sensor
     public boolean isTouchSensorPressed() {
         return !touch.getState();
-    }
-    //Husky Sensor
-    public Integer getId() {
-        HuskyLens.Block[] blocks = husky.blocks(0);
-        if (blocks.length > 0) {
-            HuskyLens.Block[] id = husky.blocks();
-        }
-        String blockString = blocks.toString();
-        Character idChar = blockString.charAt(4);
-        return Integer.parseInt(String.valueOf(idChar));
     }
 }
