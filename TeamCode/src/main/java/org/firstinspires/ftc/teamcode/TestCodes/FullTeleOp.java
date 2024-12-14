@@ -10,11 +10,23 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @TeleOp
 public class FullTeleOp extends OpMode {
     FullBoard board = new FullBoard();
+    Boolean redSpy;
 
     public void init() {
         board.init(hardwareMap);
         //Husky Lens
         board.husky.selectAlgorithm(HuskyLens.Algorithm.TAG_RECOGNITION);
+        telemetry.addData("Are you on the Red Alliance or the Blue Alliance?", "Left on D-Pad for Red, right on D-Pad for Blue");
+        while (true) {
+            if (gamepad1.dpad_left) {
+                redSpy = true;
+                break;
+            }
+            if (gamepad1.dpad_right) {
+                redSpy = false;
+                break;
+            }
+        }
     }
 
     public void loop() {
@@ -94,34 +106,12 @@ public class FullTeleOp extends OpMode {
             telemetry.addData("Amount green", board.getAmountGreen());
             telemetry.addData("Distance CM", board.getDistance(DistanceUnit.CM));
             telemetry.addData("Distance IN", board.getDistance(DistanceUnit.INCH));
-            double red = board.getAmountRed();
-            double blue = board.getAmountBlue();
-            double yellow = board.getAmountGreen() - 50;
-            if (board.getDistance(DistanceUnit.INCH) < 2.5) {
-                if (red > 100 && red > blue && red > yellow) {
-                    telemetry.addData("Block Color", "RED");
-                } else if (blue > 100 && blue > red && blue > yellow) {
-                    telemetry.addData("Block Color", "BLUE");
-                } else if (yellow > 100 && yellow > blue && yellow > red) {
-                    telemetry.addData("Block Color", "YELLOW");
-                }
-            }
+            String color = board.blockColor();
+            board.blockCheck(color, redSpy);
         }
         //Touch Sensor
         telemetry.addData("TouchPressed", board.isTouchSensorPressed());
         //Husky Lens
-        {
-            HuskyLens.Block[] blocks = board.husky.blocks();
-            if (blocks.length > 0) {
-                HuskyLens.Block[] id = board.husky.blocks();
-            }
-            telemetry.addData("Block count", blocks.length);
-            for (HuskyLens.Block block : blocks) {
-                String blockString = block.toString();
-                Character idChar = blockString.charAt(4);
-                Integer id = Integer.parseInt(String.valueOf(idChar));
-                telemetry.addData("ID", id);
-            }
-        }
+        Integer id = board.getId();
     }
 }
