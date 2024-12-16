@@ -16,8 +16,8 @@ public class LongArmTest extends OpMode {
     @Override
     public void init()
     {
-        basket   = hardwareMap.get(Servo.class, "claw");
-        longArm  = hardwareMap.get(DcMotor.class, "intakeArm");
+        basket   = hardwareMap.get(Servo.class, "basket");
+        longArm  = hardwareMap.get(DcMotor.class, "longArm");
 
         basket.setDirection(Servo.Direction.FORWARD);
         longArm.setDirection(DcMotorSimple.Direction.FORWARD);
