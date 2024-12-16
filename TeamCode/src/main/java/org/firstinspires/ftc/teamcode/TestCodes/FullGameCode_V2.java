@@ -13,12 +13,13 @@ import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
 public class FullGameCode_V2 extends OpMode {
     // Creating an object from Drive_V1 class
     Drive_v1 drive = new Drive_v1();
+
     // Creating an object from ElapsedTime class to have run time information
     private ElapsedTime runtime = new ElapsedTime();
+
     //Creating two variables for capping the speed
     String speedcap = "Normal";
-
-    double speed_percentage = 50.0;
+    double speed_percentage = 40.0;
 
     @Override
     public void init()
@@ -37,39 +38,40 @@ public class FullGameCode_V2 extends OpMode {
     @Override
     public void loop()
     {
-        // Set the speed cap for driver 1
-        if (gamepad1.a){
-            speedcap = "Max";
-            speed_percentage = 90.0;
-        } else if (gamepad1.b) {
-            speedcap = "Fast";
-            speed_percentage = 65.0;
-        } else if (gamepad1.y) {
-            speedcap = "Normal";
-            speed_percentage = 40.0;
-        } else if (gamepad1.x) {
-            speedcap = "Slow";
-            speed_percentage = 25.0;
-        }
-        else if (gamepad1.left_bumper){
-            sleep(1000);
-            speed_percentage = speed_percentage - 20.0;
-
-            if (speed_percentage < 0)
-            {
-                speed_percentage = 0.0;
+        //Speed
+        {
+            // Set the speed cap for driver 1 via face buttons
+            if (gamepad1.a) {
+                speedcap = "Max";
+                speed_percentage = 90.0;
+            } else if (gamepad1.b) {
+                speedcap = "Fast";
+                speed_percentage = 65.0;
+            } else if (gamepad1.y) {
+                speedcap = "Normal";
+                speed_percentage = 40.0;
+            } else if (gamepad1.x) {
+                speedcap = "Slow";
+                speed_percentage = 25.0;
+            }
+            // Set the speed cap for driver 1 via bumpers
+            if (gamepad1.left_bumper) {
+                speed_percentage = speed_percentage - 20.0;
+                while (true) {
+                    if (!gamepad1.left_bumper) {
+                        break;
+                    }
+                }
+            }
+            if (gamepad1.right_bumper) {
+                speed_percentage = speed_percentage + 20.0;
+                while (true) {
+                    if (!gamepad1.left_bumper) {
+                        break;
+                    }
+                }
             }
         }
-         else if (gamepad1.right_bumper) {
-             sleep(1000);
-        speed_percentage = speed_percentage + 20.0;
-
-        if (speed_percentage > 100)
-        {
-            speed_percentage = 100.0;
-        }
-
-         }
 
         /* Uses left joystick to go forward, backward, left, and right, and right joystick to rotate.
 
@@ -86,7 +88,6 @@ public class FullGameCode_V2 extends OpMode {
            Right joystick right --> rotate right
 
         */
-
         double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
         double lateral =  gamepad1.left_stick_x;
         double yaw     =  gamepad1.right_stick_x;
@@ -96,19 +97,18 @@ public class FullGameCode_V2 extends OpMode {
         boolean goLeft  = gamepad1.dpad_left;
         boolean goRight  = gamepad1.dpad_right;
         */
-
-
-
         drive.setDriveMotorPower(axial, lateral, yaw, speed_percentage);
 
-
-        //Display Runtime
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
-        //Displaying Axial,Lateral,Yaw AKA horizontal, vertical, and spin
-        telemetry.addData("Axial:", axial);
-        telemetry.addData("Lateral:",lateral);
-        telemetry.addData("Yaw:", yaw);
-        telemetry.addData("Current Speed", speedcap);
-        telemetry.addData("Speed percentage: ",speed_percentage);
+        //Displaying Statistics
+        {
+            //Display Runtime
+            telemetry.addData("Status", "Run Time: " + runtime.toString());
+            //Displaying Axial,Lateral,Yaw AKA horizontal, vertical, and spin
+            telemetry.addData("Axial:", axial);
+            telemetry.addData("Lateral:", lateral);
+            telemetry.addData("Yaw:", yaw);
+            telemetry.addData("Current Speed", speedcap);
+            telemetry.addData("Speed percentage: ", speed_percentage);
+        }
     }
 }
