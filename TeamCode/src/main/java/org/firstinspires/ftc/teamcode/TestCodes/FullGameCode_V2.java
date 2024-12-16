@@ -55,7 +55,7 @@ public class FullGameCode_V2 extends OpMode {
                 speed_percentage = 25.0;
             }
             // Set the speed cap for driver 1 via bumpers
-            if (gamepad1.left_bumper) {
+            if (gamepad1.left_bumper && speed_percentage > 20) {
                 speed_percentage = speed_percentage - 20.0;
                 while (true) {
                     if (!gamepad1.left_bumper) {
@@ -63,7 +63,7 @@ public class FullGameCode_V2 extends OpMode {
                     }
                 }
             }
-            if (gamepad1.right_bumper) {
+            if (gamepad1.right_bumper && speed_percentage < 100) {
                 speed_percentage = speed_percentage + 20.0;
                 while (true) {
                     if (!gamepad1.left_bumper) {
