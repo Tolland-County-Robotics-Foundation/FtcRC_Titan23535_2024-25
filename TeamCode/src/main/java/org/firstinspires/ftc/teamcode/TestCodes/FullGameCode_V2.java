@@ -42,17 +42,13 @@ public class FullGameCode_V2 extends OpMode {
         {
             // Set the speed cap for driver 1 via face buttons
             if (gamepad1.a) {
-                speedcap = "Max";
-                speed_percentage = 90.0;
+                speed_percentage = 80.0;
             } else if (gamepad1.b) {
-                speedcap = "Fast";
-                speed_percentage = 65.0;
+                speed_percentage = 60.0;
             } else if (gamepad1.y) {
-                speedcap = "Normal";
                 speed_percentage = 40.0;
             } else if (gamepad1.x) {
-                speedcap = "Slow";
-                speed_percentage = 25.0;
+                speed_percentage = 20.0;
             }
             // Set the speed cap for driver 1 via bumpers
             if (gamepad1.left_bumper && speed_percentage > 20) {
@@ -70,6 +66,18 @@ public class FullGameCode_V2 extends OpMode {
                         break;
                     }
                 }
+            }
+            //Names of each speed
+            if (speed_percentage == 20) {
+                speedcap = "Slow";
+            } else if (speed_percentage == 40) {
+                speedcap = "Normal";
+            } else if (speed_percentage == 60) {
+                speedcap = "Fast";
+            } else if (speed_percentage == 80) {
+                speedcap = "Hyper";
+            } else if (speed_percentage == 100) {
+                speedcap = "OVERCLOCK";
             }
         }
 
