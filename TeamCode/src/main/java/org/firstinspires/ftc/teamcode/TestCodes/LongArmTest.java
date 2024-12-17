@@ -10,32 +10,53 @@ import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp
 public class LongArmTest extends OpMode {
 
-    private Servo   basket     = null;
-    private DcMotor longArm    = null;
+    private Servo   basket          = null;
+    private DcMotor leftArmLift     = null;
+    private DcMotor rightArmLift    = null;
 
     @Override
     public void init()
     {
-        basket   = hardwareMap.get(Servo.class, "basket");
-        longArm  = hardwareMap.get(DcMotor.class, "longArm");
+        basket          = hardwareMap.get(Servo.class, "BasketArm");
+        leftArmLift     = hardwareMap.get(DcMotor.class, "LeftArmLift");
+        rightArmLift    = hardwareMap.get(DcMotor.class, "RightArmLift");
 
         basket.setDirection(Servo.Direction.FORWARD);
-        longArm.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftArmLift.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightArmLift.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        longArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
     @Override
     public void loop()
     {
-        double armPower = gamepad2.left_trigger - gamepad2.right_trigger;
-        longArm.setPower(armPower);
+        /// Long arm ---------------------------------------------------------
 
-        if (gamepad2.left_bumper)
+        double armPower = 0.0;
+
+
+        if (gamepad2.dpad_down)
+        {
+            armPower = -0.7;
+        }
+        else if (gamepad2.dpad_up)
+        {
+            armPower = 0.7;
+
+        }
+
+        leftArmLift.setPower(armPower);
+        rightArmLift.setPower(armPower);
+
+        /// Basket -----------------------------------------------------------
+
+        if (gamepad2.x)
         {
             basket.setPosition(0.3);
         }
-        else if (gamepad2.right_bumper)
+        else if (gamepad2.b)
         {
             basket.setPosition(-0.3);
         }

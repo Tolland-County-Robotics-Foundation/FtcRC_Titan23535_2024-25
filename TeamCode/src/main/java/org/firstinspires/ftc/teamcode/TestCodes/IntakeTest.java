@@ -28,27 +28,25 @@ public class IntakeTest extends OpMode {
     @Override
     public void loop()
     {
-        double intakePower = gamepad2.left_trigger - gamepad2.right_trigger;
-        intakeArm.setPower(intakePower);
+        double intakeArmPower = gamepad2.left_trigger - gamepad2.right_trigger;
+        intakeArm.setPower(intakeArmPower);
 
         if (gamepad2.left_bumper)
         {
-            claw.setPower(0.3);
+            claw.setPower(0.5);
         }
         else if (gamepad2.right_bumper)
         {
-            claw.setPower(-0.3);
+            claw.setPower(-0.5);
         }
         else
         {
             claw.setPower(0.0);
         }
 
-        telemetry.addData("intake arm power: ", intakePower);
+        telemetry.addData("intake arm power: ", intakeArmPower);
 
         telemetry.addData("claw power: ", claw.getPower());
-
-
 
     }
 }
