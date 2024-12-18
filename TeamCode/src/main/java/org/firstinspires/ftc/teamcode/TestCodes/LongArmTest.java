@@ -28,6 +28,8 @@ public class LongArmTest extends OpMode {
         leftArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        telemetry.addData("basket position: ", basket.getPosition());
+
     }
     @Override
     public void loop()
@@ -54,11 +56,11 @@ public class LongArmTest extends OpMode {
 
         if (gamepad2.x)
         {
-            basket.setPosition(0.3);
+            basket.setPosition(0.8);
         }
         else if (gamepad2.b)
         {
-            basket.setPosition(-0.3);
+            basket.setPosition(0.0);
         }
 
 

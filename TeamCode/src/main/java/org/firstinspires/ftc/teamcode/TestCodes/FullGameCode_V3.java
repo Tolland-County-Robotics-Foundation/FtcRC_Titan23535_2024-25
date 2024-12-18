@@ -1,15 +1,23 @@
+/*
+    This code contains FullGameCode_V1 + Intake code
+ */
+
 package org.firstinspires.ftc.teamcode.TestCodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
+import org.firstinspires.ftc.teamcode.Intake_Arm_Mechanisms.Intake_v1;
 
-@TeleOp(name = "Full Game Code1", group = "test")
+@TeleOp(name = "Full Game Code3", group = "test")
 
-public class FullGameCode_V1 extends OpMode {
+public class FullGameCode_V3 extends OpMode {
     // Creating an object from Drive_V1 class
     Drive_v1 drive = new Drive_v1();
     // Creating an object from ElapsedTime class to have run time information
@@ -18,6 +26,14 @@ public class FullGameCode_V1 extends OpMode {
     String speedcap = "Normal";
 
     double speed_percentage = 50.0;
+
+    /*
+        Creating objects for intake
+     */
+
+    private CRServo claw        = null;
+    private DcMotor intakeArm   = null;
+
 
     @Override
     public void init()
@@ -32,6 +48,17 @@ public class FullGameCode_V1 extends OpMode {
         telemetry.addData(">", "Press Start To Run The Robot" );
         // Use init method to do the initialization of drive object
         drive.init(hardwareMap);
+
+        /// Initialization of intake mechanism
+
+        claw        = hardwareMap.get(CRServo.class, "claw");
+        intakeArm   = hardwareMap.get(DcMotor.class, "intakeArm");
+
+        claw.setDirection(DcMotorSimple.Direction.FORWARD);
+        intakeArm.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        intakeArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
     }
     @Override
     public void loop()
@@ -90,5 +117,30 @@ public class FullGameCode_V1 extends OpMode {
         telemetry.addData("Yaw:", yaw);
         telemetry.addData("Current Speed", speedcap);
         telemetry.addData("Speed percentage: ",speed_percentage);
+
+
+        /// intake mechanism ----------------------------------------------------------------------
+
+        double intakeArmPower = gamepad2.left_trigger - gamepad2.right_trigger;
+        intakeArm.setPower(intakeArmPower);
+
+        if (gamepad2.left_bumper)
+        {
+            claw.setPower(0.5);
+        }
+        else if (gamepad2.right_bumper)
+        {
+            claw.setPower(-0.5);
+        }
+        else
+        {
+            claw.setPower(0.0);
+        }
+
+        telemetry.addData("intake arm power: ", intakeArmPower);
+
+        telemetry.addData("claw power: ", claw.getPower());
+
+
     }
 }

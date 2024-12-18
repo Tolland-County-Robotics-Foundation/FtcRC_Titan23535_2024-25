@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.TestCodes;
 
 import static android.os.SystemClock.sleep;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -10,6 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
 
 @TeleOp(name = "Full Game Code", group = "test")
+@Disabled
 public class FullGameCode_V2 extends OpMode {
     // Creating an object from Drive_V1 class
     Drive_v1 drive = new Drive_v1();
