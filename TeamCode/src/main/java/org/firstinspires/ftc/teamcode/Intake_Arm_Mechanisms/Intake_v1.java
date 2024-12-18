@@ -1,16 +1,21 @@
 package org.firstinspires.ftc.teamcode.Intake_Arm_Mechanisms;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
+
 
 public class Intake_v1 {
 
-    // Create one object of DcMotor class and one object of Servo class
+    // Create one object of DcMotor class for intake arm and one object of Servo class for claw
 
-    private Servo claw          = null;
+    private CRServo claw        = null;
     private DcMotor intakeArm   = null;
+
+    // Create a constant variable to set the claw power
+
+    private double CLAW_POWER = 0.5;
 
 
     /*Create an method (init)
@@ -33,10 +38,10 @@ public class Intake_v1 {
 
     public void init(HardwareMap hwMap)
     {
-        claw        = hwMap.get(Servo.class, "claw");
+        claw        = hwMap.get(CRServo.class, "claw");
         intakeArm   = hwMap.get(DcMotor.class, "intakeArm");
 
-        claw.setDirection(Servo.Direction.FORWARD);
+        claw.setDirection(DcMotorSimple.Direction.FORWARD);
         intakeArm.setDirection(DcMotorSimple.Direction.FORWARD);
 
         intakeArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -46,20 +51,27 @@ public class Intake_v1 {
 
     // Create a method to move the intake arm
 
-    public void moveIntakeArm(double power)
+    public void moveIntakeArm(double intakeArmPower)
     {
-        intakeArm.setPower(power);
+        intakeArm.setPower(intakeArmPower);
     }
 
 
-    // create a method to collect and release the game piece
+    // create a method to open the claw
 
-    public void collectGamePiece(boolean collectButton)
+    public void openClaw()
     {
-        if (collectButton)
-        {
-            claw.setPosition(0.5);
-        }
+        claw.setPower(-CLAW_POWER);
     }
-    
+
+    public void closeClaw()
+    {
+        claw.setPower(CLAW_POWER);
+    }
+
+    public void stopClaw()
+    {
+        claw.setPower(0.0);
+    }
+
 }
