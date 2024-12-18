@@ -1,7 +1,3 @@
-/*
-    This code contains FullGameCode_V1 + Intake code
- */
-
 package org.firstinspires.ftc.teamcode.TestCodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -14,29 +10,24 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
 
-@TeleOp(name = "Full Game Code4", group = "test")
-
+@TeleOp(name = "Full Game Code 5", group = "test")
 public class FullGameCode_V5 extends OpMode {
     // Creating an object from Drive_V1 class
     Drive_v1 drive = new Drive_v1();
+
     // Creating an object from ElapsedTime class to have run time information
     private ElapsedTime runtime = new ElapsedTime();
+
     //Creating two variables for capping the speed
     String speedcap = "Normal";
 
     double speed_percentage = 40.0;
 
-    /*
-        Creating objects for intake
-     */
-
+    //Creating objects for intake
     private CRServo claw        = null;
     private DcMotor intakeArm   = null;
 
-    /*
-        Creating objects for long arm
-     */
-
+    //Creating objects for long arm
     private Servo basket          = null;
     private DcMotor leftArmLift     = null;
     private DcMotor rightArmLift    = null;
@@ -49,7 +40,7 @@ public class FullGameCode_V5 extends OpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        // Resting runtime
+        // Resetting runtime
         runtime.reset();
 
         telemetry.addData(">", "Press Start To Run The Robot" );
@@ -84,16 +75,16 @@ public class FullGameCode_V5 extends OpMode {
     public void loop()
     {
         // Set the speed cap for driver 1
-        if (gamepad1.a){
+        if (gamepad1.y) {
             speedcap = "Max";
             speed_percentage = 90.0;
         } else if (gamepad1.b) {
             speedcap = "Fast";
             speed_percentage = 65.0;
-        } else if (gamepad1.y) {
+        } else if (gamepad1.x) {
             speedcap = "Normal";
             speed_percentage = 40.0;
-        } else if (gamepad1.x) {
+        } else if (gamepad1.a) {
             speedcap = "Slow";
             speed_percentage = 25.0;
         }
@@ -141,19 +132,14 @@ public class FullGameCode_V5 extends OpMode {
 
         /// intake mechanism ----------------------------------------------------------------------
 
-        double intakeArmPower = gamepad2.left_trigger - gamepad2.right_trigger;
+        double intakeArmPower = gamepad2.left_stick_y;
         intakeArm.setPower(intakeArmPower);
 
-        if (gamepad2.right_stick_x > 0)
-        {
+        if (gamepad2.right_stick_x > 0) {
             claw.setPower(1);
-        }
-        else if (gamepad2.right_stick_x < 0)
-        {
+        } else if (gamepad2.right_stick_x < 0) {
             claw.setPower(-1);
-        }
-        else
-        {
+        } else {
             claw.setPower(0.0);
         }
 
@@ -168,12 +154,9 @@ public class FullGameCode_V5 extends OpMode {
         double armPower = 0.0;
 
 
-        if (gamepad2.left_trigger > 0)
-        {
+        if (gamepad2.left_trigger > 0) {
             armPower = -gamepad2.left_trigger;
-        }
-        else if (gamepad2.right_trigger > 0)
-        {
+        } else if (gamepad2.right_trigger > 0) {
             armPower = gamepad2.right_trigger;
         } else {
             armPower = 0;
@@ -184,15 +167,15 @@ public class FullGameCode_V5 extends OpMode {
 
         /// Basket -----------------------------------------------------------
 
-        if (gamepad2.x)
-        {
-            basket.setPosition(0.9);
-        }
-        else if (gamepad2.b)
-        {
+        if (gamepad2.dpad_down) {
+            basket.setPosition(0.8);
+        } else if (gamepad2.dpad_up) {
             basket.setPosition(0.4);
+        } else if (gamepad2.dpad_left) {
+            basket.setPosition(1);
+        } else if (gamepad2.dpad_right) {
+            basket.setPosition(0);
         }
-
 
         telemetry.addData("intake arm power: ", armPower);
 
