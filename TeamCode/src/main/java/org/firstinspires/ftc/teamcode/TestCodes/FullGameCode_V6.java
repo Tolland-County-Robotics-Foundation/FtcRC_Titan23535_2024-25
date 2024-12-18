@@ -12,62 +12,6 @@ import org.firstinspires.ftc.teamcode.LongArm_Mechanisms.LongArm_v2;
 
 public class FullGameCode_V6 extends OpMode {
 
-    /// Button configuration ----------------------------------------------------------------------
-
-    // Drive
-
-    /* Uses left joystick to go forward, backward, left, and right, and right joystick to rotate.
-
-           Left joystick up --> forward
-
-           Left joystick down --> Backward
-
-           Left joystick right --> Right
-
-           Left joystick left --> Left
-
-           Right joystick left --> rotate left
-
-           Right joystick right --> rotate right
-
-        */
-
-    double yawButton     =  gamepad1.right_stick_x;
-    double axialButton   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
-    double lateralButton =  gamepad1.left_stick_x;
-
-    // Intake
-
-    /*
-        Pressing only left trigger will give positive values.
-        So, it will move the intake towards the game piece.
-
-        Pressing only right trigger will give negative values.
-        So, it will move the intake towards the basket.
-
-        Pressing left bumper will close the claw.
-        So, the claw can hold the game piece.
-
-        Pressing right bumper will open the claw.
-        So, the claw can release the game piece.
-     */
-
-    double intakeArmPower           = gamepad2.left_trigger - gamepad2.right_trigger;
-
-    boolean intakeClawCloseButton   = gamepad2.left_bumper;
-    boolean intakeClawOpenButton    = gamepad2.right_bumper;
-
-
-
-    // Long Arm
-
-    boolean basketScoreButton   = gamepad2.x;
-    boolean basketResetButton   = gamepad2.b;
-
-    boolean longArmLiftButton   = gamepad2.dpad_up;
-    boolean longArmResetButton  = gamepad2.dpad_down;
-
-
 
     /// Necessary objects and variable creation --------------------------------------------------
 
@@ -109,6 +53,62 @@ public class FullGameCode_V6 extends OpMode {
     @Override
     public void loop()
     {
+        /// Button configuration ----------------------------------------------------------------------
+
+        // Drive
+
+    /* Uses left joystick to go forward, backward, left, and right, and right joystick to rotate.
+
+           Left joystick up --> forward
+
+           Left joystick down --> Backward
+
+           Left joystick right --> Right
+
+           Left joystick left --> Left
+
+           Right joystick left --> rotate left
+
+           Right joystick right --> rotate right
+
+        */
+
+        double yawButton     =  gamepad1.right_stick_x;
+        double axialButton   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
+        double lateralButton =  gamepad1.left_stick_x;
+
+        // Intake
+
+    /*
+        Pressing only left trigger will give positive values.
+        So, it will move the intake towards the game piece.
+
+        Pressing only right trigger will give negative values.
+        So, it will move the intake towards the basket.
+
+        Pressing left bumper will close the claw.
+        So, the claw can hold the game piece.
+
+        Pressing right bumper will open the claw.
+        So, the claw can release the game piece.
+     */
+
+        double intakeArmPower           = gamepad2.left_trigger - gamepad2.right_trigger;
+
+        boolean intakeClawCloseButton   = gamepad2.left_bumper;
+        boolean intakeClawOpenButton    = gamepad2.right_bumper;
+
+
+
+        // Long Arm
+
+        boolean basketScoreButton   = gamepad2.x;
+        boolean basketResetButton   = gamepad2.b;
+
+        boolean longArmLiftButton   = gamepad2.dpad_up;
+        boolean longArmResetButton  = gamepad2.dpad_down;
+
+
         // Set the speed cap for driver 1
         if (gamepad1.a)
         {
