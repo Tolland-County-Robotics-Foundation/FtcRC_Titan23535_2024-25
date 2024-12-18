@@ -10,13 +10,9 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.hardware.dfrobot.HuskyLens;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
-import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.hardware.dfrobot.HuskyLens;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @TeleOp
 public class TestAll extends OpMode {
@@ -28,7 +24,7 @@ public class TestAll extends OpMode {
     private DcMotor rightBackDrive = null;
     private DcMotor intake = null;
     private DcMotor IntakeLift = null; // Intake
-    double cap = 0.5;
+    double cap = 0.65;
 
     //Linear Slide
     DcMotor leftArm;
@@ -59,9 +55,9 @@ public class TestAll extends OpMode {
         rightS.setDirection(Servo.Direction.REVERSE);
 
         //Intake
-        IntakeLift = hardwareMap.get(DcMotor.class, "intakeWheel");
+        IntakeLift = hardwareMap.get(DcMotor.class, "intake");
         IntakeLift.setDirection(DcMotorSimple.Direction.FORWARD);
-        intake = hardwareMap.get(DcMotor.class, "intake");
+        intake = hardwareMap.get(DcMotor.class, "intakeWheel");
         intake.setDirection(DcMotorSimple.Direction.FORWARD);
 
     }
@@ -100,13 +96,13 @@ public class TestAll extends OpMode {
 
         // Speed Cap
         if (gamepad1.a) {
-            cap = 0.5;
+            cap = 0.90;
         }
         if (gamepad1.b) {
-            cap = 0.45;
+            cap = 0.65;
         }
         if (gamepad1.y) {
-            cap = 0.35;
+            cap = 0.40;
         }
         if (gamepad1.x) {
             cap = 0.25;
@@ -126,26 +122,28 @@ public class TestAll extends OpMode {
 
         float leftTrig = gamepad2.left_trigger;
         float rightTrig = gamepad2.right_trigger;
-        if (leftTrig > 0 && rightTrig <= 0) {
-            IntakeLift.setPower(leftTrig);
-        } else if (rightTrig > 0 && leftTrig <= 0) {
-            IntakeLift.setPower(rightTrig);
-        } else {
-            IntakeLift.setPower(0);
+        double power = 0;
+
+        if (leftTrig > rightTrig) {
+            power = leftTrig;
+        } else if (rightTrig > leftTrig) {
+            power = rightTrig * -1;
         }
 
+        IntakeLift.setPower(power);
+
         if (gamepad2.left_bumper) { // Out
-            intake.setPower(-0.7);
+            intake.setPower(-1);
         } else if (gamepad2.right_bumper) { // In
-            intake.setPower(0.7);
+            intake.setPower(1);
         } else {
             intake.setPower(0);
         }
 
         //Linear Slide
         double liftPower = gamepad2.left_stick_y;
-        double turn = gamepad2.right_stick_x;
-        double turnPower = 0.0;
+        double turn = gamepad2.right_stick_y;
+        double turnPower = 0.5;
 
         if (turn > 0) {
             turnPower = turnPower + 0.2;
@@ -161,8 +159,3 @@ public class TestAll extends OpMode {
         rightS.setPosition(turnPower);
     }
 }
-
-
-
-
-
