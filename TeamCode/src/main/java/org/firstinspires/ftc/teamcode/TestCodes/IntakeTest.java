@@ -33,11 +33,11 @@ public class IntakeTest extends OpMode {
 
         if (gamepad2.left_bumper)
         {
-            claw.setPower(0.5);
+            claw.setPower(1);
         }
         else if (gamepad2.right_bumper)
         {
-            claw.setPower(-0.5);
+            claw.setPower(-1);
         }
         else
         {

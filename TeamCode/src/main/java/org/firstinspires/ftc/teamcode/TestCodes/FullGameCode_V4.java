@@ -185,11 +185,11 @@ public class FullGameCode_V4 extends OpMode {
 
         if (gamepad2.x)
         {
-            basket.setPosition(0.3);
+            basket.setPosition(0.8);
         }
         else if (gamepad2.b)
         {
-            basket.setPosition(0.0);
+            basket.setPosition(0.1);
         }
 
 
