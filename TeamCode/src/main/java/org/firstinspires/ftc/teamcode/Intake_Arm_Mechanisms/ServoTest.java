@@ -12,7 +12,7 @@ public class ServoTest extends OpMode {
 
     @Override
     public void init() {
-        motor  = hardwareMap.get(Servo.class, "motor");
+        motor  = hardwareMap.get(Servo.class, "BasketArm");
         motor.setDirection(Servo.Direction.FORWARD);
     }
 

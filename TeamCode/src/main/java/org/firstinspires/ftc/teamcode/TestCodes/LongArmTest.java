@@ -56,7 +56,7 @@ public class LongArmTest extends OpMode {
 
         if (gamepad2.x)
         {
-            basket.setPosition(0.8);
+            basket.setPosition(0.9);
         }
         else if (gamepad2.b)
         {

@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
 
 @TeleOp(name = "Full Game Code4", group = "test")
 
-public class FullGameCode_V4 extends OpMode {
+public class FullGameCode_V5 extends OpMode {
     // Creating an object from Drive_V1 class
     Drive_v1 drive = new Drive_v1();
     // Creating an object from ElapsedTime class to have run time information
@@ -24,7 +24,7 @@ public class FullGameCode_V4 extends OpMode {
     //Creating two variables for capping the speed
     String speedcap = "Normal";
 
-    double speed_percentage = 50.0;
+    double speed_percentage = 40.0;
 
     /*
         Creating objects for intake
@@ -144,13 +144,13 @@ public class FullGameCode_V4 extends OpMode {
         double intakeArmPower = gamepad2.left_trigger - gamepad2.right_trigger;
         intakeArm.setPower(intakeArmPower);
 
-        if (gamepad2.left_bumper)
+        if (gamepad2.right_stick_x > 0)
         {
-            claw.setPower(0.5);
+            claw.setPower(1);
         }
-        else if (gamepad2.right_bumper)
+        else if (gamepad2.right_stick_x < 0)
         {
-            claw.setPower(-0.5);
+            claw.setPower(-1);
         }
         else
         {
@@ -168,14 +168,15 @@ public class FullGameCode_V4 extends OpMode {
         double armPower = 0.0;
 
 
-        if (gamepad2.dpad_down)
+        if (gamepad2.left_trigger > 0)
         {
-            armPower = -0.7;
+            armPower = -gamepad2.left_trigger;
         }
-        else if (gamepad2.dpad_up)
+        else if (gamepad2.right_trigger > 0)
         {
-            armPower = 0.7;
-
+            armPower = gamepad2.right_trigger;
+        } else {
+            armPower = 0;
         }
 
         leftArmLift.setPower(armPower);
@@ -185,7 +186,7 @@ public class FullGameCode_V4 extends OpMode {
 
         if (gamepad2.x)
         {
-            basket.setPosition(0.8);
+            basket.setPosition(0.9);
         }
         else if (gamepad2.b)
         {

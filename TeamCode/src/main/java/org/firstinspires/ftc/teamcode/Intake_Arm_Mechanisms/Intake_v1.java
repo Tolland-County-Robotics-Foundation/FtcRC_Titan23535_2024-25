@@ -5,7 +5,15 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class Intake_v1 {
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
+
+public class Intake_v1 extends LinearOpMode{
+    @Override
+    public void runOpMode() throws InterruptedException {
+
+    }
 
     // Create one object of DcMotor class and one object of Servo class
 
