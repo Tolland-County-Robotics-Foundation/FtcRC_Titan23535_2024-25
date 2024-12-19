@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Auto Demo Red Near", group="Robot")
+@Autonomous(name="Auto Test 1", group="Autonomous")
 
 public class AutoTest1 extends LinearOpMode {
 
@@ -30,7 +30,7 @@ public class AutoTest1 extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   =  2.95276;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.15;
+    static final double     DRIVE_SPEED             = 0.25;
 
 
     @Override
@@ -46,10 +46,10 @@ public class AutoTest1 extends LinearOpMode {
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftFrontDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftBackDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // Enable brake
 
@@ -84,10 +84,14 @@ public class AutoTest1 extends LinearOpMode {
             The drive modes are: forward, backward, left, right, turnLeft, turnRight
          */
 
-        drive("forward", 8, DRIVE_SPEED, 5.0);
+        drive("forward", 10, DRIVE_SPEED, 5.0);
+
+        /*
         drive("right", 50, DRIVE_SPEED, 5.0);
 
         drive("backward", 4, DRIVE_SPEED, 5.0);
+
+         */
 
         telemetry.addData("Path", "Complete");
         telemetry.update();

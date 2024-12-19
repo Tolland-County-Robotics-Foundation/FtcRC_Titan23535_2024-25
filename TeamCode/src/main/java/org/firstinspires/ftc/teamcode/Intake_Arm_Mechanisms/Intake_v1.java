@@ -56,6 +56,11 @@ public class Intake_v1 {
         intakeArm.setPower(intakeArmPower);
     }
 
+    public void moveIntakeClaw(double intakeClawPower)
+    {
+        claw.setPower(intakeClawPower);
+    }
+
 
     // create a method to open the claw
 

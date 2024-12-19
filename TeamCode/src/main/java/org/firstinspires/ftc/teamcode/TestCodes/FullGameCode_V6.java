@@ -93,10 +93,15 @@ public class FullGameCode_V6 extends OpMode {
         So, the claw can release the game piece.
      */
 
-        double intakeArmPower           = gamepad2.left_trigger - gamepad2.right_trigger;
+        double intakeArmPower           = gamepad2.right_stick_x;
+        double intakeClawPower          = gamepad2.left_stick_x;
+
+        /*
 
         boolean intakeClawCloseButton   = gamepad2.left_bumper;
         boolean intakeClawOpenButton    = gamepad2.right_bumper;
+
+         */
 
 
 
@@ -153,6 +158,10 @@ public class FullGameCode_V6 extends OpMode {
 
         // Intake claw control
 
+        intake.moveIntakeClaw(intakeClawPower);
+
+        /*
+
         if (intakeClawCloseButton)
         {
             intake.closeClaw();
@@ -165,6 +174,8 @@ public class FullGameCode_V6 extends OpMode {
         {
             intake.stopClaw();
         }
+
+         */
 
 
         telemetry.addData("intake arm power: ", intakeArmPower);

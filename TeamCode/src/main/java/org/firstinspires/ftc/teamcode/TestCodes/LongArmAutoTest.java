@@ -2,17 +2,24 @@ package org.firstinspires.ftc.teamcode.TestCodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
-public class LongArmTest extends OpMode {
+public class LongArmAutoTest extends OpMode {
 
     private Servo   basket          = null;
     private DcMotor leftArmLift     = null;
     private DcMotor rightArmLift    = null;
+
+    private double  ARM_POWER                   = 0.7;
+    private double  BASKET_RESET_POSITION       = 0.4;
+    private double  BASKET_SCORE_POSITION       = 0.9;
+    private int     LEFT_ARM_LIFT_POSITION      = 0;
+    private int     RIGHT_ARM_LIFT_POSITION     = 0;
+    private int     LEFT_ARM_RESET_POSITION     = 0;
+    private int     RIGHT_ARM_RESET_POSITION    = 0;
 
     @Override
     public void init()
@@ -34,7 +41,15 @@ public class LongArmTest extends OpMode {
         leftArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        telemetry.addData("Left arm power: ", leftArmLift.getPower());
+
+        telemetry.addData("Right arm power: ", rightArmLift.getPower());
+
         telemetry.addData("basket position: ", basket.getPosition());
+
+        telemetry.addData("Left Arm Position: ", leftArmLift.getCurrentPosition());
+
+        telemetry.addData("Right arm position: ", rightArmLift.getCurrentPosition());
 
     }
     @Override
@@ -51,6 +66,13 @@ public class LongArmTest extends OpMode {
             leftArmLift.setPower(0.7);
             rightArmLift.setPower(0.7);
 
+        } else if (gamepad2.left_bumper)
+        {
+            autoLiftArm();
+
+        } else if (gamepad2.right_bumper)
+        {
+            autoResetArm();
         }
 
 
@@ -87,4 +109,49 @@ public class LongArmTest extends OpMode {
 
     }
 
+    public void autoLiftArm()
+    {
+        leftArmLift.setTargetPosition(LEFT_ARM_LIFT_POSITION);
+        rightArmLift.setTargetPosition(RIGHT_ARM_LIFT_POSITION);
+
+        leftArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        leftArmLift.setPower(ARM_POWER);
+        rightArmLift.setPower(ARM_POWER);
+
+        /*
+
+        leftArmLift.setPower(0.0);
+        rightArmLift.setPower(0.0);
+
+        leftArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+         */
+
+    }
+
+    public void autoResetArm()
+    {
+        leftArmLift.setTargetPosition(LEFT_ARM_RESET_POSITION);
+        rightArmLift.setTargetPosition(RIGHT_ARM_RESET_POSITION);
+
+        leftArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        leftArmLift.setPower(ARM_POWER);
+        rightArmLift.setPower(ARM_POWER);
+
+        /*
+
+        leftArmLift.setPower(0.0);
+        rightArmLift.setPower(0.0);
+
+        leftArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+         */
+
+    }
 }
