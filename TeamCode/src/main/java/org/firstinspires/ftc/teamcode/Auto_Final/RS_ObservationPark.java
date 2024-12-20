@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.TestAutonomous;
+package org.firstinspires.ftc.teamcode.Auto_Final;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Auto Test 1", group="Autonomous")
+@Autonomous(name="RS_ObservationPark", group="Autonomous")
 
-public class AutoTest1 extends LinearOpMode {
+public class RS_ObservationPark extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor leftFrontDrive = null;

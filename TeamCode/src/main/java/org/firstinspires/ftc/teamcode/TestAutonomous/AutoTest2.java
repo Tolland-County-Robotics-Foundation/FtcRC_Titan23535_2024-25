@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Auto Test 1", group="Autonomous")
+@Autonomous(name="Auto Test 2", group="Autonomous")
 
-public class AutoTest1 extends LinearOpMode {
+public class AutoTest2 extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor leftFrontDrive = null;
@@ -83,8 +83,8 @@ public class AutoTest1 extends LinearOpMode {
         /*
             The drive modes are: forward, backward, left, right, turnLeft, turnRight
          */
-
-        drive("right", 45, DRIVE_SPEED, 10.0);
+        sleep(15000);
+        drive("right", 85, DRIVE_SPEED, 10.0);
 
         /*
         drive("right", 50, DRIVE_SPEED, 5.0);

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.TestAutonomous;
+package org.firstinspires.ftc.teamcode.Auto_Final;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Auto Test 1", group="Autonomous")
+@Autonomous(name="LS_ObservationPark", group="Autonomous")
 
-public class AutoTest1 extends LinearOpMode {
+public class LS_ObservationPark extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor leftFrontDrive = null;
@@ -83,8 +83,8 @@ public class AutoTest1 extends LinearOpMode {
         /*
             The drive modes are: forward, backward, left, right, turnLeft, turnRight
          */
-
-        drive("right", 45, DRIVE_SPEED, 10.0);
+        sleep(15000);
+        drive("right", 85, DRIVE_SPEED, 10.0);
 
         /*
         drive("right", 50, DRIVE_SPEED, 5.0);

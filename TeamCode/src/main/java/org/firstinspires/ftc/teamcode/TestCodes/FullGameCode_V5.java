@@ -170,18 +170,22 @@ public class FullGameCode_V5 extends OpMode {
         if (gamepad2.dpad_down) {
             basket.setPosition(0.8);
         } else if (gamepad2.dpad_up) {
-            basket.setPosition(0.4);
+            basket.setPosition(0.5);
         } else if (gamepad2.dpad_left) {
             basket.setPosition(1);
         } else if (gamepad2.dpad_right) {
-            basket.setPosition(0);
+            basket.setPosition(0.4);
         }
 
         telemetry.addData("intake arm power: ", armPower);
 
         telemetry.addData("basket position: ", basket.getPosition());
 
+     /// Long Arm Slight Raise -----------------------------------------------
 
+
+
+     /// Long Arm Slight Raise -----------------------------------------------
     }
 }
 

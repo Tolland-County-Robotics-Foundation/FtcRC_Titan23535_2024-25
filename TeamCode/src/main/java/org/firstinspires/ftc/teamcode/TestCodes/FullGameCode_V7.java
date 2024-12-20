@@ -107,7 +107,6 @@ public class FullGameCode_V7 extends OpMode {
 
         boolean longArmLiftButton   = gamepad2.dpad_up;
         boolean longArmResetButton  = gamepad2.dpad_down;
-        boolean longArmStopButton   = gamepad2.a;
 
 
         // Set the speed cap for driver 1
@@ -175,15 +174,15 @@ public class FullGameCode_V7 extends OpMode {
 
         // Long arm control
 
-        if (longArmResetButton)     { longArm.autoResetArm();   }
-        else if (longArmLiftButton) { longArm.autoLiftArm();    }
-        else if (longArmStopButton) { longArm.stopArm();        }
+        if (longArmResetButton)     { longArm.autoResetArm(); }
+        else if (longArmLiftButton) { longArm.autoLiftArm(); }
+        else                        { longArm.stopArm(); }
 
 
         // Basket control
 
         if (basketScoreButton)      { longArm.scoreGamePiece(); }
-        else if (basketResetButton) { longArm.basketReset();    }
+        else if (basketResetButton) { longArm.basketReset(); }
 
         /// Telemetry -----------------------------------------------------------------------------
 
