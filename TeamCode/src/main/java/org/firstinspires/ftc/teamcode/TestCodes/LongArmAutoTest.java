@@ -16,10 +16,10 @@ public class LongArmAutoTest extends OpMode {
     private double  ARM_POWER                   = 0.7;
     private double  BASKET_RESET_POSITION       = 0.4;
     private double  BASKET_SCORE_POSITION       = 0.9;
-    private int     LEFT_ARM_LIFT_POSITION      = 0;
-    private int     RIGHT_ARM_LIFT_POSITION     = 0;
-    private int     LEFT_ARM_RESET_POSITION     = 0;
-    private int     RIGHT_ARM_RESET_POSITION    = 0;
+    private int     LEFT_ARM_LIFT_POSITION      = 3110; // High basket
+    private int     RIGHT_ARM_LIFT_POSITION     = 3117; // High Basket
+    private int     LEFT_ARM_RESET_POSITION     = 580;
+    private int     RIGHT_ARM_RESET_POSITION    = 600;
 
     @Override
     public void init()
