@@ -132,7 +132,7 @@ public class FullGameCode_V8 extends OpMode {
 
         /// intake mechanism ----------------------------------------------------------------------
 
-        double intakeArmPower = gamepad2.left_stick_y/0.75;
+        double intakeArmPower = gamepad2.left_stick_y * 0.5;
         intakeArm.setPower(intakeArmPower);
 
         if (gamepad2.right_stick_x > 0) {
