@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.TestCodes;
 
 import static android.os.SystemClock.sleep;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -11,7 +10,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
 
 @TeleOp(name = "Full Game Code", group = "test")
-@Disabled
 public class FullGameCode_V2 extends OpMode {
     // Creating an object from Drive_V1 class
     Drive_v1 drive = new Drive_v1();
@@ -44,13 +42,17 @@ public class FullGameCode_V2 extends OpMode {
         {
             // Set the speed cap for driver 1 via face buttons
             if (gamepad1.a) {
-                speed_percentage = 80.0;
+                speedcap = "Max";
+                speed_percentage = 90.0;
             } else if (gamepad1.b) {
-                speed_percentage = 60.0;
+                speedcap = "Fast";
+                speed_percentage = 65.0;
             } else if (gamepad1.y) {
+                speedcap = "Normal";
                 speed_percentage = 40.0;
             } else if (gamepad1.x) {
-                speed_percentage = 20.0;
+                speedcap = "Slow";
+                speed_percentage = 25.0;
             }
             // Set the speed cap for driver 1 via bumpers
             if (gamepad1.left_bumper && speed_percentage > 20) {
@@ -68,18 +70,6 @@ public class FullGameCode_V2 extends OpMode {
                         break;
                     }
                 }
-            }
-            //Names of each speed
-            if (speed_percentage == 20) {
-                speedcap = "Slow";
-            } else if (speed_percentage == 40) {
-                speedcap = "Normal";
-            } else if (speed_percentage == 60) {
-                speedcap = "Fast";
-            } else if (speed_percentage == 80) {
-                speedcap = "Hyper";
-            } else if (speed_percentage == 100) {
-                speedcap = "OVERCLOCK";
             }
         }
 

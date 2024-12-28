@@ -16,8 +16,8 @@ public class Intake_v2 {
 
     // Create one object of DcMotor class for intake arm and one object of Servo class for claw
 
-    private CRServo claw        = null;
-    private DcMotor intakeArm   = null;
+    private CRServo claw = null;
+    private DcMotor intakeArm = null;
     private Color_Sensor_v1 colorSensor = null;
 
     // Create a constant variable to set the claw power
@@ -71,8 +71,13 @@ public class Intake_v2 {
 
     public void moveIntakeClaw(double intakeClawPower)
     {
+        if (ALLIANCE_COLOR == colorDetected) {
+            claw.setPower(intakeClawPower);
+        }
+        else {
+            openClaw();
+        }
 
-        claw.setPower(intakeClawPower);
     }
 
 
@@ -93,4 +98,7 @@ public class Intake_v2 {
         claw.setPower(0.0);
     }
 
-}
+
+    }
+
+
