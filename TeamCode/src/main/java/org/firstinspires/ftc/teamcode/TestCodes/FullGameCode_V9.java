@@ -8,19 +8,25 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
+import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Color_Sensor_v1;
 
-@TeleOp(name = "Full Game Code 8", group = "test")
+import java.util.Objects;
+
+@TeleOp(name = "Full Game Code 9", group = "test")
 public class FullGameCode_V9 extends OpMode {
     // Creating an object from Drive_V1 class
     Drive_v1 drive = new Drive_v1();
+    Color_Sensor_v1 color = new Color_Sensor_v1();
     //Update
     // Creating an object from ElapsedTime class to have run time information
     private ElapsedTime runtime = new ElapsedTime();
 
-    //Creating two variables for capping the speed
+    //Creating variables
     String speedcap = "Normal";
-
+    Boolean rightColor;
+    Boolean redSpy;
     double speed_percentage = 40.0;
 
     //Creating objects for intake
@@ -137,7 +143,7 @@ public class FullGameCode_V9 extends OpMode {
 
         if (gamepad2.right_stick_x > 0) {
             claw.setPower(1);
-        } else if (gamepad2.right_stick_x < 0) {
+        } else if ((gamepad2.right_stick_x < 0) || (!rightColor)) {
             claw.setPower(-1);
         } else {
             claw.setPower(0.0);
@@ -198,6 +204,24 @@ public class FullGameCode_V9 extends OpMode {
 
 
         /// Long Arm Slight Raise -----------------------------------------------
+
+        ///Sensors --------------------------------------------------------------
+        String colorOfBlock = color.blockColor();
+        if (color.getDistance(DistanceUnit.INCH) < 0.5) {
+            telemetry.addData("Block Color", color.blockColor());
+        }
+
+        if (redSpy) {
+            if (Objects.equals(colorOfBlock, "blue")) {
+                rightColor = false;
+            }
+        } else if (redSpy = false) {
+            if (Objects.equals(colorOfBlock, "red")) {
+                rightColor = false;
+            }
+        } else {
+            rightColor = true;
+        }
     }
 }
 
