@@ -15,7 +15,7 @@ public class FullGameCode_V5 extends OpMode {
     // Creating an object from Drive_V1 class
     Drive_v1 drive = new Drive_v1();
     // Creating an object from ElapsedTime class to have run time information
-    private ElapsedTime runtime = new ElapsedTime();
+    private final ElapsedTime runtime = new ElapsedTime();
 
     //Creating two variables for capping the speed
     String speedcap = "Normal";

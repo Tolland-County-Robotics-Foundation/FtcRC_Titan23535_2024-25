@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.Sensor_Mechanisms;
 
+import com.qualcomm.hardware.dfrobot.HuskyLens;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -11,8 +11,8 @@ public class Color_Sensor_v1 {
   DistanceSensor distance;
 
     public void init (HardwareMap hardwareMap) {
-    color = hardwareMap.get(ColorSensor.class, "color");
-    distance = hardwareMap.get(DistanceSensor.class, "color");
+        color = hardwareMap.get(ColorSensor.class, "color");
+        distance = hardwareMap.get(DistanceSensor.class, "color");
     }
 
     public double getDistance(DistanceUnit du) {

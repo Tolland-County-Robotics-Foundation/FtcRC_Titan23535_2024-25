@@ -3,33 +3,23 @@ package org.firstinspires.ftc.teamcode.TestCodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
-import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Color_Sensor_v1;
 
-import java.util.Objects;
-
-@TeleOp(name = "Full Game Code 6", group = "test")
-public class FullGameCode_V6 extends OpMode {
+@TeleOp(name = "Full Game Code 8", group = "test")
+public class FullGameCode_V9 extends OpMode {
     // Creating an object from Drive_V1 class
     Drive_v1 drive = new Drive_v1();
-    Color_Sensor_v1 color = new Color_Sensor_v1();
-
+    //Update
     // Creating an object from ElapsedTime class to have run time information
-    private final ElapsedTime runtime = new ElapsedTime();
+    private ElapsedTime runtime = new ElapsedTime();
 
     //Creating two variables for capping the speed
     String speedcap = "Normal";
-
-    Boolean rightColor;
-    Boolean redSpy;
 
     double speed_percentage = 40.0;
 
@@ -41,6 +31,7 @@ public class FullGameCode_V6 extends OpMode {
     private Servo basket          = null;
     private DcMotor leftArmLift     = null;
     private DcMotor rightArmLift    = null;
+
 
     @Override
     public void init()
@@ -79,17 +70,6 @@ public class FullGameCode_V6 extends OpMode {
         leftArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        telemetry.addData("Are you on the Red Alliance or the Blue Alliance?", "Left trigger for Red, right trigger for Blue");
-        while (true) {
-            if (gamepad1.left_trigger > 0.1) {
-                redSpy = true;
-                break;
-            }
-            if (gamepad1.right_trigger > 0.1) {
-                redSpy = false;
-                break;
-            }
-        }
     }
     @Override
     public void loop()
@@ -152,12 +132,12 @@ public class FullGameCode_V6 extends OpMode {
 
         /// intake mechanism ----------------------------------------------------------------------
 
-        double intakeArmPower = gamepad2.left_stick_y;
+        double intakeArmPower = gamepad2.left_stick_y * 0.5;
         intakeArm.setPower(intakeArmPower);
 
         if (gamepad2.right_stick_x > 0) {
             claw.setPower(1);
-        } else if ((gamepad2.right_stick_x < 0) || (!rightColor)) {
+        } else if (gamepad2.right_stick_x < 0) {
             claw.setPower(-1);
         } else {
             claw.setPower(0.0);
@@ -172,14 +152,17 @@ public class FullGameCode_V6 extends OpMode {
         /// Long arm ---------------------------------------------------------
 
         double armPower = 0.0;
-
+        boolean noMove;
 
         if (gamepad2.left_trigger > 0) {
             armPower = -gamepad2.left_trigger;
+            noMove = false;
         } else if (gamepad2.right_trigger > 0) {
             armPower = gamepad2.right_trigger;
+            noMove = false;
         } else {
-            armPower = 0;
+            armPower = 0.065;
+            noMove = true;
         }
 
         leftArmLift.setPower(armPower);
@@ -188,36 +171,38 @@ public class FullGameCode_V6 extends OpMode {
         /// Basket -----------------------------------------------------------
 
         if (gamepad2.dpad_down) {
-            basket.setPosition(0.8);
+            basket.setPosition(1); // Drop
         } else if (gamepad2.dpad_up) {
-            basket.setPosition(0.4);
+            basket.setPosition(0.55); // Collect
         } else if (gamepad2.dpad_left) {
             basket.setPosition(1);
         } else if (gamepad2.dpad_right) {
-            basket.setPosition(0);
+            basket.setPosition(0.45); // Move
         }
+
+        if (armPower > 0.065 || armPower < 0.065) {
+            basket.setPosition(0.45);
+        }
+        if (intakeArmPower < 0 && gamepad2.left_trigger == 0 && gamepad2.right_trigger == 0) {
+            basket.setPosition(0.55);
+        }
+
+
 
         telemetry.addData("intake arm power: ", armPower);
 
         telemetry.addData("basket position: ", basket.getPosition());
 
-        ///Sensors ----------------------------------------------------------
+        /// Long Arm Slight Raise -----------------------------------------------
 
-        String colorOfBlock = color.blockColor();
-        if (color.getDistance(DistanceUnit.INCH) < 0.5) {
-            telemetry.addData("Block Color", color.blockColor());
-        }
 
-        if (redSpy) {
-            if (Objects.equals(colorOfBlock, "blue")) {
-                rightColor = false;
-            }
-        } else if (redSpy = false) {
-            if (Objects.equals(colorOfBlock, "red")) {
-                rightColor = false;
-            }
-        } else {
-            rightColor = true;
-        }
+
+        /// Long Arm Slight Raise -----------------------------------------------
     }
 }
+
+
+
+
+
+
