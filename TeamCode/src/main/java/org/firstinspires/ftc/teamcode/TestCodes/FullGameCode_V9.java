@@ -25,8 +25,8 @@ public class FullGameCode_V9 extends OpMode {
 
     //Creating variables
     String speedcap = "Normal";
-    Boolean rightColor;
-    Boolean redSpy;
+    boolean rightColor;
+    boolean redSpy;
     double speed_percentage = 40.0;
 
     //Creating objects for intake
