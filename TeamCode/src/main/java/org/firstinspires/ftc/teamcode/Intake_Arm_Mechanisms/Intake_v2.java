@@ -1,3 +1,7 @@
+/*
+    Intake_v1 + color sensor
+ */
+
 package org.firstinspires.ftc.teamcode.Intake_Arm_Mechanisms;
 
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -5,25 +9,26 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Color_Sensor_v1;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Servo;
 
-public class Intake_v1 extends LinearOpMode{
-    @Override
-    public void runOpMode() throws InterruptedException {
-
-    }
+public class Intake_v2 {
 
     // Create one object of DcMotor class for intake arm and one object of Servo class for claw
 
-    private CRServo claw        = null;
-    private DcMotor intakeArm   = null;
+    private CRServo claw = null;
+    private DcMotor intakeArm = null;
+    private Color_Sensor_v1 colorSensor = null;
 
     // Create a constant variable to set the claw power
 
     private double CLAW_POWER = 0.5;
+
+    private String ALLIANCE_COLOR =  null;
+
+    private String colorDetected = colorSensor.blockColor();
+
+
 
 
     /*Create an method (init)
@@ -66,11 +71,17 @@ public class Intake_v1 extends LinearOpMode{
 
     public void moveIntakeClaw(double intakeClawPower)
     {
-        claw.setPower(intakeClawPower);
+        if (ALLIANCE_COLOR == colorDetected) {
+            claw.setPower(intakeClawPower);
+        }
+        else {
+            openClaw();
+        }
+
     }
 
 
-    // create a method to open the claw
+    // create methods to control the claw
 
     public void openClaw()
     {
@@ -87,4 +98,7 @@ public class Intake_v1 extends LinearOpMode{
         claw.setPower(0.0);
     }
 
-}
+
+    }
+
+

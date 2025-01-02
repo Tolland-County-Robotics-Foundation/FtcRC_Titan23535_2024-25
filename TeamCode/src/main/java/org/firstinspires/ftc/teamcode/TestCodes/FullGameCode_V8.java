@@ -10,10 +10,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
 
-@TeleOp(name = "Full Game Code 5", group = "test")
-public class FullGameCode_V5 extends OpMode {
+@TeleOp(name = "Full Game Code 8", group = "test")
+public class FullGameCode_V8 extends OpMode {
     // Creating an object from Drive_V1 class
     Drive_v1 drive = new Drive_v1();
+    //Update
     // Creating an object from ElapsedTime class to have run time information
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -131,6 +132,7 @@ public class FullGameCode_V5 extends OpMode {
 
         /// intake mechanism ----------------------------------------------------------------------
 
+        double intakeArmPower = gamepad2.left_stick_y * 0.5;
         intakeArm.setPower(intakeArmPower);
 
         if (gamepad2.right_stick_x > 0) {
@@ -150,12 +152,17 @@ public class FullGameCode_V5 extends OpMode {
         /// Long arm ---------------------------------------------------------
 
         double armPower = 0.0;
+        boolean noMove;
 
         if (gamepad2.left_trigger > 0) {
             armPower = -gamepad2.left_trigger;
+            noMove = false;
         } else if (gamepad2.right_trigger > 0) {
             armPower = gamepad2.right_trigger;
+             noMove = false;
         } else {
+            armPower = 0.065;
+            noMove = true;
         }
 
         leftArmLift.setPower(armPower);
@@ -164,16 +171,38 @@ public class FullGameCode_V5 extends OpMode {
         /// Basket -----------------------------------------------------------
 
         if (gamepad2.dpad_down) {
+            basket.setPosition(1); // Drop
         } else if (gamepad2.dpad_up) {
+            basket.setPosition(0.55); // Collect
         } else if (gamepad2.dpad_left) {
             basket.setPosition(1);
         } else if (gamepad2.dpad_right) {
+            basket.setPosition(0.45); // Move
         }
+
+        if (armPower > 0.065 || armPower < 0.065) {
+            basket.setPosition(0.45);
+        }
+        if (intakeArmPower < 0 && gamepad2.left_trigger == 0 && gamepad2.right_trigger == 0) {
+            basket.setPosition(0.55);
+        }
+
+
 
         telemetry.addData("intake arm power: ", armPower);
 
         telemetry.addData("basket position: ", basket.getPosition());
 
+     /// Long Arm Slight Raise -----------------------------------------------
 
+
+
+     /// Long Arm Slight Raise -----------------------------------------------
     }
 }
+
+
+
+
+
+
