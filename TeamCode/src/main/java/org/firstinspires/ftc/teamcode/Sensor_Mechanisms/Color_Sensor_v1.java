@@ -33,13 +33,13 @@ public class Color_Sensor_v1 {
         double yellow = getAmountGreen() - 50;
         if (getDistance(DistanceUnit.INCH) < 2.5) {
             if (red > 100 && red > blue && red > yellow) {
-                return (String) "red";
+                return "red";
             } else if (blue > 100 && blue > red && blue > yellow) {
-                return (String) "blue";
+                return "blue";
             } else if (yellow > 100 && yellow > blue && yellow > red) {
-                return (String) "yellow";
+                return "yellow";
             }
         }
-        return null;
+        return "none";
     }
 }

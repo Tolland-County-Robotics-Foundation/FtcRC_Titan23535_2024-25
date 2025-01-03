@@ -3,28 +3,29 @@ package org.firstinspires.ftc.teamcode.TestCodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
-import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Color_Sensor_v1;
-
 import java.util.Objects;
 
 @TeleOp(name = "Full Game Code 9", group = "test")
 public class FullGameCode_V9 extends OpMode {
     // Creating an object from Drive_V1 class
     Drive_v1 drive = new Drive_v1();
-    Color_Sensor_v1 color = new Color_Sensor_v1();
-    //Update
     // Creating an object from ElapsedTime class to have run time information
     private ElapsedTime runtime = new ElapsedTime();
 
     //Creating variables
     String speedcap = "Normal";
+    String colorS;
     boolean rightColor;
     boolean redSpy;
     double speed_percentage = 40.0;
@@ -38,6 +39,9 @@ public class FullGameCode_V9 extends OpMode {
     private DcMotor leftArmLift     = null;
     private DcMotor rightArmLift    = null;
 
+    //Sensors
+    ColorSensor color;
+    DistanceSensor distance;
 
     @Override
     public void init()
@@ -76,6 +80,9 @@ public class FullGameCode_V9 extends OpMode {
         leftArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        //Sensors
+        color = hardwareMap.get(ColorSensor.class, "color");
+        distance = hardwareMap.get(DistanceSensor.class, "color");
     }
     @Override
     public void loop()
@@ -206,22 +213,34 @@ public class FullGameCode_V9 extends OpMode {
         /// Long Arm Slight Raise -----------------------------------------------
 
         ///Sensors --------------------------------------------------------------
-        String colorOfBlock = color.blockColor();
-        if (color.getDistance(DistanceUnit.INCH) < 0.5) {
-            telemetry.addData("Block Color", color.blockColor());
+        if (distance.getDistance(DistanceUnit.INCH) < 0.5) {
+            telemetry.addData("Block Color", colorS);
         }
 
         if (redSpy) {
-            if (Objects.equals(colorOfBlock, "blue")) {
+            if (Objects.equals(colorS, "blue")) {
                 rightColor = false;
             }
         } else if (redSpy = false) {
-            if (Objects.equals(colorOfBlock, "red")) {
+            if (Objects.equals(colorS, "red")) {
                 rightColor = false;
             }
         } else {
             rightColor = true;
         }
+            double red = color.red();
+            double blue = color.blue();
+            double yellow = color.green() - 50;
+            if (distance.getDistance(DistanceUnit.INCH) < 2.5) {
+               if (red > 100 && red > blue && red > yellow) {
+                    colorS = "red";
+                } else if (blue > 100 && blue > red && blue > yellow) {
+                   colorS = "blue";
+                } else if (yellow > 100 && yellow > blue && yellow > red) {
+                    colorS = "yellow";
+                }
+          }
+           colorS = "none";
     }
 }
 
