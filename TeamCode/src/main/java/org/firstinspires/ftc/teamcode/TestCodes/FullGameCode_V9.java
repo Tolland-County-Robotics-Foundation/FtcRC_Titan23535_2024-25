@@ -78,6 +78,20 @@ public class FullGameCode_V9 extends OpMode {
         leftArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        ///Alliance selection & Blinkin color set
+        telemetry.addData("Are you on the Red Alliance or the Blue Alliance?", "Left trigger for Red, right trigger for Blue");
+        while (true) {
+            if (gamepad1.left_trigger > 0.1) {
+                redSpy = true;
+                break;
+            }
+            if (gamepad1.right_trigger > 0.1) {
+                redSpy = false;
+                break;
+            }
+        }
+
+        light.allianceSet(redSpy);
     }
     @Override
     public void loop()
@@ -226,7 +240,7 @@ public class FullGameCode_V9 extends OpMode {
         }
 
 
-
+        light.sample(redSpy);
     }
 }
 
