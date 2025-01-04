@@ -213,6 +213,21 @@ public class FullGameCode_V9 extends OpMode {
         /// Long Arm Slight Raise -----------------------------------------------
 
         ///Sensors --------------------------------------------------------------
+        double red = color.red();
+        double blue = color.blue();
+        double yellow = color.green() - 50;
+        if (distance.getDistance(DistanceUnit.INCH) < 2.5) {
+            if (red > 100 && red > blue && red > yellow) {
+                colorS = "red";
+            } else if (blue > 100 && blue > red && blue > yellow) {
+                colorS = "blue";
+            } else if (yellow > 100 && yellow > blue && yellow > red) {
+                colorS = "yellow";
+            }
+        } else {
+            colorS = "none";
+        }
+
         if (distance.getDistance(DistanceUnit.INCH) < 0.5) {
             telemetry.addData("Block Color", colorS);
         }
@@ -221,26 +236,14 @@ public class FullGameCode_V9 extends OpMode {
             if (Objects.equals(colorS, "blue")) {
                 rightColor = false;
             }
-        } else if (redSpy = false) {
+        } else if (!redSpy) {
             if (Objects.equals(colorS, "red")) {
                 rightColor = false;
             }
         } else {
             rightColor = true;
         }
-            double red = color.red();
-            double blue = color.blue();
-            double yellow = color.green() - 50;
-            if (distance.getDistance(DistanceUnit.INCH) < 2.5) {
-               if (red > 100 && red > blue && red > yellow) {
-                    colorS = "red";
-                } else if (blue > 100 && blue > red && blue > yellow) {
-                   colorS = "blue";
-                } else if (yellow > 100 && yellow > blue && yellow > red) {
-                    colorS = "yellow";
-                }
-          }
-           colorS = "none";
+
     }
 }
 
