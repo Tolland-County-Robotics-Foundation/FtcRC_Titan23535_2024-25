@@ -1,20 +1,22 @@
 package org.firstinspires.ftc.teamcode.Sensor_Mechanisms;
 
-
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 import java.util.Objects;
 
-public class Blinkin_v1 {
+@Autonomous
+public class Blinkin_Test {
     RevBlinkinLedDriver blinkin;
     Color_Sensor_v1 color = new Color_Sensor_v1();
-
 
     public void init() {
         blinkin = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");
     }
 
-    public void sample() {
+    public void loop() {
         String blockColor = color.blockColor();
 
         if (Objects.equals(blockColor, "red")) {
