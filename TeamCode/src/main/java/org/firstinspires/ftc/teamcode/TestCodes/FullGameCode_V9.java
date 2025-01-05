@@ -239,7 +239,6 @@ public class FullGameCode_V9 extends OpMode {
             rightColor = true;
         }
 
-
         light.sample(redSpy);
     }
 }
