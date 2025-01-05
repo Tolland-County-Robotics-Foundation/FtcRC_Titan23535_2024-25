@@ -90,8 +90,6 @@ public class FullGameCode_V9 extends OpMode {
                 break;
             }
         }
-
-        light.allianceSet(redSpy);
     }
     @Override
     public void loop()
