@@ -3,12 +3,13 @@ package org.firstinspires.ftc.teamcode.Sensor_Mechanisms;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import java.util.Objects;
 
 @Autonomous
-public class Blinkin_Test {
+public class Blinkin_Test extends OpMode{
     RevBlinkinLedDriver blinkin;
     Color_Sensor_v1 color = new Color_Sensor_v1();
 
