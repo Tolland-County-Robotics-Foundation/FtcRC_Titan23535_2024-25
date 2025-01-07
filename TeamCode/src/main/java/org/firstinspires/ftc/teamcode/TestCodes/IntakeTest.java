@@ -48,6 +48,10 @@ public class IntakeTest extends OpMode {
                 else claw.setPower
          */
 
+        if      (ALLIANCE_COLOR == "blue" && colorDetected == "red") {claw.setPower(-0.5);}
+        else if (ALLIANCE_COLOR == "red" && colorDetected == "blue") {claw.setPower(-0.5);}
+        else {claw.setPower(clawPower);}
+
         telemetry.addData("claw power 1: ", clawPower);
 
         telemetry.addData("intake arm power: ", intakeArmPower);
