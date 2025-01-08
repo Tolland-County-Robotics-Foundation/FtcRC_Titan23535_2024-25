@@ -28,6 +28,14 @@ public class Intake_v2 {
 
     private String colorDetected = colorSensor.blockColor();
 
+    // For autonomous movement of intake arm
+
+    private double DISTANCE_PER_INCH = 0.0;
+
+    private double COUNTS_PER_REV = 0.0;
+
+    private double COUNTS_PER_INCH = COUNTS_PER_REV / DISTANCE_PER_INCH;
+
 
 
 
@@ -61,12 +69,41 @@ public class Intake_v2 {
     }
 
 
+    /// Intake Arm
 
-    // Create a method to move the intake arm
+    // Stop intake arm
+
+    public void stopArm(){ intakeArm.setPower(0.0);}
+
+    // Method to move the intake arm teleop
 
     public void moveIntakeArm(double intakeArmPower)
     {
         intakeArm.setPower(intakeArmPower);
+    }
+
+    // Method to move the intake arm autonomously
+
+    public void autoMove(String driveMode, double distance, double speed){
+
+        if (driveMode == "collect"){
+            int newIntakeArmTarget = intakeArm.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
+        } else if (driveMode == "release") {
+            int newIntakeArmTarget = intakeArm.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
+        }
+
+        int newIntakeArmTarget = intakeArm.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
+
+        intakeArm.setTargetPosition(newIntakeArmTarget);
+
+        intakeArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        intakeArm.setPower(speed);
+
+        intakeArm.setPower(0.0);
+
+        intakeArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
     }
 
     public void moveIntakeClaw(double intakeClawPower)
@@ -92,5 +129,7 @@ public class Intake_v2 {
     {
         claw.setPower(0.0);
     }
+
+
 
 }
