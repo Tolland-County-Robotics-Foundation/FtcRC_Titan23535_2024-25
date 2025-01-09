@@ -77,10 +77,13 @@ public class FullGameCode_V9 extends OpMode {
 
         leftArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        ///Alliance selection & Blinkin color set
-        telemetry.addData("Are you on the Red Alliance or the Blue Alliance?", "Left trigger for Red, right trigger for Blue");
+    }
+    @Override
+    public void loop()
+    {
+        ///Alliance selection
         while (true) {
+            telemetry.addData("Are you on the Red Alliance or the Blue Alliance?", "Left trigger for Red, right trigger for Blue");
             if (gamepad1.left_trigger > 0.1) {
                 redSpy = true;
                 break;
@@ -90,10 +93,8 @@ public class FullGameCode_V9 extends OpMode {
                 break;
             }
         }
-    }
-    @Override
-    public void loop()
-    {
+        telemetry.clear();
+
         // Set the speed cap for driver 1
         if (gamepad1.y) {
             speedCap = "Max";
@@ -128,14 +129,6 @@ public class FullGameCode_V9 extends OpMode {
         double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
         double lateral =  gamepad1.left_stick_x;
         double yaw     =  gamepad1.right_stick_x;
-        /*
-        boolean goForward  = gamepad1.dpad_up;
-        boolean goBackward = gamepad1.dpad_down;
-        boolean goLeft  = gamepad1.dpad_left;
-        boolean goRight  = gamepad1.dpad_right;
-        */
-
-
 
         drive.setDriveMotorPower(axial, lateral, yaw, speed_percentage);
 
@@ -167,22 +160,16 @@ public class FullGameCode_V9 extends OpMode {
 
         telemetry.addData("claw power: ", claw.getPower());
 
-        /// Long arm mechanism ------------------------------------------------------------------
-
         /// Long arm ---------------------------------------------------------
 
         double armPower;
-        boolean noMove;
 
         if (gamepad2.left_trigger > 0) {
             armPower = -gamepad2.left_trigger;
-            noMove = false;
         } else if (gamepad2.right_trigger > 0) {
             armPower = gamepad2.right_trigger;
-            noMove = false;
         } else {
             armPower = 0.065;
-            noMove = true;
         }
 
         leftArmLift.setPower(armPower);
@@ -208,16 +195,9 @@ public class FullGameCode_V9 extends OpMode {
         }
 
 
-
         telemetry.addData("intake arm power: ", armPower);
 
         telemetry.addData("basket position: ", basket.getPosition());
-
-        /// Long Arm Slight Raise -----------------------------------------------
-
-
-
-        /// Long Arm Slight Raise -----------------------------------------------
 
         ///Sensors --------------------------------------------------------------
         String colorOfBlock = color.blockColor();
