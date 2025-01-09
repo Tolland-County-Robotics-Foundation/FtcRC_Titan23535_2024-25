@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.LongArm_Mechanisms.LongArm_v3;
 
 @TeleOp(name = "Full Game Code7", group = "test")
 
-public class FullGameCode_V7 extends OpMode {
+public class Wolcott_FullGameCode_V1 extends OpMode {
 
 
     /// Necessary objects and variable creation --------------------------------------------------
@@ -24,7 +24,7 @@ public class FullGameCode_V7 extends OpMode {
     double speed_percentage = 50.0;
 
     // Creating objects from Drive_V1, Intake_v1, and LongArm_v2 class
-    
+
     Drive_v1    drive   = new Drive_v1();
     Intake_v1   intake  = new Intake_v1();
     LongArm_v3  longArm = new LongArm_v3();
@@ -93,14 +93,17 @@ public class FullGameCode_V7 extends OpMode {
         So, the claw can release the game piece.
      */
 
-        double intakeArmPower           = gamepad2.left_trigger - gamepad2.right_trigger;
-
+        double intakeArmPower           = gamepad2.right_stick_x;
+        double intakeClawPower          = gamepad2.left_stick_x;
+/*
         boolean intakeClawCloseButton   = gamepad2.left_bumper;
         boolean intakeClawOpenButton    = gamepad2.right_bumper;
 
-
+ */
 
         // Long Arm
+
+        double linearSlidePower = gamepad2.left_trigger - gamepad2.right_trigger;
 
         boolean basketScoreButton   = gamepad2.x;
         boolean basketResetButton   = gamepad2.b;
@@ -150,7 +153,11 @@ public class FullGameCode_V7 extends OpMode {
 
         intake.moveIntakeArm(intakeArmPower);
 
+        intake.moveIntakeClaw(intakeClawPower);
+
         // Intake claw control
+
+        /*
 
         if (intakeClawCloseButton)
         {
@@ -165,23 +172,34 @@ public class FullGameCode_V7 extends OpMode {
             intake.stopClaw();
         }
 
+         */
+
 
         telemetry.addData("intake arm power: ", intakeArmPower);
+        telemetry.addData("intake claw power: ", intakeClawPower);
 
 
         /// Long arm mechanism ------------------------------------------------------------------
 
         // Long arm control
 
+        /*
+
         if (longArmResetButton)     { longArm.autoResetArm();   }
         else if (longArmLiftButton) { longArm.autoLiftArm();    }
         else if (longArmStopButton) { longArm.stopArm();        }
+
+         */
+
+        longArm.moveLinearSlide(linearSlidePower);
 
 
         // Basket control
 
         if (basketScoreButton)      { longArm.scoreGamePiece(); }
         else if (basketResetButton) { longArm.basketReset();    }
+
+
 
         /// Telemetry -----------------------------------------------------------------------------
 

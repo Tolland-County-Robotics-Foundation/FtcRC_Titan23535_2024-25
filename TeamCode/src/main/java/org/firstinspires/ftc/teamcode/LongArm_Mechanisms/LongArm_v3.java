@@ -58,6 +58,11 @@ public class LongArm_v3 {
 
     /// Long Arm ---------------------------------------------------------------------------------
 
+    public void moveLinearSlide(double power){
+        leftArmLift.setPower(power);
+        rightArmLift.setPower(power);
+    }
+
     public void liftArm()
     {
         leftArmLift.setPower(ARM_POWER);

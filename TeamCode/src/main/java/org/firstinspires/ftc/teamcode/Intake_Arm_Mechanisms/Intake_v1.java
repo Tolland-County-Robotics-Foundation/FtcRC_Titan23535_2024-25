@@ -48,13 +48,14 @@ public class Intake_v1 {
     }
 
 
-
-    // Create a method to move the intake arm
+    // Method to move the intake arm
 
     public void moveIntakeArm(double intakeArmPower)
     {
         intakeArm.setPower(intakeArmPower);
     }
+
+    // Method to move the intake claw
 
     public void moveIntakeClaw(double intakeClawPower)
     {

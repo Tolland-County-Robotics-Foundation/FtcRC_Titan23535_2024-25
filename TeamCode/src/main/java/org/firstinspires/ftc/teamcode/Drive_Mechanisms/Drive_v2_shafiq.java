@@ -21,6 +21,10 @@ public class Drive_v2_shafiq {
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.25;
 
+    public enum Mode {
+        FORWARD, BACKWARD, LEFT, RIGHT, TURNLEFT, TURNRIGHT, STOP
+    }
+
 
     public void init(HardwareMap hardwareMap)
     {
@@ -113,42 +117,42 @@ public class Drive_v2_shafiq {
 
     }
 
-    public void autoDrive(String driveMode, double distance, double drive_speed){
+    public void autoDrive(Mode driveMode, double distance, double drive_speed){
 
         int newLeftFrontTarget=0;
         int newLeftBackTarget=0;
         int newRightFrontTarget=0;
         int newRightBackTarget=0;
 
-        if (driveMode == "forward"){
+        if (driveMode == Mode.FORWARD){
             newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
             newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
             newRightFrontTarget = rightFrontDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
             newRightBackTarget = rightBackDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
-        } else if (driveMode == "backward") {
+        } else if (driveMode == Mode.BACKWARD) {
             newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
             newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
             newRightFrontTarget = rightFrontDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
             newRightBackTarget = rightBackDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
-        } else if (driveMode == "right") {
+        } else if (driveMode == Mode.RIGHT) {
             newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
             newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
             newRightFrontTarget = rightFrontDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
             newRightBackTarget = rightBackDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
 
-        } else if (driveMode == "left") {
+        } else if (driveMode == Mode.LEFT) {
             newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
             newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
             newRightFrontTarget = rightFrontDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
             newRightBackTarget = rightBackDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
 
-        }else if (driveMode == "turnLeft") {
+        }else if (driveMode == Mode.TURNLEFT) {
             newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
             newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
             newRightFrontTarget = rightFrontDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
             newRightBackTarget = rightBackDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
 
-        } else if (driveMode == "turnRight") {
+        } else if (driveMode == Mode.TURNRIGHT) {
             newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
             newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
             newRightFrontTarget = rightFrontDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
