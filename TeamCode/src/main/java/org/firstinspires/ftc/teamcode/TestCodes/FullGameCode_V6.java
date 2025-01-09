@@ -20,7 +20,7 @@ import java.util.Objects;
 public class FullGameCode_V6 extends OpMode {
     // Creating an object from Drive_V1 class
     Drive_v1 drive = new Drive_v1();
-    Color_Sensor_v1 colors = new Color_Sensor_v1();
+    Color_Sensor_v1 color = new Color_Sensor_v1();
 
     // Creating an object from ElapsedTime class to have run time information
     private final ElapsedTime runtime = new ElapsedTime();
@@ -203,9 +203,9 @@ public class FullGameCode_V6 extends OpMode {
 
         ///Sensors ----------------------------------------------------------
 
-        String colorOfBlock = colors.blockColor();
-        if (colors.getDistance(DistanceUnit.INCH) < 0.5) {
-            telemetry.addData("Block Color", colors.blockColor());
+        String colorOfBlock = color.blockColor();
+        if (color.getDistance(DistanceUnit.INCH) < 0.5) {
+            telemetry.addData("Block Color", color.blockColor());
         }
 
         if (redSpy) {
