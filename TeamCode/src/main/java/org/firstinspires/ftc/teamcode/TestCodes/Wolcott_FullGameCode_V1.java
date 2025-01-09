@@ -175,9 +175,6 @@ public class Wolcott_FullGameCode_V1 extends OpMode {
          */
 
 
-        telemetry.addData("intake arm power: ", intakeArmPower);
-        telemetry.addData("intake claw power: ", intakeClawPower);
-
 
         /// Long arm mechanism ------------------------------------------------------------------
 
@@ -212,6 +209,12 @@ public class Wolcott_FullGameCode_V1 extends OpMode {
         telemetry.addData("Yaw:", yawButton);
         telemetry.addData("Current Speed Cap", speedcap);
         telemetry.addData("Speed percentage: ",speed_percentage);
+
+        telemetry.addData("Linear slide power: ", linearSlidePower);
+
+        telemetry.addData("intake arm power: ", intakeArmPower);
+        telemetry.addData("intake claw power: ", intakeClawPower);
+
 
 
     }
