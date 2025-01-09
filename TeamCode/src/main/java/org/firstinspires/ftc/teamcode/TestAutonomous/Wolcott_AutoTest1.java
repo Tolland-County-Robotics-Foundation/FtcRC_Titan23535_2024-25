@@ -18,6 +18,7 @@ public class Wolcott_AutoTest1 extends OpMode {
         COLLECT_GAMEPIECE,
         STORE_GAMEPIECE,
         MOVE_SCORE_POSITION,
+        PARK,
         STOP
     }
 
@@ -75,18 +76,32 @@ public class Wolcott_AutoTest1 extends OpMode {
 
             case START:
 
-                drive.autoDrive("Forward", 10, 0.5);
+                drive.autoDrive(Drive_v2_shafiq.Mode.FORWARD, 10, 0.5);
+                drive.autoDrive(Drive_v2_shafiq.Mode.LEFT, 15, 0.5);
+                drive.autoDrive(Drive_v2_shafiq.Mode.TURNLEFT, 45, 0.5);
                 longArm.autoLiftArm();
                 state = State.SCORE;
 
                 break;
-
+/*
             case MOVE_COLLECT_POSITION:
 
                 longArm.autoResetArm();
                 longArm.basketReset();
                 intake.autoMove("collect", 10, 0.5);
-                drive.autoDrive("Forward",5,0.5);
+                if (GAMEPIECE_SCORED == 1) {
+                    drive.autoDrive(Drive_v2_shafiq.Mode.TURNLEFT, 5, 0.5);
+                    drive.autoDrive(Drive_v2_shafiq.Mode.FORWARD, , );
+                    drive.autoDrive(Drive_v2_shafiq.Mode.RIGHT, , );
+                } else if (GAMEPIECE_SCORED == 2) {
+                    drive.autoDrive("turnLeft", 5, 0.5);
+                    drive.autoDrive("forward", , );
+                    drive.autoDrive("right", , );
+                } else if (GAMEPIECE_SCORED == 3) {
+                    drive.autoDrive("turnLeft", 5, 0.5);
+                    drive.autoDrive("forward", , );
+                    drive.autoDrive("right", , );
+                }
                 state = State.COLLECT_GAMEPIECE;
                 clawTimer.reset();
 
@@ -105,17 +120,26 @@ public class Wolcott_AutoTest1 extends OpMode {
 
             case STORE_GAMEPIECE:
 
+                intake.moveIntakeArm("release",);
+
                 intake.openClaw();
 
                 if (clawTimer.seconds() >= CLAW_RELEASE_TIME){
-                    state = State.SCORE;
+                    state = State.MOVE_SCORE_POSITION;
                 }
 
                 break;
 
             case MOVE_SCORE_POSITION:
 
-                drive.autoDrive("forward", 10, 0.5);
+                if (GAMEPIECE_SCORED == 1){
+                    drive.autoDrive("forward", 10, 0.5);
+                } else if (GAMEPIECE_SCORED == 2) {
+
+                    
+                } else if (GAMEPIECE_SCORED == 3) {
+                    
+                }
                 longArm.autoLiftArm();
                 state = State.SCORE;
 
@@ -127,8 +151,12 @@ public class Wolcott_AutoTest1 extends OpMode {
                 if (GAMEPIECE_SCORED < 4){
                     state = State.MOVE_COLLECT_POSITION;
                 }else {
-                    state = State.STOP;
+                    state = State.PARK;
                 }
+
+            case PARK:
+                drive.autoDrive("forward", 45 ,0.8);
+                drive.autoDrive("turnRight", 45,0.5);
 
             case STOP:
 
@@ -138,6 +166,8 @@ public class Wolcott_AutoTest1 extends OpMode {
                 longArm.stopArm();
 
                 break;
+
+ */
             default:
                 telemetry.addData("Finished: ", "Yes");
 
