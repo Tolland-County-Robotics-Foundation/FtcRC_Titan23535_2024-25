@@ -60,7 +60,7 @@ public class LongArm_v3 {
 
     public void moveLinearSlide(double power){
         leftArmLift.setPower(power);
-        rightArmLift.setPower(power);
+        rightArmLift.setPower(-power);
     }
 
     public void liftArm()
