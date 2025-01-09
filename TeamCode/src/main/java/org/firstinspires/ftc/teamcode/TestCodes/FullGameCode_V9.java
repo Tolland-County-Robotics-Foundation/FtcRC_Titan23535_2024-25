@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
-import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Blinkin_v1;
 import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Color_Sensor_v1;
 
 import java.util.Objects;
@@ -20,15 +19,14 @@ public class FullGameCode_V9 extends OpMode {
     // Creating an object from Drive_V1 class
     Drive_v1 drive = new Drive_v1();
     Color_Sensor_v1 color = new Color_Sensor_v1();
-    Blinkin_v1 light = new Blinkin_v1();
     //Update
     // Creating an object from ElapsedTime class to have run time information
-    private final ElapsedTime runtime = new ElapsedTime();
+    private ElapsedTime runtime = new ElapsedTime();
 
     //Creating variables
-    String speedCap = "Normal";
-    Boolean rightColor;
-    Boolean redSpy;
+    String speedcap = "Normal";
+    boolean rightColor;
+    boolean redSpy;
     double speed_percentage = 40.0;
 
     //Creating objects for intake
@@ -84,16 +82,16 @@ public class FullGameCode_V9 extends OpMode {
     {
         // Set the speed cap for driver 1
         if (gamepad1.y) {
-            speedCap = "Max";
+            speedcap = "Max";
             speed_percentage = 90.0;
         } else if (gamepad1.b) {
-            speedCap = "Fast";
+            speedcap = "Fast";
             speed_percentage = 65.0;
         } else if (gamepad1.x) {
-            speedCap = "Normal";
+            speedcap = "Normal";
             speed_percentage = 40.0;
         } else if (gamepad1.a) {
-            speedCap = "Slow";
+            speedcap = "Slow";
             speed_percentage = 25.0;
         }
 
@@ -129,12 +127,12 @@ public class FullGameCode_V9 extends OpMode {
 
 
         //Display Runtime
-        telemetry.addData("Status", "Run Time: " + runtime);
+        telemetry.addData("Status", "Run Time: " + runtime.toString());
         //Displaying Axial,Lateral,Yaw AKA horizontal, vertical, and spin
         telemetry.addData("Axial:", axial);
         telemetry.addData("Lateral:",lateral);
         telemetry.addData("Yaw:", yaw);
-        telemetry.addData("Current Speed", speedCap);
+        telemetry.addData("Current Speed", speedcap);
         telemetry.addData("Speed percentage: ",speed_percentage);
 
 
@@ -159,7 +157,7 @@ public class FullGameCode_V9 extends OpMode {
 
         /// Long arm ---------------------------------------------------------
 
-        double armPower;
+        double armPower = 0.0;
         boolean noMove;
 
         if (gamepad2.left_trigger > 0) {
@@ -224,9 +222,6 @@ public class FullGameCode_V9 extends OpMode {
         } else {
             rightColor = true;
         }
-
-
-
     }
 }
 
