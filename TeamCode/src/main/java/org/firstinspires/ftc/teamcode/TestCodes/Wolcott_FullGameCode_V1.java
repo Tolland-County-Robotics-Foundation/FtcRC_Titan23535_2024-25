@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
 import org.firstinspires.ftc.teamcode.Intake_Arm_Mechanisms.Intake_v1;
 import org.firstinspires.ftc.teamcode.LongArm_Mechanisms.LongArm_v3;
 
-@TeleOp(name = "Full Game Code7", group = "test")
+@TeleOp(name = "Full 1", group = "Awolcott")
 
 public class Wolcott_FullGameCode_V1 extends OpMode {
 
