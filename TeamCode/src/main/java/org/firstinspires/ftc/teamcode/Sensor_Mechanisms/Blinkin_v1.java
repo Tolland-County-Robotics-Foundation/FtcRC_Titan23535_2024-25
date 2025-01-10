@@ -2,8 +2,9 @@
 package org.firstinspires.ftc.teamcode.Sensor_Mechanisms;
 
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.Objects;
@@ -16,13 +17,13 @@ public class Blinkin_v1 {
     private final ElapsedTime timer = new ElapsedTime();
 
 
-    public void init() {
+    public void init(HardwareMap hardwareMap) {
         blinkin = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");
     }
 
     public void sample(String redSpy) {
         String blockColor = color.blockColor();
-        timer.reset();
+        //timer.reset();
         if (Objects.equals(blockColor, "red")) {
             blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.STROBE_RED);
         } else if (Objects.equals(blockColor, "blue")) {
