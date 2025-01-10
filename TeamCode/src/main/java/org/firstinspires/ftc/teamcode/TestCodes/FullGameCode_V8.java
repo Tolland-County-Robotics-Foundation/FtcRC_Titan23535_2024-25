@@ -147,22 +147,15 @@ public class FullGameCode_V8 extends OpMode {
 
         telemetry.addData("claw power: ", claw.getPower());
 
-        /// Long arm mechanism ------------------------------------------------------------------
-
         /// Long arm ---------------------------------------------------------
 
-        double armPower = 0.0;
-        boolean noMove;
-
+        double armPower;
         if (gamepad2.left_trigger > 0) {
             armPower = -gamepad2.left_trigger;
-            noMove = false;
         } else if (gamepad2.right_trigger > 0) {
             armPower = gamepad2.right_trigger;
-             noMove = false;
         } else {
             armPower = 0.065;
-            noMove = true;
         }
 
         leftArmLift.setPower(armPower);
