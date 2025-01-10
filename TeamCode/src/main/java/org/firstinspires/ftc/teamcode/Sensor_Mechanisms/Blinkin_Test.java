@@ -4,10 +4,11 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
 
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import java.util.Objects;
-
+@Disabled
 @Autonomous
 public class Blinkin_Test extends OpMode {
     RevBlinkinLedDriver blinkin;

@@ -4,17 +4,19 @@ package org.firstinspires.ftc.teamcode.Sensor_Mechanisms;
 
 
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.Objects;
-import static android.os.SystemClock.sleep;
-
+@Disabled
 public class Blinkin_v1 {
     RevBlinkinLedDriver blinkin;
     Color_Sensor_v1 color = new Color_Sensor_v1();
 
-    private final ElapsedTime timer = new ElapsedTime();
+    static {
+        new ElapsedTime();
+    }
 
 
     public void init(HardwareMap hardwareMap) {
@@ -40,4 +42,5 @@ public class Blinkin_v1 {
             }
         }
     }
+
 }

@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.AdiTestCode;
 
 import static android.os.SystemClock.sleep;
+
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -11,6 +13,7 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.hardware.Servo;
+@Disabled
 public class FullBoard {
     //Drivetrain
     DcMotor leftFront;
