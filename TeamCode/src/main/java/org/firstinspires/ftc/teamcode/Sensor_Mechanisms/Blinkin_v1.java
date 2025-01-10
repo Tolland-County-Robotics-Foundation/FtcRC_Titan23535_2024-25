@@ -18,6 +18,7 @@ public class Blinkin_v1 {
     public void init() {
         blinkin = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");
     }
+
     public void sample(String redSpy) {
         String blockColor = color.blockColor();
         timer.reset();

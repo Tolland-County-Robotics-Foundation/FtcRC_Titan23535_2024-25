@@ -83,7 +83,7 @@ public class FullGameCode_V9 extends OpMode {
             allianceText = "Left Trigger for Red, Right Trigger for Blue";
         }
 
-        telemetry.addData("Alliance", allianceText);
+        telemetry.addData("Alliance Selected", allianceText);
 
         //Chooses the alliance.
         if (start) {
@@ -121,11 +121,9 @@ public class FullGameCode_V9 extends OpMode {
 
         ///Miscellaneous telemetries.
         //Displaying runtime.
-        telemetry.addData("Status", "Run Time: " + runtime);
+        telemetry.addData("Status", "Run Time: " + runtime.seconds());
         //Displaying current speed.
         telemetry.addData("Current Speed", speedCap);
-        telemetry.addData("Speed percentage: ",speed_percentage);
-
 
         /// Intake mechanisms.
         double intakeArmPower = gamepad2.left_stick_y * 0.5;
@@ -176,7 +174,7 @@ public class FullGameCode_V9 extends OpMode {
 
         //Telemetry
         if (color.getDistance(DistanceUnit.INCH) < 0.5) {
-            telemetry.addData("Block Color", color.blockColor());
+            telemetry.addData("Sample Color", color.blockColor());
         }
 
         //Automatic sample rejection system.
