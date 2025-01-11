@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.TestCodes;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -16,8 +15,8 @@ import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Color_Sensor_v1;
 
 import java.util.Objects;
 
-@TeleOp(name = "Full Game Code 9", group = "test")
-public class FullGameCode_V9 extends OpMode {
+@TeleOp(name = "Full Game Code 10", group = "test")
+public class FullGameCode_V10 extends OpMode {
     /// Creating objects for the drivetrain, color sensor, REV Blinkin, and runtime.
     Drive_v1 drive = new Drive_v1();
     Color_Sensor_v1 color = new Color_Sensor_v1();
@@ -143,7 +142,7 @@ public class FullGameCode_V9 extends OpMode {
             claw.setPower(1);
         } else if ((gamepad2.right_stick_x < 0) || (!rightColor)) {
             claw.setPower(-1);
-        } else if (gamepad2.a){
+        } else {
             claw.setPower(0.0);
         }
 
@@ -198,6 +197,6 @@ public class FullGameCode_V9 extends OpMode {
             rightColor = true;
         }
         ///REV Blinkin.
-       //light.sample(redSpy);
+       light.sample(redSpy);
     }
 }

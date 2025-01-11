@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.Objects;
-@Disabled
+
 public class Blinkin_v1 {
     RevBlinkinLedDriver blinkin;
     Color_Sensor_v1 color = new Color_Sensor_v1();
