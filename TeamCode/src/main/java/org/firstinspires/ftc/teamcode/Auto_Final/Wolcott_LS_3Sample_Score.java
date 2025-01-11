@@ -149,6 +149,7 @@ public class Wolcott_LS_3Sample_Score extends LinearOpMode {
         drive("forward", 2, DRIVE_SPEED, 10.0);
         drive("turnLeft", 8, DRIVE_SPEED, 10.0);
         drive("right", 6, DRIVE_SPEED, 10.0);
+        claw.setPower(-1);
         drive("forward", 6, DRIVE_SPEED, 10.0);
         //Grabs 2nd sample
         claw.setPower(1);
@@ -169,6 +170,7 @@ public class Wolcott_LS_3Sample_Score extends LinearOpMode {
         sleep(750);
         intakeArm.setPower(0);
         //Scores 2nd sample and reset
+        claw.setPower(0);
         basket.setPosition(0.45);
         leftArmLift.setPower(1);
         rightArmLift.setPower(1);
@@ -185,6 +187,7 @@ public class Wolcott_LS_3Sample_Score extends LinearOpMode {
         //Moves robot to right most sample
         drive("forward", 2, DRIVE_SPEED, 10.0);
         drive("turnLeft", 8, DRIVE_SPEED, 10.0);
+        claw.setPower(-1);
         drive("forward", 6, DRIVE_SPEED, 10.0);
         //Grabs 3rd sample
         claw.setPower(1);
@@ -200,6 +203,7 @@ public class Wolcott_LS_3Sample_Score extends LinearOpMode {
         claw.setPower(-1);
         sleep(250);
         //Places intake down
+        claw.setPower(0);
         intakeArm.setPower(-0.5);
         sleep(750);
         intakeArm.setPower(0);

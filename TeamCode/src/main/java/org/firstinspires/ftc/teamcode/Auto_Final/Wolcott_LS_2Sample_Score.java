@@ -149,6 +149,7 @@ public class Wolcott_LS_2Sample_Score extends LinearOpMode {
         drive("forward", 2, DRIVE_SPEED, 10.0);
         drive("turnLeft", 8, DRIVE_SPEED, 10.0);
         drive("right", 6, DRIVE_SPEED, 10.0);
+        claw.setPower(-1);
         drive("forward", 6, DRIVE_SPEED, 10.0);
         //Grabs 2nd sample
         claw.setPower(1);
@@ -165,6 +166,7 @@ public class Wolcott_LS_2Sample_Score extends LinearOpMode {
         claw.setPower(-1);
         sleep(250);
         //Places intake down
+        claw.setPower(0);
         intakeArm.setPower(-0.5);
         sleep(750);
         intakeArm.setPower(0);
