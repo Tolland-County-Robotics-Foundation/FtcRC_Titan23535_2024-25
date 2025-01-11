@@ -86,12 +86,11 @@ public class LS_ObservationPark extends LinearOpMode {
         sleep(15000);
         drive("right", 85, DRIVE_SPEED, 10.0);
 
-        /*
-        drive("right", 50, DRIVE_SPEED, 5.0);
 
-        drive("backward", 4, DRIVE_SPEED, 5.0);
 
-         */
+
+
+
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
