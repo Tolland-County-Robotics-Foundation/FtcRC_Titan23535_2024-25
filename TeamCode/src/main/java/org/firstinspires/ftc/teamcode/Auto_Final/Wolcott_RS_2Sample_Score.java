@@ -3,19 +3,30 @@ package org.firstinspires.ftc.teamcode.Auto_Final;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="LS_ObservationPark_1Sample", group="Autonomous")
+@Autonomous(name="Wolcott-RS_2Sample_Score", group="Autonomous")
 
-public class LS_ObservationPark_1Sample extends LinearOpMode {
+public class Wolcott_RS_2Sample_Score extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor leftFrontDrive = null;
     private DcMotor leftBackDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
+
+    private CRServo claw        = null;
+    private DcMotor intakeArm   = null;
+
+    //Creating objects for long arm
+    private Servo basket          = null;
+    private DcMotor leftArmLift     = null;
+    private DcMotor rightArmLift    = null;
+
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -30,7 +41,7 @@ public class LS_ObservationPark_1Sample extends LinearOpMode {
     static final double WHEEL_DIAMETER_INCHES = 2.95276;     // For figuring circumference
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double DRIVE_SPEED = 0.25;
+    static final double DRIVE_SPEED = 0.5;
 
 
     @Override
@@ -68,6 +79,30 @@ public class LS_ObservationPark_1Sample extends LinearOpMode {
         rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        /// Initialization of intake mechanism ----------------------------------------------
+
+        claw        = hardwareMap.get(CRServo.class, "claw");
+        intakeArm   = hardwareMap.get(DcMotor.class, "intakeArm");
+
+        claw.setDirection(DcMotorSimple.Direction.FORWARD);
+        intakeArm.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        intakeArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        /// Initialization of long arm mechanism ---------------------------------------------
+
+        basket          = hardwareMap.get(Servo.class, "BasketArm");
+        leftArmLift     = hardwareMap.get(DcMotor.class, "LeftArmLift");
+        rightArmLift    = hardwareMap.get(DcMotor.class, "RightArmLift");
+
+        basket.setDirection(Servo.Direction.FORWARD);
+        leftArmLift.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightArmLift.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        leftArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Starting at", "%7d :%7d",
                 leftFrontDrive.getCurrentPosition(),
@@ -83,16 +118,87 @@ public class LS_ObservationPark_1Sample extends LinearOpMode {
         /*
             The drive modes are: forward, backward, left, right, turnLeft, turnRight
          */
-        drive("left", 15, DRIVE_SPEED, 10.0);
-        sleep(15000);
-        drive("right", 100, DRIVE_SPEED, 10.0);
+
+        /// 3 sample score auto from left side ------------------------------------------------------------------------------------------------------------
+
+        //Moves robot to scoring position from start point
+        basket.setPosition(0.45);
+        drive("left", 70, DRIVE_SPEED, 10.0);
+        //time to wait for alliance to move out of the way
+        sleep(0);
+        drive("forward", 5, DRIVE_SPEED, 10.0);
+        drive("turnRight", 8, DRIVE_SPEED, 10.0);
+        drive("backward", 2, DRIVE_SPEED, 10.0);
+        //Puts intake down
+        intakeArm.setPower(-0.5);
+        sleep(750);
+        intakeArm.setPower(0);
+        //Scores 1st sample and reset
+        basket.setPosition(0.45);
+        leftArmLift.setPower(1);
+        rightArmLift.setPower(1);
+        sleep(2500);
+        basket.setPosition(1);
+        sleep(1500);
+        basket.setPosition(0.45);
+        sleep(500);
+        leftArmLift.setPower(-1);
+        rightArmLift.setPower(-1);
+        sleep(2500);
+        leftArmLift.setPower(0);
+        rightArmLift.setPower(0);
+        //Moves robot to right most sample
+        drive("forward", 2, DRIVE_SPEED, 10.0);
+        drive("turnLeft", 8, DRIVE_SPEED, 10.0);
+        drive("right", 6, DRIVE_SPEED, 10.0);
+        drive("forward", 6, DRIVE_SPEED, 10.0);
+        //Grabs 2nd sample
+        claw.setPower(1);
+        //Moves back to scoring position
+        drive("backward", 6, DRIVE_SPEED, 10.0);
+        drive("left", 6, DRIVE_SPEED, 10.0);
+        drive("turnRight", 8, DRIVE_SPEED, 10.0);
+        drive("backward", 2, DRIVE_SPEED, 10.0);
+        //Transfers sample to basket
+        basket.setPosition(0.55);
+        intakeArm.setPower(0.50);
+        sleep(1500);
+        intakeArm.setPower(0);
+        claw.setPower(-1);
+        sleep(250);
+        //Places intake down
+        intakeArm.setPower(-0.5);
+        sleep(750);
+        intakeArm.setPower(0);
+        //Scores 2nd sample and reset
+        basket.setPosition(0.45);
+        leftArmLift.setPower(1);
+        rightArmLift.setPower(1);
+        sleep(2500);
+        basket.setPosition(1);
+        sleep(1500);
+        basket.setPosition(0.45);
+        sleep(500);
+        leftArmLift.setPower(-1);
+        rightArmLift.setPower(-1);
+        sleep(2500);
+        leftArmLift.setPower(0);
+        rightArmLift.setPower(0);
+
+/// 3 sample score auto from left side ------------------------------------------------------------------------------------------------------------
 
         /*
-        drive("right", 50, DRIVE_SPEED, 5.0);
 
-        drive("backward", 4, DRIVE_SPEED, 5.0);
+        KEY
+        intakeArm.setPower(0.25); // Up
+        claw.setPower(1); // Close
+        basket.setPosition(1); // Drop
+        basket.setPosition(0.55); // Collect
+        basket.setPosition(0.45); // Move
 
-         */
+        leftArmLift.setPower(1);
+        rightArmLift.setPower(1);
+        */
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -142,16 +248,17 @@ public class LS_ObservationPark_1Sample extends LinearOpMode {
                 newRightBackTarget = rightBackDrive.getCurrentPosition() + (int) (-distance * COUNTS_PER_INCH);
 
             } else if (driveMode == "turnLeft") {
-                leftFrontDrive.setPower(Math.abs(-speed));
-                leftBackDrive.setPower(Math.abs(-speed));
-                rightFrontDrive.setPower(Math.abs(speed));
-                rightBackDrive.setPower(Math.abs(speed));
+                newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int) (-distance * COUNTS_PER_INCH);
+                newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int) (-distance * COUNTS_PER_INCH);
+                newRightFrontTarget = rightFrontDrive.getCurrentPosition() + (int) (distance * COUNTS_PER_INCH);
+                newRightBackTarget = rightBackDrive.getCurrentPosition() + (int) (distance * COUNTS_PER_INCH);
 
             } else if (driveMode == "turnRight") {
-                leftFrontDrive.setPower(Math.abs(speed));
-                leftBackDrive.setPower(Math.abs(speed));
-                rightFrontDrive.setPower(Math.abs(-speed));
-                rightBackDrive.setPower(Math.abs(-speed));
+                newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int) (distance * COUNTS_PER_INCH);
+                newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int) (distance * COUNTS_PER_INCH);
+                newRightFrontTarget = rightFrontDrive.getCurrentPosition() + (int) (-distance * COUNTS_PER_INCH);
+                newRightBackTarget = rightBackDrive.getCurrentPosition() + (int) (-distance * COUNTS_PER_INCH);
+            }
 
             }
 
@@ -212,4 +319,3 @@ public class LS_ObservationPark_1Sample extends LinearOpMode {
             sleep(250);   // optional pause after each move.
         }
     }
-}
