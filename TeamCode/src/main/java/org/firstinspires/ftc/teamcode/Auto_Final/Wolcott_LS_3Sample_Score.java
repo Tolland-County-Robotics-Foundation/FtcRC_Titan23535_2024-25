@@ -9,9 +9,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="LeftStartFourSamples", group="Autonomous")
+@Autonomous(name="Wolcott-LS_3Sample_Score", group="Autonomous")
 
-public class LeftStartFourSamples extends LinearOpMode {
+public class Wolcott_LS_3Sample_Score extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor leftFrontDrive = null;
@@ -41,7 +41,7 @@ public class LeftStartFourSamples extends LinearOpMode {
     static final double WHEEL_DIAMETER_INCHES = 2.95276;     // For figuring circumference
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double DRIVE_SPEED = 0.25;
+    static final double DRIVE_SPEED = 0.5;
 
 
     @Override
@@ -118,58 +118,106 @@ public class LeftStartFourSamples extends LinearOpMode {
         /*
             The drive modes are: forward, backward, left, right, turnLeft, turnRight
          */
+
+        /// 3 sample score auto from left side ------------------------------------------------------------------------------------------------------------
+
+        //Moves robot to scoring position from start point
         basket.setPosition(0.45);
         drive("left", 20, DRIVE_SPEED, 10.0);
         drive("forward", 5, DRIVE_SPEED, 10.0);
         drive("turnRight", 8, DRIVE_SPEED, 10.0);
         drive("backward", 2, DRIVE_SPEED, 10.0);
+        //Puts intake down
         intakeArm.setPower(-0.5);
         sleep(750);
         intakeArm.setPower(0);
+        //Scores 1st sample and reset
         basket.setPosition(0.45);
         leftArmLift.setPower(1);
         rightArmLift.setPower(1);
         sleep(2500);
         basket.setPosition(1);
-        sleep(500);
+        sleep(1500);
         basket.setPosition(0.45);
-        sleep(2500);
+        sleep(500);
         leftArmLift.setPower(-1);
         rightArmLift.setPower(-1);
         sleep(2500);
         leftArmLift.setPower(0);
         rightArmLift.setPower(0);
-        drive("turnRight", -7.5, DRIVE_SPEED, 10.0);
+        //Moves robot to right most sample
+        drive("forward", 2, DRIVE_SPEED, 10.0);
+        drive("turnLeft", 8, DRIVE_SPEED, 10.0);
         drive("right", 6, DRIVE_SPEED, 10.0);
         drive("forward", 6, DRIVE_SPEED, 10.0);
+        //Grabs 2nd sample
         claw.setPower(1);
+        //Moves back to scoring position
         drive("backward", 6, DRIVE_SPEED, 10.0);
-        drive("right", -6, DRIVE_SPEED, 10.0);
-        drive("turnRight", 9, DRIVE_SPEED, 10.0);
+        drive("left", 6, DRIVE_SPEED, 10.0);
+        drive("turnRight", 8, DRIVE_SPEED, 10.0);
         drive("backward", 2, DRIVE_SPEED, 10.0);
+        //Transfers sample to basket
         basket.setPosition(0.55);
         intakeArm.setPower(0.50);
         sleep(1500);
         intakeArm.setPower(0);
-        basket.setPosition(0.45);
         claw.setPower(-1);
+        sleep(250);
+        //Places intake down
         intakeArm.setPower(-0.5);
-        sleep(650);
+        sleep(750);
         intakeArm.setPower(0);
+        //Scores 2nd sample and reset
         basket.setPosition(0.45);
         leftArmLift.setPower(1);
         rightArmLift.setPower(1);
         sleep(2500);
         basket.setPosition(1);
-        sleep(500);
+        sleep(1500);
         basket.setPosition(0.45);
-        sleep(2500);
+        sleep(500);
         leftArmLift.setPower(-1);
         rightArmLift.setPower(-1);
         sleep(2500);
         leftArmLift.setPower(0);
         rightArmLift.setPower(0);
-
+        //Moves robot to right most sample
+        drive("forward", 2, DRIVE_SPEED, 10.0);
+        drive("turnLeft", 8, DRIVE_SPEED, 10.0);
+        drive("forward", 6, DRIVE_SPEED, 10.0);
+        //Grabs 3rd sample
+        claw.setPower(1);
+        //Moves back to scoring position
+        drive("backward", 6, DRIVE_SPEED, 10.0);
+        drive("turnRight", 8, DRIVE_SPEED, 10.0);
+        drive("backward", 2, DRIVE_SPEED, 10.0);
+        //Transfers sample to basket
+        basket.setPosition(0.55);
+        intakeArm.setPower(0.50);
+        sleep(1500);
+        intakeArm.setPower(0);
+        claw.setPower(-1);
+        sleep(250);
+        //Places intake down
+        intakeArm.setPower(-0.5);
+        sleep(750);
+        intakeArm.setPower(0);
+        //Scores 3rd sample and reset
+        basket.setPosition(0.45);
+        leftArmLift.setPower(1);
+        rightArmLift.setPower(1);
+        sleep(2500);
+        basket.setPosition(1);
+        sleep(1500);
+        basket.setPosition(0.45);
+        sleep(500);
+        leftArmLift.setPower(-1);
+        rightArmLift.setPower(-1);
+        sleep(2500);
+        leftArmLift.setPower(0);
+        rightArmLift.setPower(0);
+/// 3 sample score auto from left side ------------------------------------------------------------------------------------------------------------
 
         /*
 
