@@ -28,9 +28,9 @@ public class Color_Sensor_v1 {
         return color.green();
     }
     public String blockColor() {
-        double red = getAmountRed();
-        double blue = getAmountBlue();
-        double yellow = getAmountGreen() - 50;
+        int red = getAmountRed();
+        int blue = getAmountBlue();
+        int yellow = getAmountGreen() - 50;
         if (getDistance(DistanceUnit.INCH) < 0.5) {
             if (red > 100 && red > blue && red > yellow) {
                 return "red";
