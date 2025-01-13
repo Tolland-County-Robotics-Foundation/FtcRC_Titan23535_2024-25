@@ -4,6 +4,7 @@
 
 package org.firstinspires.ftc.teamcode.TestCodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -15,7 +16,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
 
 @TeleOp(name = "Full Game Code4", group = "test")
-
+@Disabled
 public class FullGameCode_V4 extends OpMode {
     // Creating an object from Drive_V1 class
     Drive_v1 drive = new Drive_v1();

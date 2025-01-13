@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
 import org.firstinspires.ftc.teamcode.Intake_Arm_Mechanisms.Intake_v1;
 
 @TeleOp(name = "Full Game Code3", group = "test")
-
+@Disabled
 public class FullGameCode_V3 extends OpMode {
     // Creating an object from Drive_V1 class
     Drive_v1 drive = new Drive_v1();
