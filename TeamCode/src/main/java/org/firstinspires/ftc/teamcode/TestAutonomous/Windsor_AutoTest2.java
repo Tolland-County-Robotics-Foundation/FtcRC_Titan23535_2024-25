@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.TestAutonomous;
 
+import com.google.blocks.ftcrobotcontroller.runtime.obsolete.TfodRoverRuckusAccess;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -62,29 +63,7 @@ public class Windsor_AutoTest2 extends OpMode {
     @Override
     public void loop()
     {
-        switch (task){
-            case 1:
-                telemetry.addData("Robot busy case 1: ", drive.isBusy());
-                drive.autoDrive(Drive_v2.Mode.FORWARD,10,0.9);
-                telemetry.addData("Robot busy case 2: ", drive.isBusy());
-                while (drive.isBusy()){
-                    telemetry.addData("Robot is while:", "Moving");
-                }
-                task = 2;
-                telemetry.addData("Robot busy case 3: ", drive.isBusy());
-
-                break;
-            case 2:
-                drive.autoDrive(Drive_v2.Mode.RIGHT,10,0.9);
-                while (drive.isBusy()){
-                    telemetry.addData("Robot is:", "Moving 2");
-                }
-                task = 1;
-                break;
-
-            default:
-                break;
-        }
+        drive.autoDrive(Drive_v2.Mode.FORWARD,10,0.5);
 
         telemetry.addData("Robot busy: ", drive.isBusy());
     }
