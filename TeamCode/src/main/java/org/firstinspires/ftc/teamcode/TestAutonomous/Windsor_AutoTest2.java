@@ -64,11 +64,14 @@ public class Windsor_AutoTest2 extends OpMode {
     {
         switch (task){
             case 1:
+                telemetry.addData("Robot busy case 1: ", drive.isBusy());
                 drive.autoDrive(Drive_v2.Mode.FORWARD,10,0.9);
+                telemetry.addData("Robot busy case 2: ", drive.isBusy());
                 while (drive.isBusy()){
-                    telemetry.addData("Robot is:", "Moving");
+                    telemetry.addData("Robot is while:", "Moving");
                 }
                 task = 2;
+                telemetry.addData("Robot busy case 3: ", drive.isBusy());
 
                 break;
             case 2:
@@ -82,5 +85,7 @@ public class Windsor_AutoTest2 extends OpMode {
             default:
                 break;
         }
+
+        telemetry.addData("Robot busy: ", drive.isBusy());
     }
 }
