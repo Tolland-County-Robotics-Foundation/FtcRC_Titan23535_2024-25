@@ -65,11 +65,11 @@ public class Windsor_AutoTest2 extends OpMode {
         switch (task){
             case 1:
                 drive.autoDrive(Drive_v2.Mode.FORWARD,10,0.9);
-                task = 2;
+                if (!drive.isBusy()) {task = 2;}
                 break;
             case 2:
                 drive.autoDrive(Drive_v2.Mode.RIGHT,10,0.9);
-                task = 1;
+                if (!drive.isBusy()) {task = 1;}
                 break;
 
             default:

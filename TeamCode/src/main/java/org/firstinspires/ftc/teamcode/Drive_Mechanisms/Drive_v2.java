@@ -187,4 +187,11 @@ public class Drive_v2 {
         rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
+
+    public boolean isBusy(){
+        boolean busy = true;
+        if (!leftFrontDrive.isBusy() && !leftBackDrive.isBusy() && !rightBackDrive.isBusy() && !rightFrontDrive.isBusy())
+        { busy = false; }
+        return busy;
+    }
 }
