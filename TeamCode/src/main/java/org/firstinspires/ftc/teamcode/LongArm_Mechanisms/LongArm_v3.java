@@ -14,8 +14,9 @@ public class LongArm_v3 {
     private double  ARM_POWER                   = 0.7;
     private double  BASKET_RESET_POSITION       = 0.4;
     private double  BASKET_SCORE_POSITION       = 0.9;
-    private int     LEFT_ARM_LIFT_POSITION      = 0;
-    private int     RIGHT_ARM_LIFT_POSITION     = 0;
+    private double  BASKET_COLLECT_POSITION     = 0.5;
+    private int     LEFT_ARM_SCORE_POSITION      = 0;
+    private int     RIGHT_ARM_SCORE_POSITION     = 0;
     private int     LEFT_ARM_RESET_POSITION     = 0;
     private int     RIGHT_ARM_RESET_POSITION    = 0;
 
@@ -83,8 +84,8 @@ public class LongArm_v3 {
 
     public void autoLiftArm()
     {
-        leftArmLift.setTargetPosition(LEFT_ARM_LIFT_POSITION);
-        rightArmLift.setTargetPosition(RIGHT_ARM_LIFT_POSITION);
+        leftArmLift.setTargetPosition(LEFT_ARM_SCORE_POSITION);
+        rightArmLift.setTargetPosition(RIGHT_ARM_SCORE_POSITION);
 
         leftArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -139,4 +140,6 @@ public class LongArm_v3 {
     {
         basket.setPosition(BASKET_SCORE_POSITION);
     }
+
+    public void collectGamePiece(){basket.setPosition(BASKET_COLLECT_POSITION);}
 }
