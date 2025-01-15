@@ -65,26 +65,20 @@ public class Windsor_AutoTest2 extends OpMode {
     {
         switch (task){
             case 1:
-                telemetry.addData("Robot busy case 1.1: ", drive.isBusy());
+
                 drive.autoDrive(Drive_v2.Mode.FORWARD,10,0.9);
                 while (drive.isBusy()){
                     telemetry.addData("Robot is while moving:", "Wait");
                 }
-                telemetry.addData("Robot busy case 1.2: ", drive.isBusy());
                 task = 2;
-                telemetry.addData("Robot busy case 1.3: ", drive.isBusy());
                 break;
             case 2:
-                telemetry.addData("Robot busy case 2.1: ", drive.isBusy());
                 drive.autoDrive(Drive_v2.Mode.RIGHT,10,0.9);
                 while (drive.isBusy()){
-                    telemetry.addData("Robot is while moving:", "Wait");
+                    telemetry.addData("Robot is while moving 2:", "Wait");
                 }
-                telemetry.addData("Robot busy case 2.2: ", drive.isBusy());
-                task = 2;
-                telemetry.addData("Robot busy case 2.3: ", drive.isBusy());
+                task = 1;
                 break;
-
             default:
                 break;
         }
