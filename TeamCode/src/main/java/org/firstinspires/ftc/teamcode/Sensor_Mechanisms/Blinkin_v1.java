@@ -1,8 +1,6 @@
 
 package org.firstinspires.ftc.teamcode.Sensor_Mechanisms;
 
-
-
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -17,7 +15,6 @@ public class Blinkin_v1 {
     static {
         new ElapsedTime();
     }
-
 
     public void init(HardwareMap hardwareMap) {
         blinkin = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");

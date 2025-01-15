@@ -11,16 +11,6 @@ import org.firstinspires.ftc.teamcode.LongArm_Mechanisms.LongArm_v3;
 @Autonomous
 
 public class Windsor_AutoTest2 extends OpMode {
-    enum State {
-        START,
-        SCORE,
-        MOVE_COLLECT_POSITION,
-        COLLECT_GAMEPIECE,
-        STORE_GAMEPIECE,
-        MOVE_SCORE_POSITION,
-        PARK,
-        STOP
-    }
 
     // Create a timer for the intake claw
 
@@ -32,7 +22,7 @@ public class Windsor_AutoTest2 extends OpMode {
 
     private int GAMEPIECE_SCORED = 0;
 
-    State state = State.START;
+
 
     /// Necessary objects and variable creation --------------------------------------------------
 
@@ -45,6 +35,7 @@ public class Windsor_AutoTest2 extends OpMode {
     Intake_v2 intake  = new Intake_v2();
     LongArm_v3 linearSlide = new LongArm_v3();
 
+    int task = 1;
 
 
     @Override
@@ -71,13 +62,18 @@ public class Windsor_AutoTest2 extends OpMode {
     @Override
     public void loop()
     {
-        drive.autoDrive(Drive_v2.Mode.FORWARD, 10.0, 0.9);
+        switch (task){
+            case 1:
+                drive.autoDrive(Drive_v2.Mode.FORWARD,10,0.9);
+                task = 2;
+                break;
+            case 2:
+                drive.autoDrive(Drive_v2.Mode.RIGHT,10,0.9);
+                task = 1;
+                break;
 
-        if (clawTimer.seconds() > 2 && clawTimer.seconds() <4){
-            intake.moveIntakeArm(-0.5);
+            default:
+                break;
         }
-
-        telemetry.addData("Claw Time: ", clawTimer);
-
     }
 }

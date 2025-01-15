@@ -9,24 +9,18 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Color_Sensor_v1;
-
-
 public class Intake_v2 {
 
     // Create one object of DcMotor class for intake arm and one object of Servo class for claw
 
     private CRServo claw        = null;
     private DcMotor intakeArm   = null;
-    private Color_Sensor_v1 colorSensor = null;
 
     // Create a constant variable to set the claw power
 
     private double CLAW_POWER = 0.5;
 
     private String ALLIANCE_COLOR =  null;
-
-    private String colorDetected = colorSensor.blockColor();
 
     // For autonomous movement of intake arm
 
@@ -66,6 +60,7 @@ public class Intake_v2 {
         intakeArm.setDirection(DcMotorSimple.Direction.FORWARD);
 
         intakeArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
     }
 
 

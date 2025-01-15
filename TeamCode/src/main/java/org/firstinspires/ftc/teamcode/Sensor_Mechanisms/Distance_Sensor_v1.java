@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.Sensor_Mechanisms;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
+
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 

@@ -62,18 +62,8 @@ public class Windsor_AutoTest1 extends OpMode {
     @Override
     public void loop()
     {
-        switch (task){
-            case 1:
-                drive.autoDrive(Drive_v2.Mode.FORWARD,10,0.9);
-                task = 2;
-                break;
-            case 2:
-                drive.autoDrive(Drive_v2.Mode.RIGHT,10,0.9);
-                task = 1;
-                break;
+        drive.autoDrive(Drive_v2.Mode.FORWARD,10,0.9);
+        drive.autoDrive(Drive_v2.Mode.RIGHT,10,0.9);
 
-            default:
-                break;
-        }
     }
 }
