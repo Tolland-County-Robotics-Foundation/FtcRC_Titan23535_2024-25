@@ -174,18 +174,6 @@ public class Drive_v2 {
         leftBackDrive.setPower(drive_speed);
         rightBackDrive.setPower(drive_speed);
 
-        // Stop all motion;
-        leftFrontDrive.setPower(0);
-        leftBackDrive.setPower(0);
-        rightFrontDrive.setPower(0);
-        rightBackDrive.setPower(0);
-
-        // Turn off RUN_TO_POSITION
-        leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
     }
 
     public boolean isBusy(){
