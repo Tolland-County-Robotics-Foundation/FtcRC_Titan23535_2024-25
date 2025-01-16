@@ -64,5 +64,5 @@ public class Windsor_AutoTest1 extends OpMode {
     {
         drive.autoDrive(Drive_v2.Mode.FORWARD,10,0.9);
         drive.autoDrive(Drive_v2.Mode.RIGHT,10,0.9);
+        }
     }
-}

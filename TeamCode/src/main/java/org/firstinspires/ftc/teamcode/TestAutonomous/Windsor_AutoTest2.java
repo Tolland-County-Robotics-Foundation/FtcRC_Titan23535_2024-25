@@ -38,6 +38,7 @@ public class Windsor_AutoTest2 extends OpMode {
 
     int task = 1;
 
+    boolean taskproformed = false;
 
     @Override
     public void init()
@@ -68,14 +69,20 @@ public class Windsor_AutoTest2 extends OpMode {
 
                 drive.autoDrive(Drive_v2.Mode.FORWARD,10,0.9);
                 while (drive.isBusy()){
+                    if (!taskproformed){
                     telemetry.addData("Robot is while moving:", "Wait");
+                    taskproformed = true;
+                    }
                 }
                 task = 2;
                 break;
             case 2:
                 drive.autoDrive(Drive_v2.Mode.RIGHT,10,0.9);
                 while (drive.isBusy()){
+                    if (!taskproformed){
                     telemetry.addData("Robot is while moving 2:", "Wait");
+                        taskproformed = true;
+                    }
                 }
                 task = 1;
                 break;
