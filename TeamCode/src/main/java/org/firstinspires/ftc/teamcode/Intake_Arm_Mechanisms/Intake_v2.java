@@ -81,23 +81,21 @@ public class Intake_v2 {
 
     public void autoMove(String driveMode, double distance, double speed){
 
-        if (driveMode == "collect"){
-            int newIntakeArmTarget = intakeArm.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
-        } else if (driveMode == "release") {
-            int newIntakeArmTarget = intakeArm.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
-        }
+        int newIntakeArmTarget = 0;
 
-        int newIntakeArmTarget = intakeArm.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
+        // Option 1
+
+        if (driveMode == "collect"){
+            newIntakeArmTarget = 575;
+        } else if (driveMode == "deposit") {
+            newIntakeArmTarget = 256;
+        }
 
         intakeArm.setTargetPosition(newIntakeArmTarget);
 
         intakeArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         intakeArm.setPower(speed);
-
-        intakeArm.setPower(0.0);
-
-        intakeArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 

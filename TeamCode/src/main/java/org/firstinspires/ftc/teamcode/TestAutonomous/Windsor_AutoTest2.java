@@ -66,7 +66,6 @@ public class Windsor_AutoTest2 extends OpMode {
     {
         switch (task){
             case 1:
-
                 drive.autoDrive(Drive_v2.Mode.FORWARD,10,0.9);
                 while (drive.isBusy()){
                     if (!taskproformed){
