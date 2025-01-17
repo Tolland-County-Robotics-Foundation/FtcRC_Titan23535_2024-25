@@ -16,6 +16,8 @@ public class Intake_v2 {
     private CRServo claw        = null;
     private DcMotor intakeArm   = null;
 
+    /// Create an object of colorsensor
+
     // Create a constant variable to set the claw power
 
     private double CLAW_POWER = 0.5;
@@ -60,6 +62,8 @@ public class Intake_v2 {
         intakeArm.setDirection(DcMotorSimple.Direction.FORWARD);
 
         intakeArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        /// Initialize the colorsensor
 
     }
 

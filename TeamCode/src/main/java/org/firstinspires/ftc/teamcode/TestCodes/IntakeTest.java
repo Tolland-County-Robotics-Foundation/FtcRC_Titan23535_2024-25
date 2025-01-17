@@ -11,7 +11,9 @@ public class IntakeTest extends OpMode {
 
     private CRServo claw        = null;
     private DcMotor intakeArm   = null;
-
+    /// Create an object of colorsensor
+    ///
+    ///
     private double CLAW_POWER = 0.5;
 
     @Override
@@ -25,6 +27,10 @@ public class IntakeTest extends OpMode {
 
         intakeArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
+        /// Initialize the colorsensor
+
+
+
     }
     @Override
     public void loop()
@@ -37,6 +43,8 @@ public class IntakeTest extends OpMode {
         telemetry.addData("intake arm power: ", intakeArmPower);
 
         telemetry.addData("Intake arm position: ", intakeArm.getCurrentPosition());
+
+        /// Use the colorsensor to detact the game piece color
 
     }
 }
