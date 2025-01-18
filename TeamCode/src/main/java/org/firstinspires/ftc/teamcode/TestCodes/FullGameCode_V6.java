@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.TestCodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.teamcode.Intake_Arm_Mechanisms.Intake_v1;
 import org.firstinspires.ftc.teamcode.LongArm_Mechanisms.LongArm_v2;
 
 @TeleOp(name = "Full Game Code6", group = "test")
+@Disabled
 
 public class FullGameCode_V6 extends OpMode {
 

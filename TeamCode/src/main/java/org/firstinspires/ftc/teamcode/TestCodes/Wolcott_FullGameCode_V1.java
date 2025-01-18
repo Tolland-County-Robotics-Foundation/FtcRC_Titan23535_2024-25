@@ -93,8 +93,8 @@ public class Wolcott_FullGameCode_V1 extends OpMode {
         So, the claw can release the game piece.
      */
 
-        double intakeArmPower           = gamepad2.left_stick_y;
-        double intakeClawPower          = gamepad2.right_stick_x;
+        double intakeArmPower           = gamepad2.right_stick_x;
+        double intakeClawPower          = gamepad2.left_stick_x;
 /*
         boolean intakeClawCloseButton   = gamepad2.left_bumper;
         boolean intakeClawOpenButton    = gamepad2.right_bumper;

@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
 
 @TeleOp(name = "Full Game Code1", group = "test")
-
+@Disabled
 public class FullGameCode_V1 extends OpMode {
     // Creating an object from Drive_V1 class
     Drive_v1 drive = new Drive_v1();

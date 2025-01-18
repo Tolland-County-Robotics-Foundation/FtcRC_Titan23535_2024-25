@@ -9,24 +9,20 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Color_Sensor_v1;
-
-
 public class Intake_v2 {
 
     // Create one object of DcMotor class for intake arm and one object of Servo class for claw
 
     private CRServo claw        = null;
     private DcMotor intakeArm   = null;
-    private Color_Sensor_v1 colorSensor = null;
+
+    /// Create an object of colorsensor
 
     // Create a constant variable to set the claw power
 
     private double CLAW_POWER = 0.5;
 
     private String ALLIANCE_COLOR =  null;
-
-    private String colorDetected = colorSensor.blockColor();
 
     // For autonomous movement of intake arm
 
@@ -66,6 +62,9 @@ public class Intake_v2 {
         intakeArm.setDirection(DcMotorSimple.Direction.FORWARD);
 
         intakeArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        /// Initialize the colorsensor
+
     }
 
 
@@ -86,23 +85,21 @@ public class Intake_v2 {
 
     public void autoMove(String driveMode, double distance, double speed){
 
-        if (driveMode == "collect"){
-            int newIntakeArmTarget = intakeArm.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
-        } else if (driveMode == "release") {
-            int newIntakeArmTarget = intakeArm.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
-        }
+        int newIntakeArmTarget = 0;
 
-        int newIntakeArmTarget = intakeArm.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
+        // Option 1
+
+        if (driveMode == "collect"){
+            newIntakeArmTarget = 575;
+        } else if (driveMode == "deposit") {
+            newIntakeArmTarget = 256;
+        }
 
         intakeArm.setTargetPosition(newIntakeArmTarget);
 
         intakeArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         intakeArm.setPower(speed);
-
-        intakeArm.setPower(0.0);
-
-        intakeArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 

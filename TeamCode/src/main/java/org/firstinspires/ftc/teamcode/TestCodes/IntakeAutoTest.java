@@ -7,13 +7,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp
-public class IntakeTest extends OpMode {
+public class IntakeAutoTest extends OpMode {
 
     private CRServo claw        = null;
     private DcMotor intakeArm   = null;
-    /// Create an object of colorsensor
-    ///
-    ///
+
     private double CLAW_POWER = 0.5;
 
     @Override
@@ -25,26 +23,34 @@ public class IntakeTest extends OpMode {
         claw.setDirection(DcMotorSimple.Direction.FORWARD);
         intakeArm.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        intakeArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-
-        /// Initialize the colorsensor
-
-
+        intakeArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
     @Override
     public void loop()
     {
-        double intakeArmPower = gamepad2.left_stick_y;
-        double clawPower = gamepad2.left_stick_x;
 
-        intakeArm.setPower(intakeArmPower);
+        int newIntakeArmTarget = -1350;
+        double speed = 0.3;
 
-        telemetry.addData("intake arm power: ", intakeArmPower);
+        intakeArm.setTargetPosition(newIntakeArmTarget);
+
+        intakeArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        intakeArm.setPower(speed);
+
+        while (intakeArm.isBusy()){
+            telemetry.addData("intake arm power: ", newIntakeArmTarget);
+
+            telemetry.addData("Intake arm position: ", intakeArm.getCurrentPosition());
+        }
+
+        telemetry.addData("intake arm power: ", newIntakeArmTarget);
 
         telemetry.addData("Intake arm position: ", intakeArm.getCurrentPosition());
 
-        /// Use the colorsensor to detact the game piece color
+        intakeArm.setPower(0);
+        intakeArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 }

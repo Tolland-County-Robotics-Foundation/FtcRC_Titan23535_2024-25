@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.Sensor_Mechanisms;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
+
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -11,8 +11,8 @@ public class Color_Sensor_v1 {
   DistanceSensor distance;
 
     public void init (HardwareMap hardwareMap) {
-    color = hardwareMap.get(ColorSensor.class, "color");
-    distance = hardwareMap.get(DistanceSensor.class, "color");
+        color = hardwareMap.get(ColorSensor.class, "color");
+        distance = hardwareMap.get(DistanceSensor.class, "color");
     }
 
     public double getDistance(DistanceUnit du) {
@@ -28,18 +28,18 @@ public class Color_Sensor_v1 {
         return color.green();
     }
     public String blockColor() {
-        double red = getAmountRed();
-        double blue = getAmountBlue();
-        double yellow = getAmountGreen() - 50;
+        int red = getAmountRed();
+        int blue = getAmountBlue();
+        int yellow = getAmountGreen() - 50;
         if (getDistance(DistanceUnit.INCH) < 2.5) {
             if (red > 100 && red > blue && red > yellow) {
-                return (String) "red";
+                return "red";
             } else if (blue > 100 && blue > red && blue > yellow) {
-                return (String) "blue";
+                return "blue";
             } else if (yellow > 100 && yellow > blue && yellow > red) {
-                return (String) "yellow";
+                return  "yellow";
             }
         }
-        return null;
+        return "none";
     }
 }
