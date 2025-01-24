@@ -90,9 +90,9 @@ public class Intake_v2 {
         // Option 1
 
         if (driveMode == "collect"){
-            newIntakeArmTarget = 575;
+            newIntakeArmTarget = -200;
         } else if (driveMode == "deposit") {
-            newIntakeArmTarget = 256;
+            newIntakeArmTarget = -1030;
         }
 
         intakeArm.setTargetPosition(newIntakeArmTarget);

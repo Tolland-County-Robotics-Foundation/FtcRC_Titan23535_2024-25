@@ -25,27 +25,35 @@ public class IntakeAutoTest extends OpMode {
 
         intakeArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        public void moveIntakeArmCollect(double intakeSpeed) {
+
+    }
+
     }
     @Override
     public void loop()
     {
 
-        int newIntakeArmTarget = -1350;
+        double clawPower = gamepad2.left_stick_x;
+        claw.setPower(clawPower);
+
+        int intakeArmTargetDown = -1030;
+        int intakeArmTargetUp = -100;
         double speed = 0.3;
 
-        intakeArm.setTargetPosition(newIntakeArmTarget);
+        intakeArm.setTargetPosition(intakeArmTargetUp);
 
         intakeArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         intakeArm.setPower(speed);
 
         while (intakeArm.isBusy()){
-            telemetry.addData("intake arm power: ", newIntakeArmTarget);
+            telemetry.addData("intake arm target position: ", intakeArmTargetUp);
 
             telemetry.addData("Intake arm position: ", intakeArm.getCurrentPosition());
         }
 
-        telemetry.addData("intake arm power: ", newIntakeArmTarget);
+        telemetry.addData("intake arm power: ", intakeArmTargetDown);
 
         telemetry.addData("Intake arm position: ", intakeArm.getCurrentPosition());
 

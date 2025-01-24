@@ -132,8 +132,26 @@ public class FullGameCode_V8 extends OpMode {
 
         /// intake mechanism ----------------------------------------------------------------------
 
-        double intakeArmPower = gamepad2.left_stick_y * 0.5;
-        intakeArm.setPower(intakeArmPower);
+
+        int intakeArmTargetDown = -1030;
+        int intakeArmTargetUp = -200;
+        double intakeSpeed = 0.5;
+
+        double intakeArmPower = gamepad2.left_stick_y;
+        if (intakeArmPower > 0) {
+            intakeArm.setTargetPosition(intakeArmTargetDown);
+            intakeArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            intakeArm.setPower(intakeSpeed);
+        } else if (intakeArmPower < 0) {
+            intakeArm.setTargetPosition(intakeArmTargetUp);
+            intakeArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            intakeArm.setPower(intakeSpeed);
+        } else {
+            intakeArm.setTargetPosition(intakeArm.getCurrentPosition() + 1);
+            intakeArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            intakeArm.setPower(intakeSpeed);
+        }
+
 
         if (gamepad2.right_stick_x > 0) {
             claw.setPower(1);
