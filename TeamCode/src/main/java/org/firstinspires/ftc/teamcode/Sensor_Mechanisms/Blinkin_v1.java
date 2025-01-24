@@ -1,10 +1,6 @@
-
 package org.firstinspires.ftc.teamcode.Sensor_Mechanisms;
 
-
-
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -42,5 +38,4 @@ public class Blinkin_v1 {
             }
         }
     }
-
 }

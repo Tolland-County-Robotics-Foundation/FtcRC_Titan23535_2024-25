@@ -71,7 +71,7 @@ public class Intake_v2 {
 
     public void moveIntakeClaw(double intakeClawPower)
     {
-        if (ALLIANCE_COLOR == colorDetected) {
+        if (true) {
             claw.setPower(intakeClawPower);
         }
         else {
