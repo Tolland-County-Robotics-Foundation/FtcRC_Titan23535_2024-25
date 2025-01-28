@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v2_shafiq;
 import org.firstinspires.ftc.teamcode.Intake_Arm_Mechanisms.Intake_v2;
 import org.firstinspires.ftc.teamcode.LongArm_Mechanisms.LongArm_v3;
 

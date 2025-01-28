@@ -29,6 +29,8 @@ public class IntakeAutoTest extends OpMode {
     @Override
     public void loop()
     {
+        double clawPower = gamepad2.left_stick_x;
+        claw.setPower(clawPower);
 
         int newIntakeArmTarget = -1350;
         double speed = 0.3;

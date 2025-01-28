@@ -1,18 +1,17 @@
 package org.firstinspires.ftc.teamcode.TestCodes;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
-import org.firstinspires.ftc.teamcode.Intake_Arm_Mechanisms.Intake_v1;
-import org.firstinspires.ftc.teamcode.LongArm_Mechanisms.LongArm_v2;
+import org.firstinspires.ftc.teamcode.Mechanisms_Final.Drive;
+import org.firstinspires.ftc.teamcode.Mechanisms_Final.Intake;
+import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
 
-@TeleOp(name = "Full Game Code6", group = "test")
-@Disabled
 
-public class FullGameCode_V6 extends OpMode {
+@TeleOp(name = "Full Teleop 1", group = "AWindsor")
+
+public class Windsor_FullGameCode_V1 extends OpMode {
 
 
     /// Necessary objects and variable creation --------------------------------------------------
@@ -26,10 +25,10 @@ public class FullGameCode_V6 extends OpMode {
     double speed_percentage = 50.0;
 
     // Creating objects from Drive_V1, Intake_v1, and LongArm_v2 class
-    
-    Drive_v1    drive   = new Drive_v1();
-    Intake_v1   intake  = new Intake_v1();
-    LongArm_v2  longArm = new LongArm_v2();
+
+    Drive drive       = new Drive();
+    Intake intake      = new Intake();
+    LongArm linearSlide = new LongArm();
 
 
     @Override
@@ -44,7 +43,7 @@ public class FullGameCode_V6 extends OpMode {
 
         drive.init(hardwareMap);
         intake.init(hardwareMap);
-        longArm.init(hardwareMap);
+        linearSlide.init(hardwareMap);
 
         /// Telemetry -----------------------------------------------------------------------------
 
@@ -59,7 +58,7 @@ public class FullGameCode_V6 extends OpMode {
 
         // Drive
 
-    /* Uses left joystick to go forward, backward, left, and right, and right joystick to rotate.
+        /* Uses left joystick to go forward, backward, left, and right, and right joystick to rotate.
 
            Left joystick up --> forward
 
@@ -82,38 +81,25 @@ public class FullGameCode_V6 extends OpMode {
         // Intake
 
     /*
-        Pressing only left trigger will give positive values.
-        So, it will move the intake towards the game piece.
+        Gamepad 2 left stick y to move the intake arm
 
-        Pressing only right trigger will give negative values.
-        So, it will move the intake towards the basket.
-
-        Pressing left bumper will close the claw.
-        So, the claw can hold the game piece.
-
-        Pressing right bumper will open the claw.
-        So, the claw can release the game piece.
+        Gamepad 2 right stick x to move the claw
      */
 
-        double intakeArmPower           = gamepad2.right_stick_x;
-        double intakeClawPower          = gamepad2.left_stick_x;
-
-        /*
-
-        boolean intakeClawCloseButton   = gamepad2.left_bumper;
-        boolean intakeClawOpenButton    = gamepad2.right_bumper;
-
-         */
-
+        double intakeArmPower   = gamepad2.left_stick_y;
+        double intakeClawPower  = gamepad2.right_stick_x;
 
 
         // Long Arm
+
+        double linearSlidePower = gamepad2.left_trigger - gamepad2.right_trigger;
 
         boolean basketScoreButton   = gamepad2.x;
         boolean basketResetButton   = gamepad2.b;
 
         boolean longArmLiftButton   = gamepad2.dpad_up;
         boolean longArmResetButton  = gamepad2.dpad_down;
+        boolean longArmStopButton   = gamepad2.a;
 
 
         // Set the speed cap for driver 1
@@ -136,8 +122,6 @@ public class FullGameCode_V6 extends OpMode {
         }
 
 
-
-
         /*
         boolean goForward  = gamepad1.dpad_up;
         boolean goBackward = gamepad1.dpad_down;
@@ -150,17 +134,15 @@ public class FullGameCode_V6 extends OpMode {
 
 
 
-
-
         /// intake mechanism ----------------------------------------------------------------------
 
         // Intake arm control
 
         intake.moveIntakeArm(intakeArmPower);
 
-        // Intake claw control
-
         intake.moveIntakeClaw(intakeClawPower);
+
+        // Intake claw control
 
         /*
 
@@ -180,22 +162,28 @@ public class FullGameCode_V6 extends OpMode {
          */
 
 
-        telemetry.addData("intake arm power: ", intakeArmPower);
-
 
         /// Long arm mechanism ------------------------------------------------------------------
 
         // Long arm control
 
-        if (longArmResetButton)     { longArm.resetArm(); }
-        else if (longArmLiftButton) { longArm.liftArm(); }
-        else                        { longArm.stopArm(); }
+        /*
+
+        if      (longArmResetButton)    { longArm.autoResetArm();   }
+        else if (longArmLiftButton)     { longArm.autoLiftArm();    }
+        else if (longArmStopButton)     { longArm.stopArm();        }
+
+         */
+
+        linearSlide.moveLinearSlide(linearSlidePower);
 
 
         // Basket control
 
-        if (basketScoreButton)      { longArm.scoreGamePiece(); }
-        else if (basketResetButton) { longArm.basketReset(); }
+        if (basketScoreButton)      { linearSlide.scoreGamePiece(); }
+        else if (basketResetButton) { linearSlide.basketReset();    }
+
+
 
         /// Telemetry -----------------------------------------------------------------------------
 
@@ -209,6 +197,10 @@ public class FullGameCode_V6 extends OpMode {
         telemetry.addData("Current Speed Cap", speedcap);
         telemetry.addData("Speed percentage: ",speed_percentage);
 
+        telemetry.addData("Linear slide power: ", linearSlidePower);
+
+        telemetry.addData("intake arm power: ", intakeArmPower);
+        telemetry.addData("intake claw power: ", intakeClawPower);
 
     }
 }
