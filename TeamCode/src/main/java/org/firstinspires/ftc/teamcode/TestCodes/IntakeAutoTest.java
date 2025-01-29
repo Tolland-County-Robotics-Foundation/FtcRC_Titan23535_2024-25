@@ -14,6 +14,12 @@ public class IntakeAutoTest extends OpMode {
 
     private double CLAW_POWER = 0.5;
 
+    private int COLLECT_GAMEPIECE_POSITION = 0;
+    private int DEPOSIT_GAMEPIECE_POSITION = 0;
+    private int RESET_ARM_POSITION = 0;
+
+    int newIntakeArmTarget;
+
     @Override
     public void init()
     {
@@ -24,6 +30,7 @@ public class IntakeAutoTest extends OpMode {
         intakeArm.setDirection(DcMotorSimple.Direction.FORWARD);
 
         intakeArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
     }
     @Override
@@ -32,27 +39,34 @@ public class IntakeAutoTest extends OpMode {
         double clawPower = gamepad2.left_stick_x;
         claw.setPower(clawPower);
 
-        int newIntakeArmTarget = -1350;
-        double speed = 0.3;
+        String armPosition = "reset";
+
+        if (gamepad2.a) {
+            newIntakeArmTarget = COLLECT_GAMEPIECE_POSITION;
+            armPosition = "collect";
+        }
+        else if (gamepad2.x) {
+            newIntakeArmTarget = DEPOSIT_GAMEPIECE_POSITION;
+            armPosition = "deposit";
+        }
+        else if (gamepad2.b) {
+            newIntakeArmTarget = RESET_ARM_POSITION;
+            armPosition = "reset";
+        }
 
         intakeArm.setTargetPosition(newIntakeArmTarget);
 
         intakeArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        intakeArm.setPower(speed);
+        intakeArm.setPower(0.5);
 
         while (intakeArm.isBusy()){
-            telemetry.addData("intake arm power: ", newIntakeArmTarget);
-
+            telemetry.addData("Going to: ",armPosition);
+            telemetry.addData("Intake arm power: ", intakeArm.getPower());
             telemetry.addData("Intake arm position: ", intakeArm.getCurrentPosition());
         }
 
-        telemetry.addData("intake arm power: ", newIntakeArmTarget);
-
-        telemetry.addData("Intake arm position: ", intakeArm.getCurrentPosition());
-
-        intakeArm.setPower(0);
-        intakeArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        telemetry.addData("Intake arm reached to last destination", "waiting for next");
 
     }
 }
