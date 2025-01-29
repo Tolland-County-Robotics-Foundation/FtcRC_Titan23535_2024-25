@@ -67,6 +67,7 @@ public class IntakeAutoTest extends OpMode {
         }
 
         telemetry.addData("Intake arm reached to last destination", "waiting for next");
+        telemetry.addData("Intake arm power: ", intakeArm.getPower());
 
     }
 }
