@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v2;
 import org.firstinspires.ftc.teamcode.Intake_Arm_Mechanisms.Intake_v2;
 import org.firstinspires.ftc.teamcode.LongArm_Mechanisms.LongArm_v3;
 
@@ -40,7 +41,7 @@ public class Wolcott_AutoTest1 extends OpMode {
 
     // Creating objects from Drive_V1, Intake_v1, and LongArm_v2 class
 
-    Drive_v2_shafiq drive   = new Drive_v2_shafiq();
+    Drive_v2 drive   = new Drive_v2();
     Intake_v2 intake  = new Intake_v2();
     LongArm_v3 longArm = new LongArm_v3();
 
@@ -75,9 +76,9 @@ public class Wolcott_AutoTest1 extends OpMode {
 
             case START:
 
-                drive.autoDrive(Drive_v2_shafiq.Mode.FORWARD, 10, 0.5);
-                drive.autoDrive(Drive_v2_shafiq.Mode.LEFT, 15, 0.5);
-                drive.autoDrive(Drive_v2_shafiq.Mode.TURNLEFT, 45, 0.5);
+                drive.autoDrive(Drive_v2.Mode.FORWARD, 10, 0.5);
+                drive.autoDrive(Drive_v2.Mode.LEFT, 15, 0.5);
+                drive.autoDrive(Drive_v2.Mode.TURNLEFT, 45, 0.5);
                 longArm.autoLiftArm();
                 state = State.SCORE;
 
