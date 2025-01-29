@@ -24,34 +24,6 @@ public class Intake_v2 {
 
     private String ALLIANCE_COLOR =  null;
 
-    // For autonomous movement of intake arm
-
-    private double DISTANCE_PER_INCH = 0.0;
-
-    private double COUNTS_PER_REV = 0.0;
-
-    private double COUNTS_PER_INCH = COUNTS_PER_REV / DISTANCE_PER_INCH;
-
-
-
-
-    /*Create an method (init)
-
-        //Return of this method is void
-
-
-        //Do hardware mapping for all the objects
-
-
-        //Set the direction of rotation of the DC motor
-
-
-        //Set the direction of rotation of the servo motor
-
-
-        //Add break to the DC motor (using zero power behavior)
-
-     */
 
     public void init(HardwareMap hwMap)
     {
@@ -83,7 +55,7 @@ public class Intake_v2 {
 
     // Method to move the intake arm autonomously
 
-    public void autoMove(String driveMode, double distance, double speed){
+    public void autoMove(String driveMode, double speed){
 
         int newIntakeArmTarget = 0;
 
@@ -105,7 +77,6 @@ public class Intake_v2 {
 
     public void moveIntakeClaw(double intakeClawPower)
     {
-
         claw.setPower(intakeClawPower);
     }
 
@@ -126,7 +97,5 @@ public class Intake_v2 {
     {
         claw.setPower(0.0);
     }
-
-
 
 }

@@ -10,8 +10,8 @@ public class Intake {
 
     // Create one object of DcMotor class for intake arm and one object of Servo class for claw
 
-    private CRServo claw        = null;
-    private DcMotor intakeArm   = null;
+    private CRServo claw = null;
+    private DcMotor arm = null;
 
     // Create a constant variable to set the claw power
 
@@ -39,27 +39,30 @@ public class Intake {
     public void init(HardwareMap hwMap)
     {
         claw        = hwMap.get(CRServo.class, "claw");
-        intakeArm   = hwMap.get(DcMotor.class, "intakeArm");
+        arm = hwMap.get(DcMotor.class, "intakeArm");
 
         claw.setDirection(DcMotorSimple.Direction.FORWARD);
-        intakeArm.setDirection(DcMotorSimple.Direction.FORWARD);
+        arm.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        intakeArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
 
     // Method to move the intake arm
 
-    public void moveIntakeArm(double intakeArmPower)
+    public void moveArm(double armPower)
     {
-        intakeArm.setPower(intakeArmPower);
+        arm.setPower(armPower);
     }
 
     // Method to move the intake claw
 
-    public void moveIntakeClaw(double intakeClawPower)
+    public void moveClaw(double clawPower)
     {
-        claw.setPower(intakeClawPower);
+        claw.setPower(clawPower);
     }
 
 

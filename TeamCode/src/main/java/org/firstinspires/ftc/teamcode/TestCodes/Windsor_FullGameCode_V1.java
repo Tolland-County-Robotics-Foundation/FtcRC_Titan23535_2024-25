@@ -26,9 +26,9 @@ public class Windsor_FullGameCode_V1 extends OpMode {
 
     // Creating objects from Drive_V1, Intake_v1, and LongArm_v2 class
 
-    Drive drive       = new Drive();
-    Intake intake      = new Intake();
-    LongArm linearSlide = new LongArm();
+    Drive drive     = new Drive();
+    Intake intake   = new Intake();
+    LongArm longArm = new LongArm();
 
 
     @Override
@@ -43,7 +43,7 @@ public class Windsor_FullGameCode_V1 extends OpMode {
 
         drive.init(hardwareMap);
         intake.init(hardwareMap);
-        linearSlide.init(hardwareMap);
+        longArm.init(hardwareMap);
 
         /// Telemetry -----------------------------------------------------------------------------
 
@@ -138,9 +138,9 @@ public class Windsor_FullGameCode_V1 extends OpMode {
 
         // Intake arm control
 
-        intake.moveIntakeArm(intakeArmPower);
+        intake.moveArm(intakeArmPower);
 
-        intake.moveIntakeClaw(intakeClawPower);
+        intake.moveClaw(intakeClawPower);
 
         // Intake claw control
 
@@ -175,13 +175,13 @@ public class Windsor_FullGameCode_V1 extends OpMode {
 
          */
 
-        linearSlide.moveLinearSlide(linearSlidePower);
+        longArm.moveLinearSlide(linearSlidePower);
 
 
         // Basket control
 
-        if (basketScoreButton)      { linearSlide.scoreGamePiece(); }
-        else if (basketResetButton) { linearSlide.basketReset();    }
+        if (basketScoreButton)      { longArm.scoreGamePiece(); }
+        else if (basketResetButton) { longArm.basketReset();    }
 
 
 
