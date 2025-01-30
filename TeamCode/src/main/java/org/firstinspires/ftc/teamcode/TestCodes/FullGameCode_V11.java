@@ -26,7 +26,9 @@ public class FullGameCode_V11 extends OpMode {
     /// Initializing variables to use across the entire program.
     String speedCap = "Normal";
     Boolean start = true;
-    Boolean rightColor = false;
+    Boolean reject;
+    Boolean accept;
+
     String redSpy;
     double speed_percentage = 40.0;
 
@@ -128,7 +130,7 @@ public class FullGameCode_V11 extends OpMode {
 
         if (gamepad2.right_stick_x > 0) {
             claw.setPower(1);
-        } else if ((gamepad2.right_stick_x < 0) || (!rightColor)) {
+        } else if ((gamepad2.right_stick_x < 0)) {
             claw.setPower(-1);
         } else {
             claw.setPower(0.0);
@@ -167,21 +169,36 @@ public class FullGameCode_V11 extends OpMode {
         /// Color Sensor.
         String sample = colorB.sampleColor();
 
-        //Telemetry
-        telemetry.addData("Sample Color", colorB.sampleColor());
-
         //Automatic sample rejection system.
         if (Objects.equals(redSpy, "red")) {
             if (Objects.equals(sample, "blue")) {
-                rightColor = false;
+                reject = false;
             }
         } else if (Objects.equals(redSpy, "blue")) {
             if (Objects.equals(sample, "red")) {
-                rightColor = false;
+                reject = true;
             }
         } else {
-            rightColor = true;
+            reject = false;
         }
+
+        //Automatic sample acceptation system.
+        if (Objects.equals(redSpy, "red")) {
+            if (Objects.equals(sample, "red")) {
+                accept = true;
+            }
+        } else if (Objects.equals(redSpy, "blue")) {
+            if (Objects.equals(sample, "blue")) {
+                accept = true;
+            }
+        } else {
+            accept = false;
+        }
+
+        //Telemetry
+        telemetry.addData("Sample Color", colorB.sampleColor());
+        telemetry.addData("Reject?", reject);
+        telemetry.addData("Accept?", accept);
 
         /// Rev BLINKIN
         lightB.light(redSpy);
