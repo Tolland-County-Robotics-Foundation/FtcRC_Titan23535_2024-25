@@ -23,6 +23,7 @@ public class ColorSensor_Intake extends OpMode {
     Boolean reject;
     Boolean accept;
     String redSpy;
+    Double clawPower;
 
     ///Creating objects for the intake mechanisms.
     private CRServo claw        = null;
@@ -70,21 +71,22 @@ public class ColorSensor_Intake extends OpMode {
         intakeArm.setPower(intakeArmPower);
 
         if (accept) {
-            claw.setPower(1);
+            clawPower = 1.0;
         } else if (reject) {
-            claw.setPower(-1);
+            clawPower = -1.0;
         } else {
-            claw.setPower(0.0);
+            clawPower = 0.0;
         }
 
         if (gamepad2.right_stick_x > 0) {
-            claw.setPower(1);
+            clawPower = 1.0;
         } else if ((gamepad2.right_stick_x < 0)) {
-            claw.setPower(-1);
+            clawPower = -1.0;
         } else {
-            claw.setPower(0.0);
+            clawPower = 0.0;
         }
 
+        claw.setPower(clawPower);
         /// Color Sensor.
         String sample = colorB.sampleColor();
 
