@@ -86,7 +86,7 @@ public class ColorSensor_Intake extends OpMode {
 
         if (Objects.equals(redSpy, "red")) {
             if (Objects.equals(sample, "blue")) {
-                reject = false;
+                reject = true;
             }
         }
         if (Objects.equals(redSpy, "blue")) {
