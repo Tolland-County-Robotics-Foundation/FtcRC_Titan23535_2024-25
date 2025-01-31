@@ -120,15 +120,21 @@ public class LongArmAutoTest extends OpMode {
         leftArmLift.setPower(ARM_POWER);
         rightArmLift.setPower(ARM_POWER);
 
-        /*
+        while (leftArmLift.isBusy() && rightArmLift.isBusy()){
+
+            telemetry.addData("Moving: ", "lift");
+            telemetry.addData("left linear slide position: ", leftArmLift.getCurrentPosition());
+            telemetry.addData("right linear slide position: ", rightArmLift.getCurrentPosition());
+
+            telemetry.addData("left power: ", leftArmLift.getPower());
+            telemetry.addData("right power: ", rightArmLift.getPower());
+        }
 
         leftArmLift.setPower(0.0);
         rightArmLift.setPower(0.0);
 
         leftArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-         */
 
     }
 
@@ -143,7 +149,15 @@ public class LongArmAutoTest extends OpMode {
         leftArmLift.setPower(ARM_POWER);
         rightArmLift.setPower(ARM_POWER);
 
-        /*
+        while (leftArmLift.isBusy() && rightArmLift.isBusy()) {
+
+            telemetry.addData("Moving: ", "reset");
+            telemetry.addData("left linear slide position: ", leftArmLift.getCurrentPosition());
+            telemetry.addData("right linear slide position: ", rightArmLift.getCurrentPosition());
+
+            telemetry.addData("left power: ", leftArmLift.getPower());
+            telemetry.addData("right power: ", rightArmLift.getPower());
+        }
 
         leftArmLift.setPower(0.0);
         rightArmLift.setPower(0.0);
@@ -151,7 +165,6 @@ public class LongArmAutoTest extends OpMode {
         leftArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-         */
 
     }
 }
