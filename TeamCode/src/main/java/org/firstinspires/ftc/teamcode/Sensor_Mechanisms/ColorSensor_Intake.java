@@ -69,7 +69,7 @@ public class ColorSensor_Intake extends OpMode {
         double intakeArmPower = gamepad2.left_stick_y * 0.5;
 
         intakeArm.setPower(intakeArmPower);
-
+/*
         if (accept) {
             clawPower = 1.0;
         } else if (reject) {
@@ -77,7 +77,7 @@ public class ColorSensor_Intake extends OpMode {
         } else {
             clawPower = 0.0;
         }
-
+*/
         if (gamepad2.right_stick_x > 0) {
             clawPower = 1.0;
         } else if ((gamepad2.right_stick_x < 0)) {
