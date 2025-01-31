@@ -81,16 +81,18 @@ public class ColorSensor_Intake extends OpMode {
         String sample = colorB.sampleColor();
 
         //Automatic sample rejection system.
+        reject = false;
+        accept = false;
+
         if (Objects.equals(redSpy, "red")) {
             if (Objects.equals(sample, "blue")) {
                 reject = false;
             }
-        } else if (Objects.equals(redSpy, "blue")) {
+        }
+        if (Objects.equals(redSpy, "blue")) {
             if (Objects.equals(sample, "red")) {
                 reject = true;
             }
-        } else {
-            reject = false;
         }
 
         //Automatic sample acceptation system.
@@ -98,12 +100,11 @@ public class ColorSensor_Intake extends OpMode {
             if (Objects.equals(sample, "red")) {
                 accept = true;
             }
-        } else if (Objects.equals(redSpy, "blue")) {
+        }
+        if (Objects.equals(redSpy, "blue")) {
             if (Objects.equals(sample, "blue")) {
                 accept = true;
             }
-        } else {
-            accept = false;
         }
 
         //Telemetry
