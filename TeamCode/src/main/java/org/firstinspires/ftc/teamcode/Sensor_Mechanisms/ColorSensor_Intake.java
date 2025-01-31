@@ -69,6 +69,14 @@ public class ColorSensor_Intake extends OpMode {
 
         intakeArm.setPower(intakeArmPower);
 
+        if (accept) {
+            claw.setPower(1);
+        } else if (reject) {
+            claw.setPower(-1);
+        } else {
+            claw.setPower(0.0);
+        }
+
         if (gamepad2.right_stick_x > 0) {
             claw.setPower(1);
         } else if ((gamepad2.right_stick_x < 0)) {
@@ -105,6 +113,9 @@ public class ColorSensor_Intake extends OpMode {
             if (Objects.equals(sample, "blue")) {
                 accept = true;
             }
+        }
+        if (Objects.equals(sample, "yellow")) {
+            accept = true;
         }
 
         //Telemetry
