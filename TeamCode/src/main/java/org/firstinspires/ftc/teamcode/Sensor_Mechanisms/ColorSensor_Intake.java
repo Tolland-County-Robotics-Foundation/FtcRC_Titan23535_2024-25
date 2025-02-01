@@ -48,7 +48,7 @@ public class ColorSensor_Intake extends OpMode {
         intakeArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void samplePick(Boolean accept, Boolean Reject) {
+    public void samplePick(Boolean accept, Boolean reject) {
         if (accept) {
             clawPower = 1.0;
         } else if (reject) {

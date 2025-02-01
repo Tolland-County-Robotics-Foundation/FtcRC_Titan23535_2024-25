@@ -25,11 +25,10 @@ public class FullGameCode_V11 extends OpMode {
 
     /// Initializing variables to use across the entire program.
     String speedCap = "Normal";
-    Boolean start = true;
     Boolean reject;
     Boolean accept;
-
     String redSpy;
+    double clawPower;
     double speed_percentage = 40.0;
 
     ///Creating objects for the intake mechanisms.
@@ -81,6 +80,17 @@ public class FullGameCode_V11 extends OpMode {
             telemetry.addData("Color Sensor Error", e.getMessage());
         }
     }
+
+    public void samplePick(Boolean accept, Boolean reject) {
+        if (accept) {
+            clawPower = 1.0;
+        } else if (reject) {
+            clawPower = -1.0;
+        } else {
+            clawPower = 0.0;
+        }
+    }
+
     @Override
     public void loop()
     {
@@ -123,18 +133,58 @@ public class FullGameCode_V11 extends OpMode {
         //Displaying current speed.
         telemetry.addData("Current Speed", speedCap);
 
+        /// Color Sensor.
+        String sample = colorB.sampleColor();
+
+        //Automatic sample rejection system.
+        reject = false;
+        accept = false;
+
+        if (Objects.equals(redSpy, "red")) {
+            if (Objects.equals(sample, "blue")) {
+                reject = true;
+            }
+        }
+        if (Objects.equals(redSpy, "blue")) {
+            if (Objects.equals(sample, "red")) {
+                reject = true;
+            }
+        }
+
+        //Automatic sample acceptation system.
+        if (Objects.equals(redSpy, "red")) {
+            if (Objects.equals(sample, "red")) {
+                accept = true;
+            }
+        }
+        if (Objects.equals(redSpy, "blue")) {
+            if (Objects.equals(sample, "blue")) {
+                accept = true;
+            }
+        }
+        if (Objects.equals(sample, "yellow")) {
+            accept = true;
+        }
+
+        //Telemetry
+        telemetry.addData("Sample Color", colorB.sampleColor());
+        telemetry.addData("Reject?", reject);
+        telemetry.addData("Accept?", accept);
+
         /// Intake mechanisms.
         double intakeArmPower = gamepad2.left_stick_y * 0.5;
 
         intakeArm.setPower(intakeArmPower);
 
         if (gamepad2.right_stick_x > 0) {
-            claw.setPower(1);
+            clawPower = 1.0;
         } else if ((gamepad2.right_stick_x < 0)) {
-            claw.setPower(-1);
+            clawPower = -1.0;
         } else {
-            claw.setPower(0.0);
+            samplePick(accept, reject);
         }
+
+        claw.setPower(clawPower);
 
         /// Linear slide.
         double armPower;
@@ -166,39 +216,6 @@ public class FullGameCode_V11 extends OpMode {
         } else if (intakeArmPower > 0 && gamepad2.left_trigger == 0 && gamepad2.right_trigger == 0) {
             basket.setPosition(0.55);
         }
-        /// Color Sensor.
-        String sample = colorB.sampleColor();
-
-        //Automatic sample rejection system.
-        if (Objects.equals(redSpy, "red")) {
-            if (Objects.equals(sample, "blue")) {
-                reject = false;
-            }
-        } else if (Objects.equals(redSpy, "blue")) {
-            if (Objects.equals(sample, "red")) {
-                reject = true;
-            }
-        } else {
-            reject = false;
-        }
-
-        //Automatic sample acceptation system.
-        if (Objects.equals(redSpy, "red")) {
-            if (Objects.equals(sample, "red")) {
-                accept = true;
-            }
-        } else if (Objects.equals(redSpy, "blue")) {
-            if (Objects.equals(sample, "blue")) {
-                accept = true;
-            }
-        } else {
-            accept = false;
-        }
-
-        //Telemetry
-        telemetry.addData("Sample Color", colorB.sampleColor());
-        telemetry.addData("Reject?", reject);
-        telemetry.addData("Accept?", accept);
 
         /// Rev BLINKIN
         lightB.light(redSpy);
