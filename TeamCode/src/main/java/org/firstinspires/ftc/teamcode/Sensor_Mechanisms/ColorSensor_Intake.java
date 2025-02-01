@@ -47,6 +47,17 @@ public class ColorSensor_Intake extends OpMode {
         intakeArm.setDirection(DcMotorSimple.Direction.FORWARD);
         intakeArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
+
+    public void samplePick(Boolean accept, Boolean Reject) {
+        if (accept) {
+            clawPower = 1.0;
+        } else if (reject) {
+            clawPower = -1.0;
+        } else {
+            clawPower = 0.0;
+        }
+    }
+
     @Override
     public void loop()
     {
@@ -65,26 +76,6 @@ public class ColorSensor_Intake extends OpMode {
         //Displaying runtime.
         telemetry.addData("Status", "Run Time: " + runtime.seconds());
 
-        /// Intake mechanisms.
-        double intakeArmPower = gamepad2.left_stick_y * 0.5;
-
-        intakeArm.setPower(intakeArmPower);
-
-        if (gamepad2.right_stick_x > 0) {
-            clawPower = 1.0;
-        } else if ((gamepad2.right_stick_x < 0)) {
-            clawPower = -1.0;
-        } else {
-            if (accept) {
-                clawPower = 1.0;
-            } else if (reject) {
-                clawPower = -1.0;
-            } else {
-                clawPower = 0.0;
-            }
-        }
-
-        claw.setPower(clawPower);
         /// Color Sensor.
         String sample = colorB.sampleColor();
 
@@ -122,6 +113,21 @@ public class ColorSensor_Intake extends OpMode {
         telemetry.addData("Sample Color", colorB.sampleColor());
         telemetry.addData("Reject?", reject);
         telemetry.addData("Accept?", accept);
+
+        /// Intake mechanisms.
+        double intakeArmPower = gamepad2.left_stick_y * 0.5;
+
+        intakeArm.setPower(intakeArmPower);
+
+        if (gamepad2.right_stick_x > 0) {
+            clawPower = 1.0;
+        } else if ((gamepad2.right_stick_x < 0)) {
+            clawPower = -1.0;
+        } else {
+            samplePick(accept, reject);
+        }
+
+        claw.setPower(clawPower);
 
         /// Rev BLINKIN
         lightB.light(redSpy);
