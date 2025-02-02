@@ -44,12 +44,12 @@ public class LongArmTest extends OpMode {
         if (gamepad2.dpad_down)
         {
             leftArmLift.setPower(-0.7);
-            rightArmLift.setPower(0.7);
+            rightArmLift.setPower(-0.7);
         }
         else if (gamepad2.dpad_up)
         {
             leftArmLift.setPower(0.7);
-            rightArmLift.setPower(-0.7);
+            rightArmLift.setPower(0.7);
 
         }
 

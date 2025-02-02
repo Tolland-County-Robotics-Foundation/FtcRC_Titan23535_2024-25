@@ -61,7 +61,7 @@ public class LongArm {
 
     public void moveLinearSlide(double power){
         leftArmLift.setPower(power);
-        rightArmLift.setPower(-power);
+        rightArmLift.setPower(power);
     }
 
     public void liftArm()
