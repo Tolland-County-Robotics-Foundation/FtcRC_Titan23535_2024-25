@@ -18,24 +18,6 @@ public class Intake {
     private double CLAW_POWER = 0.5;
 
 
-    /*Create an method (init)
-
-        //Return of this method is void
-
-
-        //Do hardware mapping for all the objects
-
-
-        //Set the direction of rotation of the DC motor
-
-
-        //Set the direction of rotation of the servo motor
-
-
-        //Add break to the DC motor (using zero power behavior)
-
-     */
-
     public void init(HardwareMap hwMap)
     {
         claw        = hwMap.get(CRServo.class, "claw");
@@ -53,10 +35,7 @@ public class Intake {
 
     // Method to move the intake arm
 
-    public void moveArm(double armPower)
-    {
-        arm.setPower(armPower);
-    }
+    public void moveArm(double armPower) { arm.setPower(armPower); }
 
     // Method to move the intake claw
 
