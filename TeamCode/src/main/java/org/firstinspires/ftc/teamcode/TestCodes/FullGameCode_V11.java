@@ -170,19 +170,17 @@ public class FullGameCode_V11 extends OpMode {
         int intakeArmTargetUp = -200;
         double intakeSpeed = 0.5;
 
-        if (intakeArmPower > 0) {
+        if (intakeArmPower < 0) {
             intakeArm.setTargetPosition(intakeArmTargetDown);
             intakeArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            intakeArm.setPower(intakeSpeed);
-        } else if (intakeArmPower < 0) {
+        } else if (intakeArmPower > 0) {
             intakeArm.setTargetPosition(intakeArmTargetUp);
             intakeArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            intakeArm.setPower(intakeSpeed);
         } else {
             intakeArm.setTargetPosition(intakeArm.getCurrentPosition() + 1);
             intakeArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            intakeArm.setPower(intakeSpeed);
         }
+        intakeArm.setPower(intakeArmPower);
 
         if (gamepad2.right_stick_x > 0) {
             clawPower = 1.0;
@@ -220,8 +218,8 @@ public class FullGameCode_V11 extends OpMode {
             rightArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         } else {
-            rightArmLift.setTargetPosition(intakeArm.getCurrentPosition() + 1);
-            leftArmLift.setTargetPosition(intakeArm.getCurrentPosition() + 1);
+            rightArmLift.setTargetPosition(rightArmLift.getCurrentPosition() + 1);
+            leftArmLift.setTargetPosition(leftArmLift.getCurrentPosition() + 1);
             rightArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
