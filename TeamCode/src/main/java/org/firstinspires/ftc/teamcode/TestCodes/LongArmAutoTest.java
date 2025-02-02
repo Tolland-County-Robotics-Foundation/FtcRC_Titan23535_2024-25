@@ -14,10 +14,11 @@ public class LongArmAutoTest extends OpMode {
     private DcMotor rightArmLift    = null;
 
     private double  ARM_POWER                   = 0.7;
-    private double  BASKET_RESET_POSITION       = 0.4;
-    private double  BASKET_SCORE_POSITION       = 0.9;
-    private int     LEFT_ARM_LIFT_POSITION      = 0;
-    private int     RIGHT_ARM_LIFT_POSITION     = 0;
+    private double  BASKET_RESET_POSITION       = 0.45;
+    private double  BASKET_SCORE_POSITION       = 0.1;
+    private double  BASKET_COLLECT_POSITION     = 0.55;
+    private int     LEFT_ARM_LIFT_POSITION      = -6100;
+    private int     RIGHT_ARM_LIFT_POSITION     = -6100;
     private int     LEFT_ARM_RESET_POSITION     = 0;
     private int     RIGHT_ARM_RESET_POSITION    = 0;
 
