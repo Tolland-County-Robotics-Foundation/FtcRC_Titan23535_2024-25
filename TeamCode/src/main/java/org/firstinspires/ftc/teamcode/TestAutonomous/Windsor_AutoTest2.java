@@ -1,13 +1,12 @@
 package org.firstinspires.ftc.teamcode.TestAutonomous;
-
-import com.google.blocks.ftcrobotcontroller.runtime.obsolete.TfodRoverRuckusAccess;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v2;
-import org.firstinspires.ftc.teamcode.Intake_Arm_Mechanisms.Intake_v2;
-import org.firstinspires.ftc.teamcode.LongArm_Mechanisms.LongArm_v3;
+import org.firstinspires.ftc.teamcode.Mechanisms_Final.Drive;
+import org.firstinspires.ftc.teamcode.Mechanisms_Final.Intake;
+import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
+
 
 @Autonomous
 
@@ -32,9 +31,9 @@ public class Windsor_AutoTest2 extends OpMode {
 
     // Creating objects from Drive_V1, Intake_v1, and LongArm_v2 class
 
-    Drive_v2 drive   = new Drive_v2();
-    Intake_v2 intake  = new Intake_v2();
-    LongArm_v3 linearSlide = new LongArm_v3();
+    Drive drive   = new Drive();
+    Intake intake  = new Intake();
+    LongArm linearSlide = new LongArm();
 
     int task = 1;
 
@@ -66,17 +65,27 @@ public class Windsor_AutoTest2 extends OpMode {
     {
         switch (task){
             case 1:
-                drive.autoDrive(Drive_v2.Mode.FORWARD,10,0.9);
+                drive.autoDrive(Drive.Mode.LEFT,10,0.9);
                 while (drive.isBusy()){
                     if (!taskproformed){
-                    telemetry.addData("Robot is while moving:", "Wait");
+                    telemetry.addData("Robot is moving left:", "Wait");
                     taskproformed = true;
                     }
                 }
-                task = 2;
+
+                drive.autoDrive(Drive.Mode.BACKWARD,5,0.9);
+                while (drive.isBusy()) {
+                    if (!taskproformed) {
+                        telemetry.addData("Robot is moving left:", "Wait");
+                        taskproformed = true;
+                    }
+                }
+                //task = 2;
                 break;
+
+                /*
             case 2:
-                drive.autoDrive(Drive_v2.Mode.RIGHT,10,0.9);
+                drive.autoDrive(Drive.Mode.RIGHT,10,0.9);
                 while (drive.isBusy()){
                     if (!taskproformed){
                     telemetry.addData("Robot is while moving 2:", "Wait");
@@ -85,6 +94,8 @@ public class Windsor_AutoTest2 extends OpMode {
                 }
                 task = 1;
                 break;
+
+                 */
             default:
                 break;
         }

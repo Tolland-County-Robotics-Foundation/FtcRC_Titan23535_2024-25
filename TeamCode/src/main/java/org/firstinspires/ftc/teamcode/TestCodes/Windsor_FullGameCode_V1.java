@@ -94,8 +94,9 @@ public class Windsor_FullGameCode_V1 extends OpMode {
 
         double linearSlidePower = gamepad2.left_trigger - gamepad2.right_trigger;
 
-        boolean basketScoreButton   = gamepad2.x;
-        boolean basketCollectButton   = gamepad2.b;
+        boolean basketScoreButton   = gamepad2.dpad_down;
+        boolean basketCollectButton = gamepad2.dpad_up;
+        //boolean basketHoldButton = gamepad2.dpad_right;
 
         boolean linearSlideLiftButton   = gamepad2.dpad_up;
         boolean linearSlideResetButton  = gamepad2.dpad_down;

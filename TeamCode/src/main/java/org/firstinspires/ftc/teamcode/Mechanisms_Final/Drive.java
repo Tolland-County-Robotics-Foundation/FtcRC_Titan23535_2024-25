@@ -8,11 +8,23 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Drive {
 
-
     private DcMotor leftFrontDrive  = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor leftBackDrive   = null;
     private DcMotor rightBackDrive  = null;
+
+    private double MOTOR_POWER      = 0.5;
+
+    static final double     COUNTS_PER_MOTOR_REV    = 28;    //
+    static final double     DRIVE_GEAR_REDUCTION    =  12.0;     // 4:1 External Gearing.
+    static final double     WHEEL_DIAMETER_INCHES   =  2.95276;     // For figuring circumference
+    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+            (WHEEL_DIAMETER_INCHES * 3.1415);
+    static final double     DRIVE_SPEED             = 0.25;
+
+    public enum Mode {
+        FORWARD, BACKWARD, LEFT, RIGHT, TURNLEFT, TURNRIGHT
+    }
 
 
     public void init(HardwareMap hardwareMap)
@@ -30,10 +42,32 @@ public class Drive {
         leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        leftFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
     }
 
-    public void setDriveMotorPower(double forward, double right, double rotate, double cap)
-    {
+    public void stop() {
+        leftFrontDrive.setPower(0.0);
+        rightFrontDrive.setPower(0.0);
+        leftBackDrive.setPower(0.0);
+        rightBackDrive.setPower(0.0);
+    }
+
+    public void setDriveMotorPower(double forward, double right, double rotate, double cap) {
 
         // Drivetrain
 
@@ -75,6 +109,79 @@ public class Drive {
 
     }
 
+    public void teleOpForward(){
 
+        leftFrontDrive.setPower(MOTOR_POWER);
+        rightFrontDrive.setPower(MOTOR_POWER);
+        leftBackDrive.setPower(MOTOR_POWER);
+        rightBackDrive.setPower(MOTOR_POWER);
+
+    }
+
+    public void autoDrive(Drive.Mode driveMode, double distance, double drive_speed){
+
+        int newLeftFrontTarget=0;
+        int newLeftBackTarget=0;
+        int newRightFrontTarget=0;
+        int newRightBackTarget=0;
+
+        if (driveMode == Drive.Mode.FORWARD){
+            newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
+            newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
+            newRightFrontTarget = rightFrontDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
+            newRightBackTarget = rightBackDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
+        } else if (driveMode == Drive.Mode.BACKWARD) {
+            newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
+            newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
+            newRightFrontTarget = rightFrontDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
+            newRightBackTarget = rightBackDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
+        } else if (driveMode == Drive.Mode.RIGHT) {
+            newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
+            newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
+            newRightFrontTarget = rightFrontDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
+            newRightBackTarget = rightBackDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
+
+        } else if (driveMode == Drive.Mode.LEFT) {
+            newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
+            newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
+            newRightFrontTarget = rightFrontDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
+            newRightBackTarget = rightBackDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
+
+        }else if (driveMode == Drive.Mode.TURNLEFT) {
+            newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
+            newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
+            newRightFrontTarget = rightFrontDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
+            newRightBackTarget = rightBackDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
+
+        } else if (driveMode == Drive.Mode.TURNRIGHT) {
+            newLeftFrontTarget = leftFrontDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
+            newLeftBackTarget = leftBackDrive.getCurrentPosition() + (int)(-distance * COUNTS_PER_INCH);
+            newRightFrontTarget = rightFrontDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
+            newRightBackTarget = rightBackDrive.getCurrentPosition() + (int)(distance * COUNTS_PER_INCH);
+
+        }
+        leftFrontDrive.setTargetPosition(newLeftFrontTarget);
+        leftBackDrive.setTargetPosition(newLeftBackTarget);
+        rightFrontDrive.setTargetPosition(newRightFrontTarget);
+        rightBackDrive.setTargetPosition(newRightBackTarget);
+
+        leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        leftFrontDrive.setPower(drive_speed);
+        rightFrontDrive.setPower(drive_speed);
+        leftBackDrive.setPower(drive_speed);
+        rightBackDrive.setPower(drive_speed);
+
+    }
+
+    public boolean isBusy(){
+        boolean busy = true;
+        if (!leftFrontDrive.isBusy() && !leftBackDrive.isBusy() && !rightBackDrive.isBusy() && !rightFrontDrive.isBusy())
+        { busy = false; }
+        return busy;
+    }
 
 }
