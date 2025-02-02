@@ -165,7 +165,6 @@ public class FullGameCode_V11 extends OpMode {
 
         /// Intake mechanisms.
         double intakeArmPower = gamepad2.left_stick_y * 0.5;
-        intakeArm.setPower(intakeArmPower);
         int intakeArmTargetDown = -1030;
         int intakeArmTargetUp = -200;
         double intakeSpeed = 0.5;
@@ -201,7 +200,7 @@ public class FullGameCode_V11 extends OpMode {
         } else if (gamepad2.right_trigger > 0) {
             armPower = gamepad2.right_trigger;
         } else {
-            armPower = 0.065;
+            armPower = 0;
         }
 
         int slideArmTargetDown = 580;
