@@ -166,8 +166,8 @@ public class FullGameCode_V11 extends OpMode {
         /// Intake mechanisms.
         double intakeArmPower = gamepad2.left_stick_y * 0.5;
         intakeArm.setPower(intakeArmPower);
-        int intakeArmTargetDown = -1030;
-        int intakeArmTargetUp = -200;
+        int intakeArmTargetDown = 50;
+        int intakeArmTargetUp = 1300;
         double intakeSpeed = 0.5;
 
         if (intakeArmPower < 0) {
@@ -201,11 +201,11 @@ public class FullGameCode_V11 extends OpMode {
         } else if (gamepad2.right_trigger > 0) {
             armPower = gamepad2.right_trigger;
         } else {
-            armPower = 0.065;
+            armPower = 0;
         }
 
-        int slideArmTargetDown = 580;
-        int slideArmTargetUp = 3120;
+        int slideArmTargetDown = 50;
+        int slideArmTargetUp = 1300;
 
         if (armPower > 0) {
             rightArmLift.setTargetPosition(slideArmTargetDown);
@@ -238,7 +238,7 @@ public class FullGameCode_V11 extends OpMode {
         }
 
         //Automatic controls.
-        if (armPower > 0.065 || armPower < 0.065) {
+        if (armPower > 0 || armPower < 0) {
             basket.setPosition(0.45);
         } else if (intakeArmPower > 0 && gamepad2.left_trigger == 0 && gamepad2.right_trigger == 0) {
             basket.setPosition(0.55);
