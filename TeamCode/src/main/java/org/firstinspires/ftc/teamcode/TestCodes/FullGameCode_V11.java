@@ -73,14 +73,6 @@ public class FullGameCode_V11 extends OpMode {
         rightArmLift    = hardwareMap.get(DcMotor.class, "RightArmLift");
         rightArmLift.setDirection(DcMotorSimple.Direction.REVERSE);
         rightArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-       // color.init(hardwareMap);
-        try {
-            colorB.init(hardwareMap);
-            telemetry.addData("Color Sensor", "Initialized");
-        } catch (Exception e) {
-            telemetry.addData("Color Sensor Error", e.getMessage());
-        }
     }
 
     public void samplePick(Boolean accept, Boolean reject) {
@@ -175,8 +167,24 @@ public class FullGameCode_V11 extends OpMode {
 
         /// Intake mechanisms.
         double intakeArmPower = gamepad2.left_stick_y * 0.5;
-
         intakeArm.setPower(intakeArmPower);
+        int intakeArmTargetDown = -1030;
+        int intakeArmTargetUp = -200;
+        double intakeSpeed = 0.5;
+
+        if (intakeArmPower > 0) {
+            intakeArm.setTargetPosition(intakeArmTargetDown);
+            intakeArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            intakeArm.setPower(intakeSpeed);
+        } else if (intakeArmPower < 0) {
+            intakeArm.setTargetPosition(intakeArmTargetUp);
+            intakeArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            intakeArm.setPower(intakeSpeed);
+        } else {
+            intakeArm.setTargetPosition(intakeArm.getCurrentPosition() + 1);
+            intakeArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            intakeArm.setPower(intakeSpeed);
+        }
 
         if (gamepad2.right_stick_x > 0) {
             clawPower = 1.0;
