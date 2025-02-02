@@ -214,7 +214,7 @@ public class FullGameCode_V11 extends OpMode {
             leftArmLift.setTargetPosition(slideArmTargetDown);
             rightArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             leftArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        } else if (intakeArmPower < 0) {
+        } else if (armPower < 0) {
             rightArmLift.setTargetPosition(slideArmTargetUp);
             leftArmLift.setTargetPosition(slideArmTargetUp);
             rightArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
