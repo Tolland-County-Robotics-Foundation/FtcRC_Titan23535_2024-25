@@ -32,7 +32,7 @@ public class Color_Sensor_v2 {
         int blue = blue();
         int yellow = yellow();
 
-        if (distance.getDistance(DistanceUnit.INCH) < 1) {
+        if (distance.getDistance(DistanceUnit.INCH) < 2) {
             if (red > 100 && red > blue && red > yellow) {
                 return "red";
             } else if (blue > 100 && blue > red && blue > yellow) {

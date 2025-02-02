@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
 import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Blinkin_v2;
 import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Color_Sensor_v2;
@@ -198,17 +197,9 @@ public class FullGameCode_V11 extends OpMode {
             while (gamepad2.y) {
             }
         }
-
         if (gamepad2.a & aToggle) {
             aToggle = !aToggle;
             while (gamepad2.a) {}
-        }
-
-        if (gamepad2.a & yToggle) {
-            yToggle = !yToggle;
-        }
-        if (gamepad2.y & aToggle) {
-            aToggle = !aToggle;
         }
 
         //Controls
@@ -218,12 +209,6 @@ public class FullGameCode_V11 extends OpMode {
             armPower = gamepad2.right_trigger;
         } else {
             armPower = 0.065;
-            if (yToggle) {
-                armPower = 1.0;
-            }
-            if (aToggle) {
-                armPower = 0.0;
-            }
         }
 
         leftArmLift.setPower(armPower);
