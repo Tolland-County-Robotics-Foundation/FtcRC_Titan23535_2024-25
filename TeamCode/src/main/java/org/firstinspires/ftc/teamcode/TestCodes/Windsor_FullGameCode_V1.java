@@ -95,11 +95,11 @@ public class Windsor_FullGameCode_V1 extends OpMode {
         double linearSlidePower = gamepad2.left_trigger - gamepad2.right_trigger;
 
         boolean basketScoreButton   = gamepad2.x;
-        boolean basketResetButton   = gamepad2.b;
+        boolean basketCollectButton   = gamepad2.b;
 
         boolean linearSlideLiftButton   = gamepad2.dpad_up;
         boolean linearSlideResetButton  = gamepad2.dpad_down;
-        boolean linearSlideStopButton   = gamepad2.a;
+        boolean linerSlideStopButton   = gamepad2.a;
 
 
         // Set the speed cap for driver 1
@@ -171,7 +171,7 @@ public class Windsor_FullGameCode_V1 extends OpMode {
 
         if      (linearSlideResetButton)    { longArm.autoResetArm();   }
         else if (linearSlideLiftButton)     { longArm.autoLiftArm();    }
-        else if (linearSlideStopButton)     { longArm.stopArm();        }
+        else if (linerSlideStopButton)     { longArm.stopArm();        }
 
          */
 
@@ -181,7 +181,7 @@ public class Windsor_FullGameCode_V1 extends OpMode {
         // Basket control
 
         if (basketScoreButton)      { longArm.scoreGamePiece(); }
-        else if (basketResetButton) { longArm.basketReset();    }
+        else if (basketCollectButton) { longArm.collectGamePiece();    }
 
 
 

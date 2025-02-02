@@ -18,7 +18,8 @@ public class IntakeAutoTest extends OpMode {
     private int DEPOSIT_GAMEPIECE_POSITION = 0;
     private int RESET_ARM_POSITION = 0;
 
-    int newIntakeArmTarget;
+    int newIntakeArmTarget = 0;
+    String armPosition = "reset";
 
     @Override
     public void init()
@@ -38,8 +39,6 @@ public class IntakeAutoTest extends OpMode {
     {
         double clawPower = gamepad2.left_stick_x;
         claw.setPower(clawPower);
-
-        String armPosition = "reset";
 
         if (gamepad2.a) {
             newIntakeArmTarget = COLLECT_GAMEPIECE_POSITION;

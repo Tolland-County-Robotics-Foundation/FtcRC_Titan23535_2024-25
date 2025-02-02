@@ -17,6 +17,14 @@ public class Intake {
 
     private double CLAW_POWER = 0.5;
 
+    public enum Mode {
+        COLLECT, DEPOSIT, RESET
+    }
+
+    private int COLLECT_GAMEPIECE_POSITION = 0;
+    private int DEPOSIT_GAMEPIECE_POSITION = 0;
+    private int RESET_ARM_POSITION = 0;
+
 
     public void init(HardwareMap hwMap)
     {
@@ -32,10 +40,38 @@ public class Intake {
         arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
+    /// Arm Mechanisms -------------------------------------------------------------------
 
     // Method to move the intake arm
 
     public void moveArm(double armPower) { arm.setPower(armPower); }
+
+    public void autoMoveArm(Mode runMode){
+
+        int newIntakeArmTarget = 0;
+
+        if (runMode == Mode.COLLECT){
+
+            newIntakeArmTarget = COLLECT_GAMEPIECE_POSITION;
+            
+        } else if (runMode == Mode.DEPOSIT) {
+
+            newIntakeArmTarget = DEPOSIT_GAMEPIECE_POSITION;
+            
+        } else if (runMode == Mode.RESET) {
+
+            newIntakeArmTarget = RESET_ARM_POSITION;
+            
+        }
+
+        arm.setTargetPosition(newIntakeArmTarget);
+
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        arm.setPower(0.5);
+    }
+
+    /// Claw Mechanisms -------------------------------------------------------------------
 
     // Method to move the intake claw
 
