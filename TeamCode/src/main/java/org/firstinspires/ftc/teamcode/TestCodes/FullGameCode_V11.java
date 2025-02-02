@@ -30,6 +30,9 @@ public class FullGameCode_V11 extends OpMode {
     String redSpy;
     double clawPower;
     double speed_percentage = 40.0;
+    Boolean yToggle = false;
+    Boolean aToggle = false;
+
 
     ///Creating objects for the intake mechanisms.
     private CRServo claw        = null;
@@ -189,16 +192,46 @@ public class FullGameCode_V11 extends OpMode {
         /// Linear slide.
         double armPower;
 
+        //Button Toggles
+        if (gamepad2.y) {
+            yToggle = !yToggle;
+            while (gamepad2.y) {
+            }
+        }
+
+        if (gamepad2.a & aToggle) {
+            aToggle = !aToggle;
+            while (gamepad2.a) {}
+        }
+
+        if (gamepad2.a & yToggle) {
+            yToggle = !yToggle;
+        }
+        if (gamepad2.y & aToggle) {
+            aToggle = !aToggle;
+        }
+
+        //Controls
         if (gamepad2.left_trigger > 0) {
             armPower = -gamepad2.left_trigger;
         } else if (gamepad2.right_trigger > 0) {
             armPower = gamepad2.right_trigger;
         } else {
             armPower = 0.065;
+            if (yToggle) {
+                armPower = 1.0;
+            }
+            if (aToggle) {
+                armPower = 0.0;
+            }
         }
 
         leftArmLift.setPower(armPower);
         rightArmLift.setPower(armPower);
+
+        //Telemetries
+        telemetry.addData("Y Toggle", yToggle);
+        telemetry.addData("A Toggle", aToggle);
 
         /// Basket.
         //Manual controls.
