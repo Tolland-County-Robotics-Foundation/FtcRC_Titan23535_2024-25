@@ -27,10 +27,11 @@ public class Windsor_FullGameCode_V2 extends OpMode {
 
     // Creating objects from Drive_V1, Intake_v1, and LongArm_v2 class
 
+    Climb hook      = new Climb();
     Drive drive     = new Drive();
     Intake intake   = new Intake();
     LongArm longArm = new LongArm();
-    Climb hook = new Climb();
+
 
 
     @Override
@@ -81,13 +82,10 @@ public class Windsor_FullGameCode_V2 extends OpMode {
         double axialButton   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
         double lateralButton =  gamepad1.left_stick_x;
 
-        boolean goForwardButton = gamepad1.dpad_up;
-        boolean goBackwardButton = gamepad1.dpad_down;
-        boolean goLeftButton = gamepad1.dpad_left;
-        boolean goRightButton = gamepad1.dpad_right;
-
-        boolean buttonPressed = false;
-
+        boolean goForwardButton     = gamepad1.dpad_up;
+        boolean goBackwardButton    = gamepad1.dpad_down;
+        boolean goLeftButton        = gamepad1.dpad_left;
+        boolean goRightButton       = gamepad1.dpad_right;
 
         // Intake
 
@@ -149,10 +147,14 @@ public class Windsor_FullGameCode_V2 extends OpMode {
 
         drive.setDriveMotorPower(axialButton, lateralButton, yawButton, speed_percentage);
 
-        if (goForwardButton && !buttonPressed) {
+        if (goForwardButton) {
             drive.teleOpForward();
-        } else if (goBackwardButton && !buttonPressed) {
-            
+        } else if (goBackwardButton) {
+            drive.teleOpBackward();
+        } else if (goLeftButton) {
+            drive.teleOpLeft();
+        } else if (goRightButton) {
+            drive.teleOpRight();
         }
 
 

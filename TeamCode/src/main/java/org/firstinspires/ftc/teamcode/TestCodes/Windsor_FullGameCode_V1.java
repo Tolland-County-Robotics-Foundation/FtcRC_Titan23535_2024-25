@@ -78,6 +78,14 @@ public class Windsor_FullGameCode_V1 extends OpMode {
         double axialButton   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
         double lateralButton =  gamepad1.left_stick_x;
 
+        boolean goForwardButton = gamepad1.dpad_up;
+        boolean goBackwardButton = gamepad1.dpad_down;
+        boolean goLeftButton = gamepad1.dpad_left;
+        boolean goRightButton = gamepad1.dpad_right;
+
+        boolean buttonPressed = false;
+
+
         // Intake
 
     /*
@@ -132,8 +140,6 @@ public class Windsor_FullGameCode_V1 extends OpMode {
 
 
         drive.setDriveMotorPower(axialButton, lateralButton, yawButton, speed_percentage);
-
-
 
         /// intake mechanism ----------------------------------------------------------------------
 

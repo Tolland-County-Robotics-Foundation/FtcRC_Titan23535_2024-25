@@ -109,13 +109,33 @@ public class Drive {
 
     }
 
+    /// Drive straight forward, backward, left, and right teleop
     public void teleOpForward(){
-
         leftFrontDrive.setPower(MOTOR_POWER);
         rightFrontDrive.setPower(MOTOR_POWER);
         leftBackDrive.setPower(MOTOR_POWER);
         rightBackDrive.setPower(MOTOR_POWER);
+    }
 
+    public void teleOpBackward(){
+        leftFrontDrive.setPower(-MOTOR_POWER);
+        rightFrontDrive.setPower(-MOTOR_POWER);
+        leftBackDrive.setPower(-MOTOR_POWER);
+        rightBackDrive.setPower(-MOTOR_POWER);
+    }
+
+    public void teleOpLeft(){
+        leftFrontDrive.setPower(-MOTOR_POWER);
+        rightFrontDrive.setPower(MOTOR_POWER);
+        leftBackDrive.setPower(MOTOR_POWER);
+        rightBackDrive.setPower(-MOTOR_POWER);
+    }
+
+    public void teleOpRight(){
+        leftFrontDrive.setPower(MOTOR_POWER);
+        rightFrontDrive.setPower(-MOTOR_POWER);
+        leftBackDrive.setPower(-MOTOR_POWER);
+        rightBackDrive.setPower(MOTOR_POWER);
     }
 
     public void autoDrive(Drive.Mode driveMode, double distance, double drive_speed){
