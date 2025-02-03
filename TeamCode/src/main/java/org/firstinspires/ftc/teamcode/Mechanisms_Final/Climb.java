@@ -11,7 +11,7 @@ public class Climb {
     private CRServo hookLeft = null;
     private CRServo hookRight = null;
 
-    private double hookPower = 0.5;
+    private double hookPower = 0.9;
 
     // create an init function for hardware mapping
 
@@ -31,6 +31,11 @@ public class Climb {
     public void grabRung() {
         hookLeft.setPower(hookPower);
         hookRight.setPower(hookPower);
+    }
+
+    public void stop() {
+        hookLeft.setPower(0);
+        hookRight.setPower(0);
     }
 
 }

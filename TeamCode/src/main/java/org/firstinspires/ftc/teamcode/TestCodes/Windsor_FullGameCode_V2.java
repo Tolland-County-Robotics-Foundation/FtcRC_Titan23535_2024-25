@@ -210,6 +210,7 @@ public class Windsor_FullGameCode_V2 extends OpMode {
         /// Hook Mechanism ---------------------------------------------------------------------
 
         if (hookResetButton) { hook.reset(); } else if (hookGrabRungButton) {hook.grabRung();}
+        else hook.stop();
 
 
         /// Telemetry -----------------------------------------------------------------------------
