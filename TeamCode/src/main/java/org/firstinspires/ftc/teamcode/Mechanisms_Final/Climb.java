@@ -11,7 +11,7 @@ public class Climb {
     private CRServo hookLeft = null;
     private CRServo hookRight = null;
 
-    private double hookPower = 0.9;
+    private double hookPower = 1;
 
     // create an init function for hardware mapping
 

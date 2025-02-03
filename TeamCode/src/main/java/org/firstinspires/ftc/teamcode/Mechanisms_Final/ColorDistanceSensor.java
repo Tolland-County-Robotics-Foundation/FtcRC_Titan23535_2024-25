@@ -16,20 +16,21 @@ public class ColorDistanceSensor {
         distanceSensor = hardwareMap.get(DistanceSensor.class, "color");
     }
 
-    public double getDistance(DistanceUnit du) {
-        return distanceSensor.getDistance(du);
-    }
 
     public String detectColor() {
 
         int red = colorSensor.red();
         int blue = colorSensor.blue();
         int yellow = colorSensor.green() - 50;
+        double sampleDistance = distanceSensor.getDistance(DistanceUnit.INCH);
 
-        if (red > 100 && red > blue && red > yellow) { return "red"; }
-        else if (blue > 100 && blue > red && blue > yellow) { return "blue"; }
-        else if (yellow > 100 && yellow > blue && yellow > red) { return "yellow"; }
-        else return "none";
+        if (sampleDistance < 2) {
+            if (red > 100 && red > blue && red > yellow) { return "red"; }
+            else if (blue > 100 && blue > red && blue > yellow) { return "blue"; }
+            else if (yellow > 100 && yellow > blue && yellow > red) { return "yellow"; }
+            else return "none";
+        }
+        return "No Sample";
     }
 
 }
