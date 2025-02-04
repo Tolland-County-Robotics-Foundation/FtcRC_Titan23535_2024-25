@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms_Final.Intake;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
 
 
-@TeleOp(name = "Full Teleop 2", group = "AWindsor")
+@TeleOp(name = "Full Teleop 3", group = "AWindsor")
 
 public class Windsor_FullGameCode_V3 extends OpMode {
 
@@ -116,9 +116,6 @@ public class Windsor_FullGameCode_V3 extends OpMode {
         boolean basketCollectButton = gamepad2.dpad_up;
         //boolean basketHoldButton = gamepad2.dpad_right;
 
-        boolean linearSlideLiftButton   = gamepad2.dpad_up;
-        boolean linearSlideResetButton  = gamepad2.dpad_down;
-        boolean linerSlideStopButton   = gamepad2.a;
 
         // Hook
 
@@ -219,8 +216,8 @@ public class Windsor_FullGameCode_V3 extends OpMode {
 
         // Basket control
 
-        if (basketScoreButton)      { longArm.scoreGamePiece(); }
-        else if (basketCollectButton) { longArm.collectGamePiece();    }
+        if (basketScoreButton)      { longArm.scoreSample(); }
+        else if (basketCollectButton) { longArm.collectSample();    }
 
         /// Hook Mechanism ---------------------------------------------------------------------
 
@@ -235,7 +232,7 @@ public class Windsor_FullGameCode_V3 extends OpMode {
 
         //Display Runtime
         telemetry.addData("Alliance: ", alliance_color);
-        telemetry.addData("Sample: ", clrSensor.detectColor());
+        telemetry.addData("Sample Color: ", clrSensor.detectColor());
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Axial:", axialButton);
         telemetry.addData("Lateral:",lateralButton);

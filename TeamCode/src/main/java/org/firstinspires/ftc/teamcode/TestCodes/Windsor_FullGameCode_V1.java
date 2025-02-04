@@ -187,8 +187,8 @@ public class Windsor_FullGameCode_V1 extends OpMode {
 
         // Basket control
 
-        if (basketScoreButton)      { longArm.scoreGamePiece(); }
-        else if (basketCollectButton) { longArm.collectGamePiece();    }
+        if (basketScoreButton)      { longArm.scoreSample(); }
+        else if (basketCollectButton) { longArm.collectSample();    }
 
 
 

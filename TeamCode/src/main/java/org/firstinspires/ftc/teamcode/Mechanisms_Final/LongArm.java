@@ -20,21 +20,6 @@ public class LongArm {
     private int     LEFT_ARM_RESET_POSITION     = 0;
     private int     RIGHT_ARM_RESET_POSITION    = 0;
 
-    /*
-    private int    LIFT_DISTANCE         = 10;
-
-     */
-
-    /*
-
-    static final double     COUNTS_PER_MOTOR_REV    = 28;    // Gobilda 5203
-    static final double     DRIVE_GEAR_REDUCTION    =  1.0;     // No gear
-    static final double     WHEEL_DIAMETER_INCHES   =  1.5;     // For figuring circumference
-    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHEEL_DIAMETER_INCHES * 3.1415);
-
-
-     */
 
     public void init(HardwareMap hwMap)
     {
@@ -93,16 +78,6 @@ public class LongArm {
         leftArmLift.setPower(ARM_POWER);
         rightArmLift.setPower(ARM_POWER);
 
-        /*
-
-        leftArmLift.setPower(0.0);
-        rightArmLift.setPower(0.0);
-
-        leftArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-         */
-
     }
 
     public void autoResetArm()
@@ -116,15 +91,6 @@ public class LongArm {
         leftArmLift.setPower(ARM_POWER);
         rightArmLift.setPower(ARM_POWER);
 
-        /*
-
-        leftArmLift.setPower(0.0);
-        rightArmLift.setPower(0.0);
-
-        leftArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-         */
 
     }
 
@@ -136,10 +102,10 @@ public class LongArm {
         basket.setPosition(BASKET_RESET_POSITION);
     }
 
-    public void scoreGamePiece()
+    public void scoreSample()
     {
         basket.setPosition(BASKET_SCORE_POSITION);
     }
 
-    public void collectGamePiece(){basket.setPosition(BASKET_COLLECT_POSITION);}
+    public void collectSample(){basket.setPosition(BASKET_COLLECT_POSITION);}
 }
