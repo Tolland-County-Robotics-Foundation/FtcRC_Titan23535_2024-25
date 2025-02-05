@@ -108,6 +108,7 @@ public class Windsor_AutoTest2 extends OpMode {
                     longArm.collectSample();
                     longArm.autoResetLinearSlide();
                     drive.autoDrive(Drive.Mode.TURNLEFT, 9,0.5);
+                    drive.autoDrive(Drive.Mode.FORWARD,7,0.9);
 
 
                     step3Initialized = true;
