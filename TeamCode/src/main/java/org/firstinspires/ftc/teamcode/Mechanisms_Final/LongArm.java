@@ -15,8 +15,8 @@ public class LongArm {
     private double  BASKET_RESET_POSITION       = 0.45;
     private double  BASKET_SCORE_POSITION       = 1;
     private double  BASKET_COLLECT_POSITION     = 0.55;
-    private int     LEFT_ARM_SCORE_POSITION      = 0;
-    private int     RIGHT_ARM_SCORE_POSITION     = 0;
+    private int     LEFT_ARM_SCORE_POSITION      = -6100;
+    private int     RIGHT_ARM_SCORE_POSITION     = -6100;
     private int     LEFT_ARM_RESET_POSITION     = 0;
     private int     RIGHT_ARM_RESET_POSITION    = 0;
 
@@ -49,25 +49,25 @@ public class LongArm {
         rightArmLift.setPower(power);
     }
 
-    public void liftArm()
+    public void liftLinearSlide()
     {
         leftArmLift.setPower(ARM_POWER);
         rightArmLift.setPower(ARM_POWER);
     }
 
-    public void resetArm()
+    public void resetLinearSlide()
     {
         leftArmLift.setPower(-ARM_POWER);
         rightArmLift.setPower(-ARM_POWER);
     }
 
-    public void stopArm()
+    public void stopLinearSlide()
     {
         leftArmLift.setPower(0);
         rightArmLift.setPower(0);
     }
 
-    public void autoLiftArm()
+    public void autoLiftLinearSlide()
     {
         leftArmLift.setTargetPosition(LEFT_ARM_SCORE_POSITION);
         rightArmLift.setTargetPosition(RIGHT_ARM_SCORE_POSITION);
@@ -80,7 +80,7 @@ public class LongArm {
 
     }
 
-    public void autoResetArm()
+    public void autoResetLinearSlide()
     {
         leftArmLift.setTargetPosition(LEFT_ARM_RESET_POSITION);
         rightArmLift.setTargetPosition(RIGHT_ARM_RESET_POSITION);

@@ -33,7 +33,7 @@ public class Windsor_AutoTest2 extends OpMode {
 
     Drive drive   = new Drive();
     Intake intake  = new Intake();
-    LongArm linearSlide = new LongArm();
+    LongArm longArm = new LongArm();
 
     int task = 1;
 
@@ -52,7 +52,7 @@ public class Windsor_AutoTest2 extends OpMode {
 
         drive.init(hardwareMap);
         intake.init(hardwareMap);
-        linearSlide.init(hardwareMap);
+        longArm.init(hardwareMap);
 
         /// Telemetry -----------------------------------------------------------------------------
 
@@ -66,36 +66,9 @@ public class Windsor_AutoTest2 extends OpMode {
         switch (task){
             case 1:
                 drive.autoDrive(Drive.Mode.LEFT,10,0.9);
-                while (drive.isBusy()){
-                    if (!taskproformed){
-                    telemetry.addData("Robot is moving left:", "Wait");
-                    taskproformed = true;
-                    }
-                }
-
-                drive.autoDrive(Drive.Mode.BACKWARD,5,0.9);
-                while (drive.isBusy()) {
-                    if (!taskproformed) {
-                        telemetry.addData("Robot is moving left:", "Wait");
-                        taskproformed = true;
-                    }
-                }
-                //task = 2;
+                intake.autoMoveArm(Intake.Mode.COLLECT);
+                longArm.autoLiftLinearSlide();
                 break;
-
-                /*
-            case 2:
-                drive.autoDrive(Drive.Mode.RIGHT,10,0.9);
-                while (drive.isBusy()){
-                    if (!taskproformed){
-                    telemetry.addData("Robot is while moving 2:", "Wait");
-                        taskproformed = true;
-                    }
-                }
-                task = 1;
-                break;
-
-                 */
             default:
                 break;
         }
