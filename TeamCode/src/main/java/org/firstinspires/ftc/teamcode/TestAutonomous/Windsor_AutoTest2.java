@@ -26,6 +26,7 @@ public class Windsor_AutoTest2 extends OpMode {
     private boolean step1Initialized = false;
     private boolean step2Initialized = false;
     private boolean step3Initialized = false;
+    private boolean step4Initialized = false;
 
 
 
@@ -108,16 +109,46 @@ public class Windsor_AutoTest2 extends OpMode {
                     longArm.collectSample();
                     longArm.autoResetLinearSlide();
                     drive.autoDrive(Drive.Mode.TURNLEFT, 9,0.5);
-                    drive.autoDrive(Drive.Mode.FORWARD,7,0.9);
-
 
                     step3Initialized = true;
                     telemetry.addData("Case 3: ", "Started");
                 }
-                telemetry.addData("Case 3:", "NA");
+                if (!drive.isBusy()) {
+                    task = 4;
+                } else {
+                    telemetry.addData("Case 3: ","Working");
+                }
                 break;
+            case 4:
+                if (!step4Initialized) {
+                    drive.autoDrive(Drive.Mode.FORWARD,7,0.9);
+                    intake.closeClaw();
+
+                    step4Initialized = true;
+                    telemetry.addData("Case 4:", "Started");
+                }
+
+                if (!drive.isBusy()) {
+                    clawTimer.reset();
+
+                    if (clawTimer.milliseconds() > 2000) {
+                        task = 5;
+                    }
+                } else {
+                    telemetry.addData("Case 4: ","Working");
+                }
+
+                break;
+            case 5:
+                break;
+
+
             default:
                 telemetry.addData("Done", " No more tasks");
+                drive.stop();
+                intake.stopClaw();
+                intake.stopArm();
+                longArm.stopLinearSlide();
                 break;
         }
         telemetry.update();

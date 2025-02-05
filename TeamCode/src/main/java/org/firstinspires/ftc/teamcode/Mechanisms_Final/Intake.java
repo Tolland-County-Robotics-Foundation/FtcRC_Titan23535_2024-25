@@ -45,6 +45,7 @@ public class Intake {
     // Method to move the intake arm
 
     public void moveArm(double armPower) { arm.setPower(armPower); }
+    public void stopArm() {arm.setPower(0);}
 
     public void autoMoveArm(Mode runMode){
 
