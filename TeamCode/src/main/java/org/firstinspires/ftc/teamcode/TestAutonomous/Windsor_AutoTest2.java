@@ -25,6 +25,7 @@ public class Windsor_AutoTest2 extends OpMode {
 
     private boolean step1Initialized = false;
     private boolean step2Initialized = false;
+    private boolean step3Initialized = false;
 
 
 
@@ -74,6 +75,7 @@ public class Windsor_AutoTest2 extends OpMode {
                     drive.autoDrive(Drive.Mode.LEFT,10,0.9);
                     intake.autoMoveArm(Intake.Mode.COLLECT);
                     longArm.autoLiftLinearSlide();
+                    longArm.collectSample();
 
                     step1Initialized = true;
                     telemetry.addData("Case 1: ", "Started");
@@ -88,6 +90,7 @@ public class Windsor_AutoTest2 extends OpMode {
             case 2:
                 if (!step2Initialized) {
                     longArm.scoreSample();
+                    drive.autoDrive(Drive.Mode.BACKWARD,5,0.9);
                     basketTimer.reset();
                     step2Initialized = true;
                     telemetry.addData("Case 2: ","Started");
@@ -101,6 +104,15 @@ public class Windsor_AutoTest2 extends OpMode {
                 }
                 break;
             case 3:
+                if (!step3Initialized) {
+                    longArm.collectSample();
+                    longArm.autoResetLinearSlide();
+                    drive.autoDrive(Drive.Mode.TURNLEFT, 9,0.5);
+
+
+                    step3Initialized = true;
+                    telemetry.addData("Case 3: ", "Started");
+                }
                 telemetry.addData("Case 3:", "NA");
                 break;
             default:
