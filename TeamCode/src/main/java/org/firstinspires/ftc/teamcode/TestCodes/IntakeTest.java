@@ -26,6 +26,7 @@ public class IntakeTest extends OpMode {
         intakeArm.setDirection(DcMotorSimple.Direction.FORWARD);
 
         intakeArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        intakeArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         /// Initialize the colorsensor
 

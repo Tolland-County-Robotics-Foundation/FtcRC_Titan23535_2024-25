@@ -15,6 +15,7 @@ public class Windsor_AutoTest2 extends OpMode {
     // Create a timer for the intake claw
 
     ElapsedTime clawTimer = new ElapsedTime();
+    ElapsedTime basketTimer = new ElapsedTime();
 
     private double CLAW_COLLECT_TIME = 5.0;
 
@@ -22,7 +23,8 @@ public class Windsor_AutoTest2 extends OpMode {
 
     private int GAMEPIECE_SCORED = 0;
 
-    private boolean stepInitialized = false;
+    private boolean step1Initialized = false;
+    private boolean step2Initialized = false;
 
 
 
@@ -47,6 +49,7 @@ public class Windsor_AutoTest2 extends OpMode {
         // Resting runtime
         runtime.reset();
         clawTimer.reset();
+        basketTimer.reset();
 
         /// Initialization ------------------------------------------------------------------------
 
@@ -67,12 +70,12 @@ public class Windsor_AutoTest2 extends OpMode {
     {
         switch (task){
             case 1:
-                if (!stepInitialized) {
+                if (!step1Initialized) {
                     drive.autoDrive(Drive.Mode.LEFT,10,0.9);
                     intake.autoMoveArm(Intake.Mode.COLLECT);
                     longArm.autoLiftLinearSlide();
 
-                    stepInitialized = true;
+                    step1Initialized = true;
                     telemetry.addData("Case 1: ", "Started");
                 }
 
@@ -83,7 +86,22 @@ public class Windsor_AutoTest2 extends OpMode {
                 }
                 break;
             case 2:
-                telemetry.addData("Nothing to do", "Move on");
+                if (!step2Initialized) {
+                    longArm.scoreSample();
+                    basketTimer.reset();
+                    step2Initialized = true;
+                    telemetry.addData("Case 2: ","Started");
+                }
+
+                if (basketTimer.milliseconds() > 3000) {
+                    telemetry.addData("Case 2:", "Done");
+                    task = 3;
+                } else {
+                    telemetry.addData("Case 2:", "Basket is moving to score");
+                }
+                break;
+            case 3:
+                telemetry.addData("Case 3:", "NA");
                 break;
             default:
                 telemetry.addData("Done", " No more tasks");
