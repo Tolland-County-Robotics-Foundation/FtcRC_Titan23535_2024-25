@@ -21,7 +21,7 @@ public class Intake {
         COLLECT, DEPOSIT, RESET
     }
 
-    private int COLLECT_GAMEPIECE_POSITION = 0;
+    private int COLLECT_GAMEPIECE_POSITION = -830;
     private int DEPOSIT_GAMEPIECE_POSITION = 0;
     private int RESET_ARM_POSITION = 0;
 
