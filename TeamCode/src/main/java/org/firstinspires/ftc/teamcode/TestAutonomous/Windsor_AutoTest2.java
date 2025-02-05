@@ -22,6 +22,8 @@ public class Windsor_AutoTest2 extends OpMode {
 
     private int GAMEPIECE_SCORED = 0;
 
+    private boolean stepInitialized = false;
+
 
 
     /// Necessary objects and variable creation --------------------------------------------------
@@ -65,12 +67,28 @@ public class Windsor_AutoTest2 extends OpMode {
     {
         switch (task){
             case 1:
-                drive.autoDrive(Drive.Mode.LEFT,10,0.9);
-                intake.autoMoveArm(Intake.Mode.COLLECT);
-                longArm.autoLiftLinearSlide();
+                if (!stepInitialized) {
+                    drive.autoDrive(Drive.Mode.LEFT,10,0.9);
+                    intake.autoMoveArm(Intake.Mode.COLLECT);
+                    longArm.autoLiftLinearSlide();
+
+                    stepInitialized = true;
+                    telemetry.addData("Case 1: ", "Started");
+                }
+
+                if (!drive.isBusy() && !intake.isArmBusy() && !longArm.isLinearSlideBusy()) {
+                    task = 2;
+                } else {
+                    telemetry.addData("Case 1: ","Working");
+                }
+                break;
+            case 2:
+                telemetry.addData("Nothing to do", "Move on");
                 break;
             default:
+                telemetry.addData("Done", " No more tasks");
                 break;
         }
+        telemetry.update();
     }
 }

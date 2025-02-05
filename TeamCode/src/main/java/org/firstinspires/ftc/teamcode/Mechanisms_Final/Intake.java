@@ -71,6 +71,15 @@ public class Intake {
         arm.setPower(0.5);
     }
 
+    public boolean isArmBusy() {
+        boolean busy = true;
+        if (!arm.isBusy()) {
+            busy = false;
+        }
+
+        return busy;
+    }
+
     /// Claw Mechanisms -------------------------------------------------------------------
 
     // Method to move the intake claw

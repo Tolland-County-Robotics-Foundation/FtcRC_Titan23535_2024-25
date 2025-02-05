@@ -94,6 +94,14 @@ public class LongArm {
 
     }
 
+    public boolean isLinearSlideBusy() {
+        boolean busy = true;
+        if (!leftArmLift.isBusy() && !rightArmLift.isBusy()) {
+            busy = false;
+        }
+        return busy;
+    }
+
 
     /// Basket -----------------------------------------------------------------------------------
 
