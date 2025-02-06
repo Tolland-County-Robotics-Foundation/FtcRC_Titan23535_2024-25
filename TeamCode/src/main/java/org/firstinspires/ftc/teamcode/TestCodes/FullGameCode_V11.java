@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
+import org.firstinspires.ftc.teamcode.Mechanisms_Final.Climb;
 import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Blinkin_v2;
 import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Color_Sensor_v2;
 
@@ -20,7 +21,9 @@ public class FullGameCode_V11 extends OpMode {
     Drive_v1 drive = new Drive_v1();
     Color_Sensor_v2 colorB = new Color_Sensor_v2();
     Blinkin_v2 lightB = new Blinkin_v2();
+    Climb hook      = new Climb();
     private final ElapsedTime runtime = new ElapsedTime();
+    private ElapsedTime hookTimer = new ElapsedTime();
 
     /// Initializing variables to use across the entire program.
     String speedCap = "Normal";
@@ -46,11 +49,13 @@ public class FullGameCode_V11 extends OpMode {
     {
         // Resetting runtime
         runtime.reset();
+        hookTimer.reset();
 
         // Use init method to do the initialization of drive object
         drive.init(hardwareMap);
         colorB.init(hardwareMap);
         lightB.init(hardwareMap);
+        hook.init(hardwareMap);
 
         /// Initialization of intake mechanisms.
         claw        = hardwareMap.get(CRServo.class, "claw");
@@ -204,8 +209,8 @@ public class FullGameCode_V11 extends OpMode {
             armPower = 0;
         }
 
-        int slideArmTargetDown = 50;
-        int slideArmTargetUp = 1300;
+        int slideArmTargetDown = 0;
+        int slideArmTargetUp = -6050;
 
         if (armPower > 0) {
             rightArmLift.setTargetPosition(slideArmTargetDown);
@@ -243,6 +248,23 @@ public class FullGameCode_V11 extends OpMode {
         } else if (intakeArmPower > 0 && gamepad2.left_trigger == 0 && gamepad2.right_trigger == 0) {
             basket.setPosition(0.55);
         }
+
+        // Hook
+
+        boolean hookResetButton = gamepad2.y;
+        boolean hookGrabRungButton = gamepad2.a;
+
+        /// Hook Mechanism ---------------------------------------------------------------------
+
+        if (hookGrabRungButton) {
+            hookTimer.reset();
+            while (hookTimer.seconds() < 2.5) { hook.grabRung(); }
+        } else hook.stop();
+
+        if (hookResetButton) {
+            hookTimer.reset();
+            while (hookTimer.seconds() < 2.5) { hook.reset(); }
+        } else hook.stop();
 
         /// Rev BLINKIN
         lightB.light(redSpy);
