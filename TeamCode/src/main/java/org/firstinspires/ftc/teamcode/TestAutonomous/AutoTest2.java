@@ -117,7 +117,7 @@ public class AutoTest2 extends LinearOpMode {
 
             // Step 3) Drive FORWARD 7 inches
             drive.autoDrive(Drive.Mode.FORWARD, 7.0, 0.9);
-            intake.closeClaw();
+            intake.openClaw();
             while (opModeIsActive() && drive.isBusy()) {
                 telemetry.addData("Sample 1 Collect", "Driving FORWARD 7 in");
                 telemetry.update();

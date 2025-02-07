@@ -53,6 +53,7 @@ public class AutoTestSpecimen1 extends LinearOpMode {
 
             // Raise intake to half way down
             intake.autoMoveArm(Intake.Mode.HANG);
+            intake.closeClaw();
             while (opModeIsActive() && intake.isArmBusy()) {
                 telemetry.addData("Intake: ", "Move");
                 telemetry.update();
@@ -60,6 +61,7 @@ public class AutoTestSpecimen1 extends LinearOpMode {
 
             // Drive backward 16 inches
             drive.autoDrive(Drive.Mode.BACKWARD, 16, 0.5);
+            intake.openClaw();
             while (opModeIsActive() && drive.isBusy()) {
                 telemetry.addData("Drive:", "Backward 16 inches");
                 telemetry.update();
