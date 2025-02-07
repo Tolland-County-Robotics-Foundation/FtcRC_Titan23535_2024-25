@@ -225,9 +225,7 @@ public class Windsor_FullGameCode_V4 extends OpMode {
             hook.reset();
         } else hook.stop();
 
-
         /// Telemetry -----------------------------------------------------------------------------
-
 
         //Display Runtime
         telemetry.addData("Alliance: ", alliance_color);
