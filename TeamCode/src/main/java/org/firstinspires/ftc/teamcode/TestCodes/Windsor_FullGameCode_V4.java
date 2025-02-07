@@ -196,7 +196,7 @@ public class Windsor_FullGameCode_V4 extends OpMode {
 
         /// Long arm mechanism ------------------------------------------------------------------
 
-        // Long arm control
+        // Linear slide control
 
         /*
 
@@ -221,6 +221,8 @@ public class Windsor_FullGameCode_V4 extends OpMode {
         if (hookGrabRungButton) {
             hookTimer.reset();
             while (hookTimer.seconds() < 2.5) { hook.grabRung(); }
+        } else if (hookResetButton) {
+            hook.reset();
         } else hook.stop();
 
 

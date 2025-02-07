@@ -23,7 +23,7 @@ public class Intake {
 
     private int COLLECT_GAMEPIECE_POSITION = -1381;
     private int DEPOSIT_GAMEPIECE_POSITION = 0;
-    private int RESET_ARM_POSITION = 0;
+    private int RESET_ARM_POSITION = -1000;
 
 
     public void init(HardwareMap hwMap)
