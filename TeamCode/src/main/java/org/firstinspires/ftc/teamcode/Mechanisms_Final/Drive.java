@@ -197,6 +197,19 @@ public class Drive {
 
     }
 
+    public void autoStop(){
+        leftFrontDrive.setPower(0.0);
+        rightFrontDrive.setPower(0.0);
+        leftBackDrive.setPower(0.0);
+        rightBackDrive.setPower(0.0);
+
+        leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+    }
+
     public boolean isBusy(){
         boolean busy = true;
         if (!leftFrontDrive.isBusy() && !leftBackDrive.isBusy() && !rightBackDrive.isBusy() && !rightFrontDrive.isBusy())
