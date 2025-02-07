@@ -1,4 +1,4 @@
-// v2 + color sensor + hook timer
+// v4 + linear slide timer
 
 package org.firstinspires.ftc.teamcode.TestCodes;
 
@@ -13,23 +13,26 @@ import org.firstinspires.ftc.teamcode.Mechanisms_Final.Intake;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
 
 
-@TeleOp(name = "Full Teleop 3", group = "AWindsor")
+@TeleOp(name = "Full Teleop 5", group = "AWindsor")
 
-public class Windsor_FullGameCode_V3 extends OpMode {
-
+public class Windsor_FullGameCode_V5 extends OpMode {
 
     /// Necessary objects and variable creation --------------------------------------------------
 
-    // Creating an object from ElapsedTime class to have run time information
+    // Creating timers
     private ElapsedTime runtime = new ElapsedTime();
     private ElapsedTime hookTimer = new ElapsedTime();
+    private ElapsedTime linearSlideTimer = new ElapsedTime();
 
     //Creating two variables for capping the speed
     String speedcap = "Normal";
 
     double speed_percentage = 50.0;
 
-    String alliance_color = "blue";
+    String alliance_color = "Not Selected";
+    String sample_color = "Not Selected";
+    String wrong_sample_color = "Not Selected";
+
 
     // Creating objects from Drive_V1, Intake_v1, and LongArm_v2 class
 
@@ -39,14 +42,13 @@ public class Windsor_FullGameCode_V3 extends OpMode {
     LongArm longArm = new LongArm();
     ColorDistanceSensor clrSensor = new ColorDistanceSensor();
 
-
-
     @Override
     public void init()
     {
         // Resting runtime
         runtime.reset();
         hookTimer.reset();
+        linearSlideTimer.reset();
 
         /// Initialization ------------------------------------------------------------------------
 
@@ -67,7 +69,7 @@ public class Windsor_FullGameCode_V3 extends OpMode {
     @Override
     public void loop()
     {
-        /// Button configuration ----------------------------------------------------------------------
+        /// Button configuration -------------------------------------------------------------------
 
         // Drive
 
@@ -88,7 +90,7 @@ public class Windsor_FullGameCode_V3 extends OpMode {
         */
 
         double yawButton     =  gamepad1.right_stick_x;
-        double axialButton   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
+        double axialButton   = -gamepad1.left_stick_y;  // Negative value for pushing stick forward
         double lateralButton =  gamepad1.left_stick_x;
 
         boolean goForwardButton     = gamepad1.dpad_up;
@@ -104,7 +106,7 @@ public class Windsor_FullGameCode_V3 extends OpMode {
         Gamepad 2 right stick x to move the claw
      */
 
-        double intakeArmPower   = gamepad2.left_stick_y;
+        double intakeArmPower   = gamepad2.left_stick_y * 0.5;
         double intakeClawPower  = gamepad2.right_stick_x;
 
 
@@ -114,22 +116,35 @@ public class Windsor_FullGameCode_V3 extends OpMode {
 
         boolean basketScoreButton   = gamepad2.dpad_down;
         boolean basketCollectButton = gamepad2.dpad_up;
-        //boolean basketHoldButton = gamepad2.dpad_right;
-
+        boolean basketResetButton = gamepad2.dpad_right;
+        
 
         // Hook
 
         boolean hookResetButton = gamepad2.y;
         boolean hookGrabRungButton = gamepad2.a;
 
-        // Alliance color change to red
-        boolean allianceButton = gamepad1.left_bumper;
+        // Alliance color
+        boolean allianceRedButton = gamepad1.left_bumper;
+        boolean allianceBlueButton = gamepad1.right_bumper;
 
-        if (allianceButton) { alliance_color = "red"; }
+
+        /// Mechanisms ------------------------------------------------------------------------
+
+        /// Alliance selection --------------------------------------------------
+
+        if (allianceRedButton) { alliance_color = "red"; wrong_sample_color = "blue"; }
+        else if (allianceBlueButton) { alliance_color = "blue"; wrong_sample_color = "red"; }
+
+        /// Color sensor -----------------------------------------------------------------
+
+        sample_color = clrSensor.detectColor();
+
+        /// Drive Controls -----------------------------------------------------------------
 
 
         // Set the speed cap for driver 1
-        if (gamepad1.a)
+        if (gamepad1.y)
         {
             speedcap = "Max";
             speed_percentage = 90.0;
@@ -137,26 +152,21 @@ public class Windsor_FullGameCode_V3 extends OpMode {
         {
             speedcap = "Fast";
             speed_percentage = 65.0;
-        } else if (gamepad1.y)
+        } else if (gamepad1.x)
         {
             speedcap = "Normal";
             speed_percentage = 40.0;
-        } else if (gamepad1.x)
+        } else if (gamepad1.a)
         {
             speedcap = "Slow";
             speed_percentage = 25.0;
         }
 
-
-        /*
-        boolean goForward  = gamepad1.dpad_up;
-        boolean goBackward = gamepad1.dpad_down;
-        boolean goLeft  = gamepad1.dpad_left;
-        boolean goRight  = gamepad1.dpad_right;
-        */
-
+        // Control for setting the motors power
 
         drive.setDriveMotorPower(axialButton, lateralButton, yawButton, speed_percentage);
+
+        // Control for driving straight forward, backward, left and right
 
         if (goForwardButton) {
             drive.teleOpForward();
@@ -169,39 +179,24 @@ public class Windsor_FullGameCode_V3 extends OpMode {
         }
 
 
-        /// intake mechanism ----------------------------------------------------------------------
+        /// Intake Controls ----------------------------------------------------------------------
 
-        // Intake arm control
+        // Intake arm controls
 
         intake.moveArm(intakeArmPower);
 
-        if (clrSensor.detectColor() == alliance_color) { intake.openClaw(); }
-        else { intake.moveClaw(intakeClawPower); }
+        // Intake claw controls
 
-        // Intake claw control
+        intake.moveClaw(intakeClawPower);
 
-        /*
-
-        if (intakeClawCloseButton)
-        {
-            intake.closeClaw();
-        }
-        else if (intakeClawOpenButton)
-        {
-            intake.openClaw();
-        }
-        else
-        {
-            intake.stopClaw();
-        }
-
-         */
+        if (intakeClawPower == 0 && sample_color == wrong_sample_color) {
+            intake.openClaw(); }
 
 
 
-        /// Long arm mechanism ------------------------------------------------------------------
+        /// Long arm Controls ------------------------------------------------------------------
 
-        // Long arm control
+        // Linear slide controls
 
         /*
 
@@ -214,21 +209,33 @@ public class Windsor_FullGameCode_V3 extends OpMode {
         longArm.moveLinearSlide(linearSlidePower);
 
 
-        // Basket control
+        if (basketScoreButton) {
+            linearSlideTimer.reset();
+            if (linearSlideTimer.milliseconds() < 1500) {
+                longArm.moveLinearSlide(0.1);
+            }
+        }
 
-        if (basketScoreButton)      { longArm.basketScoreSample(); }
-        else if (basketCollectButton) { longArm.basketCollectSample();    }
+        // Basket controls
 
-        /// Hook Mechanism ---------------------------------------------------------------------
+        if (basketScoreButton)          { longArm.basketScoreSample();    }
+        else if (basketCollectButton)   { longArm.basketCollectSample();  }
+        else if (basketResetButton)     { longArm.basketReset();    }
+
+        if (linearSlidePower > 0.1 || linearSlidePower < -0.1) {longArm.basketReset();}
+        if (intakeArmPower > 0.1) {longArm.basketCollectSample();}
+
+
+        /// Hook Controls ---------------------------------------------------------------------
 
         if (hookGrabRungButton) {
             hookTimer.reset();
             while (hookTimer.seconds() < 2.5) { hook.grabRung(); }
+        } else if (hookResetButton) {
+            hook.reset();
         } else hook.stop();
 
-
         /// Telemetry -----------------------------------------------------------------------------
-
 
         //Display Runtime
         telemetry.addData("Alliance: ", alliance_color);

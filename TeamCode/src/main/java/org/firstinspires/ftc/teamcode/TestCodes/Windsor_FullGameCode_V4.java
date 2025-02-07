@@ -209,12 +209,12 @@ public class Windsor_FullGameCode_V4 extends OpMode {
 
         // Basket control
 
-        if (basketScoreButton)          { longArm.scoreSample();    }
-        else if (basketCollectButton)   { longArm.collectSample();  }
+        if (basketScoreButton)          { longArm.basketScoreSample();    }
+        else if (basketCollectButton)   { longArm.basketCollectSample();  }
         else if (basketResetButton)     { longArm.basketReset();    }
 
         if (linearSlidePower > 0.1 || linearSlidePower < -0.1) {longArm.basketReset();}
-        if (intakeArmPower > 0.1) {longArm.collectSample();}
+        if (intakeArmPower > 0.1) {longArm.basketCollectSample();}
 
 
         /// Hook Mechanism ---------------------------------------------------------------------

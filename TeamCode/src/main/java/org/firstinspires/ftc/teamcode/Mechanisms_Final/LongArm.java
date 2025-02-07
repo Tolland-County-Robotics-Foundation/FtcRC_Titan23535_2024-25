@@ -110,10 +110,10 @@ public class LongArm {
         basket.setPosition(BASKET_RESET_POSITION);
     }
 
-    public void scoreSample()
+    public void basketScoreSample()
     {
         basket.setPosition(BASKET_SCORE_POSITION);
     }
 
-    public void collectSample(){basket.setPosition(BASKET_COLLECT_POSITION);}
+    public void basketCollectSample(){basket.setPosition(BASKET_COLLECT_POSITION);}
 }
