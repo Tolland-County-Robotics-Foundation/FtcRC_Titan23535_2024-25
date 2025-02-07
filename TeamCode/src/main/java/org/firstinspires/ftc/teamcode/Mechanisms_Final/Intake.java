@@ -18,12 +18,13 @@ public class Intake {
     private double CLAW_POWER = 0.5;
 
     public enum Mode {
-        COLLECT, DEPOSIT, RESET
+        COLLECT, DEPOSIT, RESET, HANG
     }
 
     private int COLLECT_GAMEPIECE_POSITION = -1381;
     private int DEPOSIT_GAMEPIECE_POSITION = 0;
     private int RESET_ARM_POSITION = -1000;
+    private int HANG_SPECIMENT_POSITION = -800;
 
 
     public void init(HardwareMap hwMap)
@@ -63,6 +64,10 @@ public class Intake {
 
             newIntakeArmTarget = RESET_ARM_POSITION;
             
+        } else if (runMode == Mode.HANG) {
+
+            newIntakeArmTarget = HANG_SPECIMENT_POSITION;
+
         }
 
         arm.setTargetPosition(newIntakeArmTarget);
