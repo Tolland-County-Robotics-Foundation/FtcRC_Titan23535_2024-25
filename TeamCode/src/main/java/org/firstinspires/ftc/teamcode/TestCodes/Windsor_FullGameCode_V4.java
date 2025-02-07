@@ -209,7 +209,7 @@ public class Windsor_FullGameCode_V4 extends OpMode {
         longArm.moveLinearSlide(linearSlidePower);
 
         if (linearSlidePower > 0.1 || linearSlidePower < -0.1) {longArm.basketReset();}
-
+        if (intakeArmPower > 0.1) {longArm.collectSample();}
 
         // Basket control
 
