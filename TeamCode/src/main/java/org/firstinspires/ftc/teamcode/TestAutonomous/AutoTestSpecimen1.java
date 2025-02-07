@@ -59,7 +59,15 @@ public class AutoTestSpecimen1 extends LinearOpMode {
                 telemetry.update();
             }
 
-            // Drive backward 16 inches
+            // Drive backward 3 inches
+            drive.autoDrive(Drive.Mode.BACKWARD, 3, 0.5);
+            intake.closeClaw();
+            while (opModeIsActive() && drive.isBusy()) {
+                telemetry.addData("Drive:", "Backward 16 inches");
+                telemetry.update();
+            }
+
+            // Drive backward 12 inches
             drive.autoDrive(Drive.Mode.BACKWARD, 16, 0.5);
             intake.openClaw();
             while (opModeIsActive() && drive.isBusy()) {
