@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms_Final.Drive;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.Intake;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
 
-@Autonomous(name="Auto Test 2", group="Autonomous")
+@Autonomous(name="Auto Test Specimen 1", group="Autonomous")
 
 public class AutoTestSpecimen1 extends LinearOpMode {
 

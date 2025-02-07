@@ -109,6 +109,7 @@ public class AutoTest2 extends LinearOpMode {
 
             // Step 2) Turn LEFT 9 inches
             drive.autoDrive(Drive.Mode.TURNLEFT, 9.0, 0.5);
+            intake.openClaw();
             while (opModeIsActive() && drive.isBusy()) {
                 telemetry.addData("Sample 1 Collect", "Turning LEFT");
                 telemetry.update();
@@ -116,6 +117,7 @@ public class AutoTest2 extends LinearOpMode {
 
             // Step 3) Drive FORWARD 7 inches
             drive.autoDrive(Drive.Mode.FORWARD, 7.0, 0.9);
+            intake.closeClaw();
             while (opModeIsActive() && drive.isBusy()) {
                 telemetry.addData("Sample 1 Collect", "Driving FORWARD 7 in");
                 telemetry.update();
@@ -124,7 +126,7 @@ public class AutoTest2 extends LinearOpMode {
             // Step 4) Close claw (3s)
             intake.closeClaw();
             clawTimer.reset();
-            while (opModeIsActive() && clawTimer.milliseconds() < 3000) {
+            while (opModeIsActive() && clawTimer.milliseconds() < 2000) {
                 telemetry.addData("Sample 1 Collect", "Closing claw...");
                 telemetry.update();
             }

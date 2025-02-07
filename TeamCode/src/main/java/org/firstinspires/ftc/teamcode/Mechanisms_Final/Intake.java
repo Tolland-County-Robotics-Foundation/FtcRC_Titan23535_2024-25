@@ -15,7 +15,7 @@ public class Intake {
 
     // Create a constant variable to set the claw power
 
-    private double CLAW_POWER = 0.5;
+    private double CLAW_POWER = 0.3;
 
     public enum Mode {
         COLLECT, DEPOSIT, RESET, HANG
@@ -24,7 +24,7 @@ public class Intake {
     private int COLLECT_GAMEPIECE_POSITION = -1381;
     private int DEPOSIT_GAMEPIECE_POSITION = 0;
     private int RESET_ARM_POSITION = -1000;
-    private int HANG_SPECIMENT_POSITION = -800;
+    private int HANG_SPECIMENT_POSITION = -608;
 
 
     public void init(HardwareMap hwMap)
