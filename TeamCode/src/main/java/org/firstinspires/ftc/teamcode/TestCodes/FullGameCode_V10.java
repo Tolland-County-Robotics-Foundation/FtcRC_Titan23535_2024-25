@@ -6,27 +6,28 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
+import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Blinkin_v1;
 import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Color_Sensor_v1;
 
 import java.util.Objects;
 
-@TeleOp(name = "Full Game Code 9", group = "test")
-public class FullGameCode_V9 extends OpMode {
+@TeleOp(name = "Full Game Code 10", group = "test")
+public class FullGameCode_V10 extends OpMode {
     /// Creating objects for the drivetrain, color sensor, REV Blinkin, and runtime.
     Drive_v1 drive = new Drive_v1();
     Color_Sensor_v1 color = new Color_Sensor_v1();
+    Blinkin_v1 light = new Blinkin_v1();
     private final ElapsedTime runtime = new ElapsedTime();
 
     /// Initializing variables to use across the entire program.
     String speedCap = "Normal";
     Boolean start = true;
     Boolean rightColor = false;
-    String redSpy = "none";
+    String redSpy = "yellow";
     double speed_percentage = 40.0;
 
     ///Creating objects for the intake mechanisms.
@@ -38,8 +39,6 @@ public class FullGameCode_V9 extends OpMode {
     private DcMotor leftArmLift     = null;
     private DcMotor rightArmLift    = null;
 
-    ///Creating an object for the REV Blinkin.
-    RevBlinkinLedDriver blinkin;
 
     @Override
     public void init()
@@ -70,10 +69,7 @@ public class FullGameCode_V9 extends OpMode {
         rightArmLift.setDirection(DcMotorSimple.Direction.REVERSE);
         rightArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        /// Initialize Blinkin.
-        blinkin = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");
-
-        // color.init(hardwareMap);
+       // color.init(hardwareMap);
         try {
             color.init(hardwareMap);
             telemetry.addData("Color Sensor", "Initialized");
@@ -146,7 +142,7 @@ public class FullGameCode_V9 extends OpMode {
             claw.setPower(1);
         } else if ((gamepad2.right_stick_x < 0) || (!rightColor)) {
             claw.setPower(-1);
-        } else if (gamepad2.a){
+        } else {
             claw.setPower(0.0);
         }
 
@@ -181,10 +177,7 @@ public class FullGameCode_V9 extends OpMode {
             basket.setPosition(0.55);
         }
         /// Color Sensor.
-        String blockColor = "none";
-        if (color.getDistance(DistanceUnit.INCH) < 0.5) {
-            blockColor = color.blockColor();
-        }
+        String colorOfBlock = color.blockColor();
 
         //Telemetry
         if (color.getDistance(DistanceUnit.INCH) < 0.5) {
@@ -193,34 +186,17 @@ public class FullGameCode_V9 extends OpMode {
 
         //Automatic sample rejection system.
         if (Objects.equals(redSpy, "red")) {
-            if (Objects.equals(blockColor, "blue")) {
+            if (Objects.equals(colorOfBlock, "blue")) {
                 rightColor = false;
             }
         } else if (Objects.equals(redSpy, "blue")) {
-            if (Objects.equals(blockColor, "red")) {
+            if (Objects.equals(colorOfBlock, "red")) {
                 rightColor = false;
             }
         } else {
             rightColor = true;
         }
-
         ///REV Blinkin.
-        if (Objects.equals(blockColor, "red")) {
-            blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.STROBE_RED);
-        }
-        if (Objects.equals(blockColor, "blue")) {
-            blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.STROBE_BLUE);
-        }
-        if (Objects.equals(blockColor, "yellow")) {
-            blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.STROBE_GOLD);
-        } else {
-            if (Objects.equals(redSpy, "red")) {
-                blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);
-            } else if (Objects.equals(redSpy, "blue")) {
-                blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLUE);
-            } else {
-                blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.RAINBOW_PARTY_PALETTE);
-            }
-        }
+       light.sample(redSpy);
     }
 }

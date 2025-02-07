@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Sensor_Mechanisms;
 
-import com.qualcomm.hardware.dfrobot.HuskyLens;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -28,18 +27,18 @@ public class Color_Sensor_v1 {
         return color.green();
     }
     public String blockColor() {
-        double red = getAmountRed();
-        double blue = getAmountBlue();
-        double yellow = getAmountGreen() - 50;
-        if (getDistance(DistanceUnit.INCH) < 0.5) {
-            if (red > 100 && red > blue && red > yellow) {
-                return "red";
-            } else if (blue > 100 && blue > red && blue > yellow) {
-                return "blue";
-            } else if (yellow > 100 && yellow > blue && yellow > red) {
-                return "yellow";
-            }
+        int red = getAmountRed();
+        int blue = getAmountBlue();
+        int yellow = getAmountGreen() - 50;
+
+        if (red > 100 && red > blue && red > yellow) {
+            return "red";
+        } else if (blue > 100 && blue > red && blue > yellow) {
+            return "blue";
+        } else if (yellow > 100 && yellow > blue && yellow > red) {
+            return "yellow";
+        } else {
+            return "none";
         }
-        return "none";
     }
 }

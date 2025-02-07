@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.TestCodes;
+package org.firstinspires.ftc.teamcode.Mechanisms_Final;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Drive_Mechanisms.Drive_v1;
 
-@TeleOp(name = "Full Game Code 8", group = "test")
-public class FullGameCode_V8 extends OpMode {
+@TeleOp(name = "Full Game Code Wolcott", group = "test")
+public class FullGameCode_Wollcot extends OpMode {
     // Creating an object from Drive_V1 class
     Drive_v1 drive = new Drive_v1();
     //Update
