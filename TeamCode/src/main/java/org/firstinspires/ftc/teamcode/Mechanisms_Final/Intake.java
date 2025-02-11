@@ -74,7 +74,7 @@ public class Intake {
 
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        arm.setPower(0.5);
+        arm.setPower(0.2);
     }
 
     public boolean isArmBusy() {

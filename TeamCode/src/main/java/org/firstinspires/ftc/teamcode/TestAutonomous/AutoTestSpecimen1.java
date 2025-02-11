@@ -45,7 +45,8 @@ public class AutoTestSpecimen1 extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Drive forward 17 inches
-            drive.autoDrive(Drive.Mode.FORWARD, 17, 0.5);
+            drive.autoDrive(Drive.Mode.FORWARD, 17, 0.3);
+            intake.closeClaw();
             while (opModeIsActive() && drive.isBusy()) {
                 telemetry.addData("Drive:", "Forward 17 inches");
                 telemetry.update();
@@ -60,19 +61,21 @@ public class AutoTestSpecimen1 extends LinearOpMode {
             }
 
             // Drive backward 16 inches
-            drive.autoDrive(Drive.Mode.BACKWARD, 16, 0.5);
-            intake.openClaw();
+            sleep(3000);
+            drive.autoDrive(Drive.Mode.BACKWARD, 16, 0.3);
+            intake.closeClaw();
             while (opModeIsActive() && drive.isBusy()) {
                 telemetry.addData("Drive:", "Backward 16 inches");
                 telemetry.update();
             }
 
             // Drive right 50 inches
-            drive.autoDrive(Drive.Mode.RIGHT, 9, 0.5);
+            drive.autoDrive(Drive.Mode.RIGHT, 40, 0.3);
             while (opModeIsActive() && drive.isBusy()) {
                 telemetry.addData("Drive:", "Right 50 inches");
                 telemetry.update();
             }
+
             /*
              * -------------------------------
              *  COMPLETED / STOP

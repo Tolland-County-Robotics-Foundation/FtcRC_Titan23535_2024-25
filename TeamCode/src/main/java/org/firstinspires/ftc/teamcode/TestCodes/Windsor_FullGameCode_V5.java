@@ -29,7 +29,7 @@ public class Windsor_FullGameCode_V5 extends OpMode {
 
     double speed_percentage = 50.0;
 
-    String alliance_color = "Not Selected";
+    String alliance_color ="Not Selected";
     String sample_color = "Not Selected";
     String wrong_sample_color = "Not Selected";
 
