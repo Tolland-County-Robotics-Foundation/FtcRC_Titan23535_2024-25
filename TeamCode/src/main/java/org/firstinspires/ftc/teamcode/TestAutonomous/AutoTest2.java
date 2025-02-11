@@ -72,6 +72,7 @@ public class AutoTest2 extends LinearOpMode {
 
             // Step 3) Move intake arm to collect + lift linear slide
             intake.autoMoveArm(Intake.Mode.COLLECT);
+            longArm.basketReset();
             longArm.autoLiftLinearSlide();
             while (opModeIsActive() && (intake.isArmBusy() || longArm.isLinearSlideBusy())) {
                 telemetry.addData("Sample 0 Score", "Moving Arm & Linear Slide");
