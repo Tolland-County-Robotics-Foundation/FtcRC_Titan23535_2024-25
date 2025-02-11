@@ -13,7 +13,7 @@ public class Drive {
     private DcMotor leftBackDrive   = null;
     private DcMotor rightBackDrive  = null;
 
-    private double MOTOR_POWER      = 0.5;
+    private double MOTOR_POWER      = 0.3;
 
     static final double     COUNTS_PER_MOTOR_REV    = 28;    //
     static final double     DRIVE_GEAR_REDUCTION    =  12.0;     // 4:1 External Gearing.
