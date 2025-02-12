@@ -4,10 +4,6 @@ package org.firstinspires.ftc.teamcode.TestCodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.Climb;
@@ -16,6 +12,8 @@ import org.firstinspires.ftc.teamcode.Mechanisms_Final.Intake;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
 import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Blinkin_v2;
 import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Color_Sensor_v2;
+
+import java.util.Objects;
 
 @TeleOp(name = "Full TeleOp 6", group = "AWindsor")
 
@@ -31,9 +29,7 @@ public class Windsor_FullGameCode_V6 extends OpMode {
     //Creating two variables for capping the speed
     String speedcap = "Normal";
     double speed_percentage = 50.0;
-    String alliance_color = "Not Selected";
-    String sample_color = "Not Selected";
-    String wrong_sample_color = "none";
+    String sample = "none";
     Boolean reject;
     Boolean accept;
     String redSpy;
@@ -124,25 +120,40 @@ public class Windsor_FullGameCode_V6 extends OpMode {
         boolean hookResetButton = gamepad2.y;
         boolean hookGrabRungButton = gamepad2.a;
 
-        // Alliance color
-        boolean allianceRedButton = gamepad1.left_bumper;
-        boolean allianceBlueButton = gamepad1.right_bumper;
-
-
-        /// Mechanisms ------------------------------------------------------------------------
-
-        /// Alliance selection --------------------------------------------------
-
-        if (allianceRedButton) { alliance_color = "red"; wrong_sample_color = "blue"; }
-        else if (allianceBlueButton) { alliance_color = "blue"; wrong_sample_color = "red"; }
-
         /// Color sensor -----------------------------------------------------------------
+        sample = colorB.sampleColor();
 
-        sample_color = colorB.sampleColor();
+        //Automatic sample rejection system.
+        reject = false;
+        accept = false;
+
+        if (Objects.equals(redSpy, "red")) {
+            if (Objects.equals(sample, "blue")) {
+                reject = true;
+            }
+        }
+        if (Objects.equals(redSpy, "blue")) {
+            if (Objects.equals(sample, "red")) {
+                reject = true;
+            }
+        }
+
+        //Automatic sample acceptation system.
+        if (Objects.equals(redSpy, "red")) {
+            if (Objects.equals(sample, "red")) {
+                accept = true;
+            }
+        }
+        if (Objects.equals(redSpy, "blue")) {
+            if (Objects.equals(sample, "blue")) {
+                accept = true;
+            }
+        }
+        if (Objects.equals(sample, "yellow")) {
+            accept = true;
+        }
 
         /// Drive Controls -----------------------------------------------------------------
-
-
         // Set the speed cap for driver 1
         if (gamepad1.y)
         {
@@ -163,11 +174,9 @@ public class Windsor_FullGameCode_V6 extends OpMode {
         }
 
         // Control for setting the motors power
-
         drive.setDriveMotorPower(axialButton, lateralButton, yawButton, speed_percentage);
 
         // Control for driving straight forward, backward, left and right
-
         if (goForwardButton) {
             drive.teleOpForward();
         } else if (goBackwardButton) {
@@ -180,32 +189,21 @@ public class Windsor_FullGameCode_V6 extends OpMode {
 
 
         /// Intake Controls ----------------------------------------------------------------------
-
         // Intake arm controls
-
         intake.moveArm(intakeArmPower);
 
         // Intake claw controls
+        if (gamepad2.right_stick_x > 0) {
+            clawPower = 1.0;
+        } else if ((gamepad2.right_stick_x < 0)) {
+            clawPower = -1.0;
+        } else {
+            samplePick(accept, reject);
+        }
 
         intake.moveClaw(intakeClawPower);
 
-        if (intakeClawPower == 0 && sample_color == wrong_sample_color) {
-            intake.openClaw(); }
-
-
-
         /// Long arm Controls ------------------------------------------------------------------
-
-        // Linear slide controls
-
-        /*
-
-        if      (linearSlideResetButton)    { longArm.autoResetArm();   }
-        else if (linearSlideLiftButton)     { longArm.autoLiftArm();    }
-        else if (linerSlideStopButton)     { longArm.stopArm();        }
-
-         */
-
         longArm.moveLinearSlide(linearSlidePower);
 
 
@@ -217,7 +215,6 @@ public class Windsor_FullGameCode_V6 extends OpMode {
         }
 
         // Basket controls
-
         if (basketScoreButton)          { longArm.basketScoreSample();    }
         else if (basketCollectButton)   { longArm.basketCollectSample();  }
         else if (basketResetButton)     { longArm.basketReset();    }
@@ -227,7 +224,6 @@ public class Windsor_FullGameCode_V6 extends OpMode {
 
 
         /// Hook Controls ---------------------------------------------------------------------
-
         if (hookGrabRungButton) {
             hookTimer.reset();
             while (hookTimer.seconds() < 2.5) { hook.grabRung(); }
@@ -235,11 +231,15 @@ public class Windsor_FullGameCode_V6 extends OpMode {
             hook.reset();
         } else hook.stop();
 
-        /// Telemetry -----------------------------------------------------------------------------
+        /// Rev BLINKIN
+        lightB.light(redSpy);
 
+        /// Telemetry -----------------------------------------------------------------------------
         //Display Runtime
-        telemetry.addData("Alliance: ", alliance_color);
-        telemetry.addData("Sample Color: ", colorB.sampleColor());
+        telemetry.addData("Alliance: ", redSpy);
+        telemetry.addData("Sample Color", colorB.sampleColor());
+        telemetry.addData("Reject?", reject);
+        telemetry.addData("Accept?", accept);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Axial:", axialButton);
         telemetry.addData("Lateral:",lateralButton);
