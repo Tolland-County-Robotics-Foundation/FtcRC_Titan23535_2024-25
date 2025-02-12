@@ -11,7 +11,7 @@ public class LongArm {
     private DcMotor leftArmLift      = null;
     private DcMotor rightArmLift     = null;
 
-    private double  ARM_POWER                   = 0.7;
+    private double  ARM_POWER                   = 1;
     private double  BASKET_RESET_POSITION       = 0.5;
     private double  BASKET_SCORE_POSITION       = 1;
     private double  BASKET_COLLECT_POSITION     = 0.6;

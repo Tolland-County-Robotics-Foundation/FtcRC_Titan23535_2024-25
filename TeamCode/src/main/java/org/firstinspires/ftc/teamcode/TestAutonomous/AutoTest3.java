@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms_Final.Intake;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.Pose;
 
-@Autonomous(name="Auto Test 2", group="Autonomous")
+@Autonomous(name="Auto Test 3", group="Autonomous")
 
 public class AutoTest3 extends LinearOpMode {
 
@@ -24,7 +24,7 @@ public class AutoTest3 extends LinearOpMode {
     private ElapsedTime clawTimer   = new ElapsedTime();
     private ElapsedTime basketTimer = new ElapsedTime();
 
-    Pose sample0Pose = new Pose(8.5, 5, 45);
+    Pose sample0Pose = new Pose(-8.5, 5, 45);
 
     @Override
     public void runOpMode() {
@@ -48,13 +48,25 @@ public class AutoTest3 extends LinearOpMode {
         if (opModeIsActive()) {
 
             drive.autoDrivePose(sample0Pose, 0.5);
+            longArm.basketReset();
 
             while (opModeIsActive() && drive.isBusy()) {
-                telemetry.addData("Sample 0 Score", "Driving LEFT 10 in");
+                telemetry.addData("Sample 0 Score", "Driving to sample 0 score");
                 telemetry.update();
             }
 
             drive.stop();
+            intake.autoMoveArm(Intake.Mode.COLLECT);
+            longArm.basketReset();
+            longArm.autoLiftLinearSlide();
+            while (opModeIsActive() && (intake.isArmBusy() || longArm.isLinearSlideBusy())) {
+                telemetry.addData("Sample 0 Score", "Moving Arm & Linear Slide");
+                telemetry.update();
+            }
+
+            drive.stop();
+            intake.stopArm();
+            longArm.stopLinearSlide();
             telemetry.update();
 
 
