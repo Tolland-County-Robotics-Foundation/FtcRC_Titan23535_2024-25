@@ -3,12 +3,13 @@
 package org.firstinspires.ftc.teamcode.Mechanisms_Final;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Drive {
 
-    private DcMotor leftFrontDrive  = null;
+    private DcMotorEx leftFrontDrive  = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor leftBackDrive   = null;
     private DcMotor rightBackDrive  = null;
@@ -20,7 +21,6 @@ public class Drive {
     static final double     WHEEL_DIAMETER_INCHES   =  2.95276;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.25;
 
     public enum Mode {
         FORWARD, BACKWARD, LEFT, RIGHT, TURNLEFT, TURNRIGHT
@@ -31,7 +31,7 @@ public class Drive {
     {
 
         //Hardware mapping
-        leftFrontDrive  = hardwareMap.get(DcMotor.class,"leftFront");
+        leftFrontDrive  = hardwareMap.get(DcMotorEx.class,"leftFront");
         rightFrontDrive = hardwareMap.get(DcMotor.class,"rightFront");
         leftBackDrive   = hardwareMap.get(DcMotor.class,"leftBack");
         rightBackDrive  = hardwareMap.get(DcMotor.class,"rightBack");
@@ -195,6 +195,8 @@ public class Drive {
         leftBackDrive.setPower(drive_speed);
         rightBackDrive.setPower(drive_speed);
 
+        // if getTargetPosition = getcurrentposition, autoStop()
+
     }
 
     public void autoStop(){
@@ -207,6 +209,10 @@ public class Drive {
         leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+    }
+
+    public void autoDriveToPosition(){
 
     }
 
