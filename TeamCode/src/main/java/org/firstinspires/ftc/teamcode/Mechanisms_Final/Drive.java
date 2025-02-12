@@ -2,16 +2,15 @@
 
 package org.firstinspires.ftc.teamcode.Mechanisms_Final;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Drive {
 
-    private DcMotor leftFrontDrive  = null;
-    private DcMotor rightFrontDrive = null;
-    private DcMotor leftBackDrive   = null;
-    private DcMotor rightBackDrive  = null;
+    private DcMotorEx leftFrontDrive  = null;
+    private DcMotorEx rightFrontDrive = null;
+    private DcMotorEx leftBackDrive   = null;
+    private DcMotorEx rightBackDrive  = null;
 
     private double MOTOR_POWER      = 0.5;
 
@@ -31,31 +30,31 @@ public class Drive {
     {
 
         //Hardware mapping
-        leftFrontDrive  = hardwareMap.get(DcMotor.class,"leftFront");
-        rightFrontDrive = hardwareMap.get(DcMotor.class,"rightFront");
-        leftBackDrive   = hardwareMap.get(DcMotor.class,"leftBack");
-        rightBackDrive  = hardwareMap.get(DcMotor.class,"rightBack");
+        leftFrontDrive  = hardwareMap.get(DcMotorEx.class,"leftFront");
+        rightFrontDrive = hardwareMap.get(DcMotorEx.class,"rightFront");
+        leftBackDrive   = hardwareMap.get(DcMotorEx.class,"leftBack");
+        rightBackDrive  = hardwareMap.get(DcMotorEx.class,"rightBack");
 
         // Setting the direction
-        leftFrontDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightFrontDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftFrontDrive.setDirection(DcMotorEx.Direction.FORWARD);
+        rightFrontDrive.setDirection(DcMotorEx.Direction.FORWARD);
+        leftBackDrive.setDirection(DcMotorEx.Direction.REVERSE);
+        rightBackDrive.setDirection(DcMotorEx.Direction.REVERSE);
 
-        leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftFrontDrive.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        leftBackDrive.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        rightFrontDrive.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        rightBackDrive.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
-        leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftFrontDrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        leftBackDrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        rightFrontDrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        rightBackDrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftFrontDrive.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        leftBackDrive.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        rightFrontDrive.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        rightBackDrive.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
 
     }
@@ -185,10 +184,10 @@ public class Drive {
         rightFrontDrive.setTargetPosition(newRightFrontTarget);
         rightBackDrive.setTargetPosition(newRightBackTarget);
 
-        leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftFrontDrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        leftBackDrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        rightFrontDrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        rightBackDrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
         leftFrontDrive.setPower(drive_speed);
         rightFrontDrive.setPower(drive_speed);
@@ -203,10 +202,10 @@ public class Drive {
         leftBackDrive.setPower(0.0);
         rightBackDrive.setPower(0.0);
 
-        leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftFrontDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        leftBackDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        rightFrontDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        rightBackDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
     }
 

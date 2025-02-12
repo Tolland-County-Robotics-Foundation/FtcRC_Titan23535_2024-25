@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.Mechanisms_Final;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
@@ -11,7 +11,7 @@ public class Intake {
     // Create one object of DcMotor class for intake arm and one object of Servo class for claw
 
     private CRServo claw = null;
-    private DcMotor arm = null;
+    private DcMotorEx arm = null;
 
     // Create a constant variable to set the claw power
 
@@ -30,10 +30,10 @@ public class Intake {
     public void init(HardwareMap hwMap)
     {
         claw        = hwMap.get(CRServo.class, "claw");
-        arm = hwMap.get(DcMotor.class, "intakeArm");
+        arm = hwMap.get(DcMotorEx.class, "intakeArm");
 
-        claw.setDirection(DcMotorSimple.Direction.FORWARD);
-        arm.setDirection(DcMotorSimple.Direction.FORWARD);
+        claw.setDirection(DcMotorEx.Direction.FORWARD);
+        arm.setDirection(DcMotorEx.Direction.FORWARD);
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 

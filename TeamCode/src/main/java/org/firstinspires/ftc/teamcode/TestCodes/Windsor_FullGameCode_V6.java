@@ -4,16 +4,20 @@ package org.firstinspires.ftc.teamcode.TestCodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.Climb;
-import org.firstinspires.ftc.teamcode.Mechanisms_Final.ColorDistanceSensor;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.Drive;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.Intake;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
+import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Blinkin_v2;
+import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Color_Sensor_v2;
 
-
-@TeleOp(name = "Full Teleop 6", group = "AWindsor")
+@TeleOp(name = "Full TeleOp 6", group = "AWindsor")
 
 public class Windsor_FullGameCode_V6 extends OpMode {
 
@@ -26,13 +30,14 @@ public class Windsor_FullGameCode_V6 extends OpMode {
 
     //Creating two variables for capping the speed
     String speedcap = "Normal";
-
     double speed_percentage = 50.0;
-
     String alliance_color = "Not Selected";
     String sample_color = "Not Selected";
-    String wrong_sample_color = "Not Selected";
-
+    String wrong_sample_color = "none";
+    Boolean reject;
+    Boolean accept;
+    String redSpy;
+    double clawPower;
 
     // Creating objects from Drive_V1, Intake_v1, and LongArm_v2 class
 
@@ -40,7 +45,8 @@ public class Windsor_FullGameCode_V6 extends OpMode {
     Drive drive     = new Drive();
     Intake intake   = new Intake();
     LongArm longArm = new LongArm();
-    ColorDistanceSensor clrSensor = new ColorDistanceSensor();
+    Color_Sensor_v2 colorB = new Color_Sensor_v2();
+    Blinkin_v2 lightB = new Blinkin_v2();
 
     @Override
     public void init()
@@ -58,37 +64,40 @@ public class Windsor_FullGameCode_V6 extends OpMode {
         intake.init(hardwareMap);
         longArm.init(hardwareMap);
         hook.init(hardwareMap);
-        clrSensor.init(hardwareMap);
-
+        colorB.init(hardwareMap);
+        lightB.init(hardwareMap);
         /// Telemetry -----------------------------------------------------------------------------
 
         // Wait for the game to start (driver presses PLAY)
         telemetry.addData("Status", "Initialized");
 
     }
+
+    public void samplePick(Boolean accept, Boolean reject) {
+        if (accept) {
+            clawPower = 1.0;
+        } else if (reject) {
+            clawPower = -1.0;
+        } else {
+            clawPower = 0.0;
+        }
+    }
+
     @Override
     public void loop()
     {
+        /// Alliance data.
+        telemetry.addData("Alliance", "Left Trigger for Red, Right Trigger for Blue");
+        if (gamepad1.left_trigger > 0) {
+            redSpy = "red";
+            telemetry.addData("Alliance", "Red");
+        }
+        if (gamepad1.right_trigger > 0) {
+            redSpy = "blue";
+            telemetry.addData("Alliance", "Blue");
+        }
+
         /// Button configuration -------------------------------------------------------------------
-
-        // Drive
-
-        /* Uses left joystick to go forward, backward, left, and right, and right joystick to rotate.
-
-           Left joystick up --> forward
-
-           Left joystick down --> Backward
-
-           Left joystick right --> Right
-
-           Left joystick left --> Left
-
-           Right joystick left --> rotate left
-
-           Right joystick right --> rotate right
-
-        */
-
         double yawButton     =  gamepad1.right_stick_x;
         double axialButton   = -gamepad1.left_stick_y;  // Negative value for pushing stick forward
         double lateralButton =  gamepad1.left_stick_x;
@@ -99,19 +108,11 @@ public class Windsor_FullGameCode_V6 extends OpMode {
         boolean goRightButton       = gamepad1.dpad_right;
 
         // Intake
-
-    /*
-        Gamepad 2 left stick y to move the intake arm
-
-        Gamepad 2 right stick x to move the claw
-     */
-
         double intakeArmPower   = gamepad2.left_stick_y * 0.5;
         double intakeClawPower  = gamepad2.right_stick_x;
 
 
         // Long Arm
-
         double linearSlidePower = gamepad2.left_trigger - gamepad2.right_trigger;
 
         boolean basketScoreButton   = gamepad2.dpad_down;
@@ -120,7 +121,6 @@ public class Windsor_FullGameCode_V6 extends OpMode {
         
 
         // Hook
-
         boolean hookResetButton = gamepad2.y;
         boolean hookGrabRungButton = gamepad2.a;
 
@@ -138,7 +138,7 @@ public class Windsor_FullGameCode_V6 extends OpMode {
 
         /// Color sensor -----------------------------------------------------------------
 
-        sample_color = clrSensor.detectColor();
+        sample_color = colorB.sampleColor();
 
         /// Drive Controls -----------------------------------------------------------------
 
@@ -239,7 +239,7 @@ public class Windsor_FullGameCode_V6 extends OpMode {
 
         //Display Runtime
         telemetry.addData("Alliance: ", alliance_color);
-        telemetry.addData("Sample Color: ", clrSensor.detectColor());
+        telemetry.addData("Sample Color: ", colorB.sampleColor());
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Axial:", axialButton);
         telemetry.addData("Lateral:",lateralButton);

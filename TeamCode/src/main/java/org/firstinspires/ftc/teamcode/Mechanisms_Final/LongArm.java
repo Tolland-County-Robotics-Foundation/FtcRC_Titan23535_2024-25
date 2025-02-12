@@ -1,15 +1,14 @@
 package org.firstinspires.ftc.teamcode.Mechanisms_Final;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class LongArm {
 
     private Servo   basket           = null;
-    private DcMotor leftArmLift      = null;
-    private DcMotor rightArmLift     = null;
+    private DcMotorEx leftArmLift      = null;
+    private DcMotorEx rightArmLift     = null;
 
     private double  ARM_POWER                   = 0.7;
     private double  BASKET_RESET_POSITION       = 0.45;
@@ -24,21 +23,21 @@ public class LongArm {
     public void init(HardwareMap hwMap)
     {
         basket          = hwMap.get(Servo.class, "BasketArm");
-        leftArmLift     = hwMap.get(DcMotor.class, "LeftArmLift");
-        rightArmLift    = hwMap.get(DcMotor.class, "RightArmLift");
+        leftArmLift     = hwMap.get(DcMotorEx.class, "LeftArmLift");
+        rightArmLift    = hwMap.get(DcMotorEx.class, "RightArmLift");
 
         basket.setDirection(Servo.Direction.FORWARD);
-        leftArmLift.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightArmLift.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftArmLift.setDirection(DcMotorEx.Direction.FORWARD);
+        rightArmLift.setDirection(DcMotorEx.Direction.REVERSE);
 
-        leftArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftArmLift.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        rightArmLift.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
-        leftArmLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightArmLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftArmLift.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        rightArmLift.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftArmLift.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        rightArmLift.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
     }
 
 
@@ -72,8 +71,8 @@ public class LongArm {
         leftArmLift.setTargetPosition(LEFT_ARM_SCORE_POSITION);
         rightArmLift.setTargetPosition(RIGHT_ARM_SCORE_POSITION);
 
-        leftArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftArmLift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        rightArmLift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
         leftArmLift.setPower(ARM_POWER);
         rightArmLift.setPower(ARM_POWER);
@@ -85,8 +84,8 @@ public class LongArm {
         leftArmLift.setTargetPosition(LEFT_ARM_RESET_POSITION);
         rightArmLift.setTargetPosition(RIGHT_ARM_RESET_POSITION);
 
-        leftArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftArmLift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        rightArmLift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
         leftArmLift.setPower(ARM_POWER);
         rightArmLift.setPower(ARM_POWER);
