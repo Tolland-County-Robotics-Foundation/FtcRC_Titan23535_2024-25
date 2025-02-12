@@ -9,10 +9,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Drive {
 
-    private DcMotor leftFrontDrive  = null;
-    private DcMotor rightFrontDrive = null;
-    private DcMotor leftBackDrive   = null;
-    private DcMotor rightBackDrive  = null;
+    private DcMotorEx leftFrontDrive  = null;
+    private DcMotorEx rightFrontDrive = null;
+    private DcMotorEx leftBackDrive   = null;
+    private DcMotorEx rightBackDrive  = null;
 
     private double MOTOR_POWER      = 0.3;
 
@@ -32,10 +32,10 @@ public class Drive {
     {
 
         //Hardware mapping
-        leftFrontDrive  = hardwareMap.get(DcMotor.class,"leftFront");
-        rightFrontDrive = hardwareMap.get(DcMotor.class,"rightFront");
-        leftBackDrive   = hardwareMap.get(DcMotor.class,"leftBack");
-        rightBackDrive  = hardwareMap.get(DcMotor.class,"rightBack");
+        leftFrontDrive  = hardwareMap.get(DcMotorEx.class,"leftFront");
+        rightFrontDrive = hardwareMap.get(DcMotorEx.class,"rightFront");
+        leftBackDrive   = hardwareMap.get(DcMotorEx.class,"leftBack");
+        rightBackDrive  = hardwareMap.get(DcMotorEx.class,"rightBack");
 
         // Setting the direction
         leftFrontDrive.setDirection(DcMotorSimple.Direction.FORWARD);
