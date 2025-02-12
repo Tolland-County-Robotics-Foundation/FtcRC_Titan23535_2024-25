@@ -3,6 +3,7 @@
 package org.firstinspires.ftc.teamcode.Mechanisms_Final;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -207,6 +208,35 @@ public class Drive {
         leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+    }
+
+    public void autoDrivePose(Pose pose, double driveSpeed) {
+
+        int forwardTarget = (int) (pose.y * COUNTS_PER_INCH);
+        int rightTarget = (int) (pose.x * COUNTS_PER_INCH);
+        int rotateTarget = (int) (pose.orientation * COUNTS_PER_INCH);
+
+        int newLeftFrontTarget= 0;
+        int newLeftBackTarget=0;
+        int newRightFrontTarget=0;
+        int newRightBackTarget=0;
+
+
+        leftFrontDrive.setTargetPosition(newLeftFrontTarget);
+        leftBackDrive.setTargetPosition(newLeftBackTarget);
+        rightFrontDrive.setTargetPosition(newRightFrontTarget);
+        rightBackDrive.setTargetPosition(newRightBackTarget);
+
+        leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        leftFrontDrive.setPower(driveSpeed);
+        rightFrontDrive.setPower(driveSpeed);
+        leftBackDrive.setPower(driveSpeed);
+        rightBackDrive.setPower(driveSpeed);
 
     }
 
