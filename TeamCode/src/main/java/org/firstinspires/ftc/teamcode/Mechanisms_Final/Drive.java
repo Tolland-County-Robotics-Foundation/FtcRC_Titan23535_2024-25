@@ -217,7 +217,7 @@ public class Drive {
         int rightTarget = (int) (pose.x * COUNTS_PER_INCH);
         int rotateTarget = (int) (pose.orientation * COUNTS_PER_INCH);
 
-        int newLeftFrontTarget= 0;
+        int newLeftFrontTarget= leftFrontDrive.getCurrentPosition() + forwardTarget + rightTarget + rotateTarget;
         int newLeftBackTarget=0;
         int newRightFrontTarget=0;
         int newRightBackTarget=0;
