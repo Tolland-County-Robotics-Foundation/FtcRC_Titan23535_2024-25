@@ -24,7 +24,7 @@ public class AutoTest3 extends LinearOpMode {
     private ElapsedTime clawTimer   = new ElapsedTime();
     private ElapsedTime basketTimer = new ElapsedTime();
 
-    Pose sample0Pose = new Pose(-8.5, 5, 45);
+    Pose sample0Pose = new Pose(-9, 2, 45);
 
     @Override
     public void runOpMode() {
