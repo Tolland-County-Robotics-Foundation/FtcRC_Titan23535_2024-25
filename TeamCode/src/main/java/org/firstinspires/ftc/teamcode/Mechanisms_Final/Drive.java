@@ -213,9 +213,12 @@ public class Drive {
 
     public void autoDrivePose(Pose pose, double driveSpeed) {
 
+        int orientationInch = 0;
+        if (pose.orientation == 45) { orientationInch = 9; }
+
         int forwardTarget = (int) (pose.y * COUNTS_PER_INCH);
         int rightTarget = (int) (pose.x * COUNTS_PER_INCH);
-        int rotateTarget = (int) (pose.orientation * COUNTS_PER_INCH);
+        int rotateTarget = (int) (orientationInch * COUNTS_PER_INCH);
 
         int newLeftFrontTarget= leftFrontDrive.getCurrentPosition() + forwardTarget + rightTarget + rotateTarget;
         int newLeftBackTarget = leftBackDrive.getCurrentPosition() + forwardTarget - rightTarget + rotateTarget;
