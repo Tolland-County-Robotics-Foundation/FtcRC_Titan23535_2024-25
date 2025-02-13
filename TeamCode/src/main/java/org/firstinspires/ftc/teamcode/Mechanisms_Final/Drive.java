@@ -3,17 +3,18 @@
 package org.firstinspires.ftc.teamcode.Mechanisms_Final;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Drive {
 
-    private DcMotor leftFrontDrive  = null;
-    private DcMotor rightFrontDrive = null;
-    private DcMotor leftBackDrive   = null;
-    private DcMotor rightBackDrive  = null;
+    private DcMotorEx leftFrontDrive  = null;
+    private DcMotorEx rightFrontDrive = null;
+    private DcMotorEx leftBackDrive   = null;
+    private DcMotorEx rightBackDrive  = null;
 
-    private double MOTOR_POWER      = 0.5;
+    private double MOTOR_POWER      = 0.3;
 
     static final double     COUNTS_PER_MOTOR_REV    = 28;    //
     static final double     DRIVE_GEAR_REDUCTION    =  12.0;     // 4:1 External Gearing.
@@ -31,10 +32,10 @@ public class Drive {
     {
 
         //Hardware mapping
-        leftFrontDrive  = hardwareMap.get(DcMotor.class,"leftFront");
-        rightFrontDrive = hardwareMap.get(DcMotor.class,"rightFront");
-        leftBackDrive   = hardwareMap.get(DcMotor.class,"leftBack");
-        rightBackDrive  = hardwareMap.get(DcMotor.class,"rightBack");
+        leftFrontDrive  = hardwareMap.get(DcMotorEx.class,"leftFront");
+        rightFrontDrive = hardwareMap.get(DcMotorEx.class,"rightFront");
+        leftBackDrive   = hardwareMap.get(DcMotorEx.class,"leftBack");
+        rightBackDrive  = hardwareMap.get(DcMotorEx.class,"rightBack");
 
         // Setting the direction
         leftFrontDrive.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -207,6 +208,38 @@ public class Drive {
         leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+    }
+
+    public void autoDrivePose(Pose pose, double driveSpeed) {
+
+        int orientationInch = 0;
+        if (pose.orientation == 45) { orientationInch = 9; }
+
+        int forwardTarget = (int) (pose.y * COUNTS_PER_INCH);
+        int rightTarget = (int) (pose.x * COUNTS_PER_INCH);
+        int rotateTarget = (int) (orientationInch * COUNTS_PER_INCH);
+
+        int newLeftFrontTarget= leftFrontDrive.getCurrentPosition() + forwardTarget + rightTarget + rotateTarget;
+        int newLeftBackTarget = leftBackDrive.getCurrentPosition() + forwardTarget - rightTarget + rotateTarget;
+        int newRightFrontTarget = leftBackDrive.getCurrentPosition() + forwardTarget - rightTarget - rotateTarget;
+        int newRightBackTarget = leftBackDrive.getCurrentPosition() + forwardTarget + rightTarget - rotateTarget;
+
+
+        leftFrontDrive.setTargetPosition(newLeftFrontTarget);
+        leftBackDrive.setTargetPosition(newLeftBackTarget);
+        rightFrontDrive.setTargetPosition(newRightFrontTarget);
+        rightBackDrive.setTargetPosition(newRightBackTarget);
+
+        leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        leftFrontDrive.setPower(driveSpeed);
+        rightFrontDrive.setPower(driveSpeed);
+        leftBackDrive.setPower(driveSpeed);
+        rightBackDrive.setPower(driveSpeed);
 
     }
 

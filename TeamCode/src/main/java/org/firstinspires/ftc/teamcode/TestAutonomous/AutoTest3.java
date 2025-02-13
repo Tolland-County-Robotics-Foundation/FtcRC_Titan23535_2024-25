@@ -7,10 +7,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.Drive;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.Intake;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
+import org.firstinspires.ftc.teamcode.Mechanisms_Final.Pose;
 
-@Autonomous(name="Auto Test Specimen 1", group="Autonomous")
+@Autonomous(name="Auto Test 3", group="Autonomous")
 
-public class AutoTestSpecimen1 extends LinearOpMode {
+public class AutoTest3 extends LinearOpMode {
 
 
     // Hardware
@@ -22,6 +23,8 @@ public class AutoTestSpecimen1 extends LinearOpMode {
     private ElapsedTime runtime     = new ElapsedTime();
     private ElapsedTime clawTimer   = new ElapsedTime();
     private ElapsedTime basketTimer = new ElapsedTime();
+
+    Pose sample0Pose = new Pose(-9, 2, 45);
 
     @Override
     public void runOpMode() {
@@ -44,50 +47,29 @@ public class AutoTestSpecimen1 extends LinearOpMode {
 
         if (opModeIsActive()) {
 
-            // Drive forward 17 inches
-            drive.autoDrive(Drive.Mode.FORWARD, 17, 0.5);
+            drive.autoDrivePose(sample0Pose, 0.5);
+            longArm.basketReset();
+
             while (opModeIsActive() && drive.isBusy()) {
-                telemetry.addData("Drive:", "Forward 17 inches");
+                telemetry.addData("Sample 0 Score", "Driving to sample 0 score");
                 telemetry.update();
             }
 
-            // Raise intake to half way down
-            intake.autoMoveArm(Intake.Mode.HANG);
-            intake.closeClaw();
-            while (opModeIsActive() && intake.isArmBusy()) {
-                telemetry.addData("Intake: ", "Move");
+            drive.stop();
+            intake.autoMoveArm(Intake.Mode.COLLECT);
+            longArm.basketReset();
+            longArm.autoLiftLinearSlide();
+            while (opModeIsActive() && (intake.isArmBusy() || longArm.isLinearSlideBusy())) {
+                telemetry.addData("Sample 0 Score", "Moving Arm & Linear Slide");
                 telemetry.update();
             }
 
-            // Drive backward 16 inches
-            drive.autoDrive(Drive.Mode.BACKWARD, 16, 0.5);
-            intake.openClaw();
-            while (opModeIsActive() && drive.isBusy()) {
-                telemetry.addData("Drive:", "Backward 16 inches");
-                telemetry.update();
-            }
-
-            // Drive right 50 inches
-            drive.autoDrive(Drive.Mode.RIGHT, 9, 0.5);
-            while (opModeIsActive() && drive.isBusy()) {
-                telemetry.addData("Drive:", "Right 50 inches");
-                telemetry.update();
-            }
-            /*
-             * -------------------------------
-             *  COMPLETED / STOP
-             * -------------------------------
-             */
             drive.stop();
             intake.stopArm();
-            intake.stopClaw();
             longArm.stopLinearSlide();
-
-            telemetry.addData("Completed", "All tasks finished");
             telemetry.update();
 
-            // Optionally sleep a bit to see the final telemetry
-            sleep(1000);
+
         }
     }
 }

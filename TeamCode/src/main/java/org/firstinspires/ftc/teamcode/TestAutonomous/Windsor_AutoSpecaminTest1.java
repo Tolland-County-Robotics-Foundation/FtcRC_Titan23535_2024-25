@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
 
 @Autonomous
 
-public class Windsor_AutoTest3 extends OpMode {
+public class Windsor_AutoSpecaminTest1 extends OpMode {
 
     private boolean autonomousMovementStart = false;
 
@@ -37,7 +37,6 @@ public class Windsor_AutoTest3 extends OpMode {
 
     ElapsedTime clawTimer = new ElapsedTime();
     ElapsedTime basketTimer = new ElapsedTime();
-    private ElapsedTime runtime = new ElapsedTime();
 
     private double CLAW_COLLECT_TIME = 5.0;
 
@@ -47,7 +46,7 @@ public class Windsor_AutoTest3 extends OpMode {
     /// Necessary objects and variable creation --------------------------------------------------
 
     // Creating an object from ElapsedTime class to have run time information
-
+    private ElapsedTime runtime = new ElapsedTime();
 
     // Creating objects from Drive_V1, Intake_v1, and LongArm_v2 class
 
@@ -187,6 +186,7 @@ public class Windsor_AutoTest3 extends OpMode {
                         if (!drive.isBusy()) { sample1CollectSteps = 3; }
                         else { telemetry.addData("Sample 1 Collect: ", "Step 3"); }
                     }break;
+
                     case 3:{
                         if (!initializedSample1CollectStep[3]){
                             intake.closeClaw();
