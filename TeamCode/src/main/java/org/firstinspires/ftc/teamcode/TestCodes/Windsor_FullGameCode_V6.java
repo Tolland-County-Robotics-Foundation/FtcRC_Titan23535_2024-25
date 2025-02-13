@@ -69,13 +69,13 @@ public class Windsor_FullGameCode_V6 extends OpMode {
 
     }
 
-    public void samplePick(Boolean accept, Boolean reject) {
+    public double samplePick(Boolean accept, Boolean reject) {
         if (accept) {
-            clawPower = 1.0;
+            return 1.0;
         } else if (reject) {
-            clawPower = -1.0;
+            return -1.0;
         } else {
-            clawPower = 0.0;
+            return 0.0;
         }
     }
 
@@ -107,7 +107,6 @@ public class Windsor_FullGameCode_V6 extends OpMode {
         double intakeArmPower   = gamepad2.left_stick_y * 0.5;
         double intakeClawPower  = gamepad2.right_stick_x;
 
-
         // Long Arm
         double linearSlidePower = gamepad2.left_trigger - gamepad2.right_trigger;
 
@@ -123,7 +122,7 @@ public class Windsor_FullGameCode_V6 extends OpMode {
         /// Color sensor -----------------------------------------------------------------
         sample = colorB.sampleColor();
 
-        //Automatic sample rejection system.
+        //Automatic sample rejection & acceptation system.
         reject = false;
         accept = false;
 
@@ -131,27 +130,19 @@ public class Windsor_FullGameCode_V6 extends OpMode {
             if (Objects.equals(sample, "blue")) {
                 reject = true;
             }
+            if (Objects.equals(sample, "red")) {
+                accept = true;
+            }
         }
         if (Objects.equals(redSpy, "blue")) {
             if (Objects.equals(sample, "red")) {
                 reject = true;
             }
-        }
-
-        //Automatic sample acceptation system.
-        if (Objects.equals(redSpy, "red")) {
-            if (Objects.equals(sample, "red")) {
-                accept = true;
-            }
-        }
-        if (Objects.equals(redSpy, "blue")) {
             if (Objects.equals(sample, "blue")) {
                 accept = true;
             }
         }
-        if (Objects.equals(sample, "yellow")) {
-            accept = true;
-        }
+        if (Objects.equals(sample, "yellow"))
 
         /// Drive Controls -----------------------------------------------------------------
         // Set the speed cap for driver 1
@@ -198,10 +189,10 @@ public class Windsor_FullGameCode_V6 extends OpMode {
         } else if ((gamepad2.right_stick_x < 0)) {
             clawPower = -1.0;
         } else {
-            samplePick(accept, reject);
+            clawPower = samplePick(accept, reject);
         }
 
-        intake.moveClaw(intakeClawPower);
+        intake.moveClaw(clawPower);
 
         /// Long arm Controls ------------------------------------------------------------------
         longArm.moveLinearSlide(linearSlidePower);
