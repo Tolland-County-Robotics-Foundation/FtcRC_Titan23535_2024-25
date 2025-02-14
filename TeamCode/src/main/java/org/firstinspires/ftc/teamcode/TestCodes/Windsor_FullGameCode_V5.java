@@ -274,8 +274,6 @@ public class Windsor_FullGameCode_V5 extends OpMode {
         }
 
 
-
-
         /// Telemetry -----------------------------------------------------------------------------
 
         //Display Runtime
