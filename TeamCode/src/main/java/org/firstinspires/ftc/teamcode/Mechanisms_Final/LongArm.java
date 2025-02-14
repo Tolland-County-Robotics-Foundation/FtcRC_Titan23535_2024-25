@@ -98,6 +98,16 @@ public class LongArm {
 
     }
 
+    public int leftLSPosition(){
+        return leftArmLift.getCurrentPosition();
+    }
+
+    public int rightLSPosition(){
+        return rightArmLift.getCurrentPosition();
+    }
+
+
+
     public boolean isLinearSlideBusy() {
 
         if (leftArmLift.isBusy() || !rightArmLift.isBusy()) {
