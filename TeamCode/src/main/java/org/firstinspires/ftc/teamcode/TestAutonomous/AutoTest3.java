@@ -24,7 +24,7 @@ public class AutoTest3 extends LinearOpMode {
     private ElapsedTime clawTimer   = new ElapsedTime();
     private ElapsedTime basketTimer = new ElapsedTime();
 
-    Pose sample0ScorePose = new Pose(-20, 3, 45);
+    Pose sample0ScorePose = new Pose(-10, 5, 0);
     Pose sample1CollectPose = new Pose(1, 1, -45);
 
     @Override
@@ -68,7 +68,7 @@ public class AutoTest3 extends LinearOpMode {
                 telemetry.addData("Sample 0: ", "Driving to score position");
                 telemetry.addData("Drive busy: ", drive.isBusy());
                 telemetry.addData("Intake busy: ", intake.isArmBusy());
-                telemetry.addData("Drive busy: ", longArm.isLinearSlideBusy());
+                telemetry.addData("Long Arm busy: ", longArm.isLinearSlideBusy());
                 telemetry.update();
             }
 
