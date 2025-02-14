@@ -42,6 +42,15 @@ public class Windsor_FullGameCode_V5 extends OpMode {
     LongArm longArm = new LongArm();
     ColorDistanceSensor clrSensor = new ColorDistanceSensor();
 
+    // Hook states enums
+
+    private enum HookStates {
+        STOP, GRAB, RESET
+    }
+
+    private HookStates hookStates = HookStates.STOP;
+
+
     @Override
     public void init()
     {
@@ -229,12 +238,32 @@ public class Windsor_FullGameCode_V5 extends OpMode {
         /// Hook Controls ---------------------------------------------------------------------
 
         if (hookGrabRungButton) {
-            hookTimer.reset();
-            if (hookTimer.seconds() < 2.5) {
-                hook.grabRung(); }
+            hookStates = HookStates.GRAB;
         } else if (hookResetButton) {
-            hook.reset();
-        } else hook.stop();
+            hookStates = HookStates.RESET;
+        }
+
+        switch (hookStates) {
+            case STOP: {
+                hook.stop();
+            }
+            case GRAB: {
+                hookTimer.reset();
+                hook.grabRung();
+                if (hookTimer.milliseconds() > 2) {
+                    hookStates = HookStates.STOP;
+                }
+            }
+            case RESET: {
+                hookTimer.reset();
+                hook.reset();
+                if (hookTimer.milliseconds() > 2) {
+                    hookStates = HookStates.STOP;
+                }
+            }
+        }
+
+
 
         /// Telemetry -----------------------------------------------------------------------------
 

@@ -53,7 +53,7 @@ public class AutoTest3 extends LinearOpMode {
              *  MOVING TO SAMPLE 0 SCORE
              * -------------------------------
              * Steps:
-             *   1) Drive robot to sample scoring position
+             *   1) Drive robot to sample 0 scoring position
              *   2) Move linear slide to collect position
              *   3) Move basket to reset position (it should be in this position at the beginning)
              *   4) Lift the linear slide
@@ -65,7 +65,7 @@ public class AutoTest3 extends LinearOpMode {
             longArm.autoLiftLinearSlide();
 
             while (opModeIsActive() && drive.isBusy() && intake.isArmBusy() && longArm.isLinearSlideBusy()) {
-                telemetry.addData("Sample 0 Score", "Driving to sample 0 score");
+                telemetry.addData("Sample 0: ", "Driving to score position");
                 telemetry.update();
             }
 
@@ -83,7 +83,26 @@ public class AutoTest3 extends LinearOpMode {
             longArm.basketScoreSample();
             basketTimer.reset();
             while (basketTimer.milliseconds() < 2000) {
-                telemetry.addData("Scoring: ", "Sample 0");
+                telemetry.addData("Sample 0: ", "Scoring");
+                telemetry.update();
+            }
+
+            /*
+             * -------------------------------
+             *  MOVING TO SAMPLE 1 COLLECT
+             * -------------------------------
+             * Steps:
+             *   1) Drive robot to sample 1 collect position
+             *   2) Drop linear slide
+             *   3) Move basket to collect
+             */
+
+            drive.autoDrivePose(sample1Pose, 0.9);
+            longArm.autoResetLinearSlide();
+            longArm.basketCollectSample();
+
+            while (opModeIsActive() && drive.isBusy() && longArm.isLinearSlideBusy()) {
+                telemetry.addData("Sample 1: ", "Driving to sample 1 collect");
                 telemetry.update();
             }
 
@@ -92,8 +111,27 @@ public class AutoTest3 extends LinearOpMode {
              *  SAMPLE 1 COLLECT
              * -------------------------------
              * Steps:
-             *   1) Drive robot to sample 1 collect position
+             *   1) Close claw for 2 seconds
              */
+
+            clawTimer.reset();
+            while (clawTimer.milliseconds() < 2000) {
+                intake.closeClaw();
+            }
+
+            /*
+             * -------------------------------
+             *  MOVING TO SAMPLE 1 SCORE
+             * -------------------------------
+             * Steps:
+             *   1) Drive robot to sample 1 scoring position
+             *   2) Move linear slide to deposit position
+             *   3) Move basket to reset position (it should be in this position at the beginning)
+             *   4) Lift the linear slide
+             */
+
+
+
 
         }
     }
