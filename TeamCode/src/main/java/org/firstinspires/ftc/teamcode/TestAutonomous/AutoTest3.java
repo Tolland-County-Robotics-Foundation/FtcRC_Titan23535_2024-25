@@ -63,6 +63,7 @@ public class AutoTest3 extends LinearOpMode {
             intake.autoMoveArm(Intake.Mode.COLLECT);
             longArm.basketReset();
             longArm.autoLiftLinearSlide();
+            /*
 
             while (drive.isBusy() || intake.isArmBusy() || longArm.isLinearSlideBusy()) {
                 telemetry.addData("Sample 0: ", "Driving to score position");
@@ -73,6 +74,20 @@ public class AutoTest3 extends LinearOpMode {
                 telemetry.addData("Right LS: ", longArm.rightLSPosition());
                 telemetry.update();
             }
+
+             */
+
+            while (drive.isBusy() || intake.isArmBusy() || longArm.leftLSPosition() > -5990) {
+                telemetry.addData("Sample 0: ", "Driving to score position");
+                telemetry.addData("Drive busy: ", drive.isBusy());
+                telemetry.addData("Intake busy: ", intake.isArmBusy());
+                telemetry.addData("Linear Slide busy: ", longArm.isLinearSlideBusy());
+                telemetry.addData("Left LS: ", longArm.leftLSPosition());
+                telemetry.addData("Right LS: ", longArm.rightLSPosition());
+                telemetry.update();
+            }
+
+
 
             drive.stop();
             intake.stopArm();

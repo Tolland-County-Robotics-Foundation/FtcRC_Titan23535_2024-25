@@ -95,7 +95,6 @@ public class LongArm {
         leftArmLift.setPower(ARM_POWER);
         rightArmLift.setPower(ARM_POWER);
 
-
     }
 
     public int leftLSPosition(){
