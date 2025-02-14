@@ -246,8 +246,10 @@ public class Windsor_FullGameCode_V5 extends OpMode {
  */
         if (hookGrabRungButton) {
             hookStates = HookStates.GRAB;
+            hookTimer.reset();
         } else if (hookResetButton) {
             hookStates = HookStates.RESET;
+            hookTimer.reset();
         }
 
         switch (hookStates) {
@@ -256,7 +258,6 @@ public class Windsor_FullGameCode_V5 extends OpMode {
                 telemetry.addData("Hook: ", "Stopped");
             }
             case GRAB: {
-                hookTimer.reset();
                 hook.grabRung();
                 telemetry.addData("Hook: ", "Grab Rung");
                 if (hookTimer.milliseconds() > 2000) {
@@ -264,7 +265,6 @@ public class Windsor_FullGameCode_V5 extends OpMode {
                 }
             }
             case RESET: {
-                hookTimer.reset();
                 hook.reset();
                 telemetry.addData("Hook: ", "Reset");
                 if (hookTimer.milliseconds() > 2000) {
