@@ -24,8 +24,8 @@ public class AutoTest3 extends LinearOpMode {
     private ElapsedTime clawTimer   = new ElapsedTime();
     private ElapsedTime basketTimer = new ElapsedTime();
 
-    Pose sample0Pose = new Pose(-9, 2, 45);
-    Pose sample1Pose = new Pose(0, 0, 0);
+    Pose sample0ScorePose = new Pose(-20, 3, 45);
+    Pose sample1CollectPose = new Pose(1, 1, -45);
 
     @Override
     public void runOpMode() {
@@ -59,7 +59,7 @@ public class AutoTest3 extends LinearOpMode {
              *   4) Lift the linear slide
              */
 
-            drive.autoDrivePose(sample0Pose, 0.9);
+            drive.autoDrivePose(sample0ScorePose, 0.9);
             intake.autoMoveArm(Intake.Mode.COLLECT);
             longArm.basketReset();
             longArm.autoLiftLinearSlide();
@@ -99,7 +99,7 @@ public class AutoTest3 extends LinearOpMode {
              *   3) Move basket to collect
              */
 
-            drive.autoDrivePose(sample1Pose, 0.9);
+            drive.autoDrivePose(sample1CollectPose, 0.9);
             longArm.autoResetLinearSlide();
             longArm.basketCollectSample();
 

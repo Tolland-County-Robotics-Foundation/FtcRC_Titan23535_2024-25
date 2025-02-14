@@ -213,8 +213,8 @@ public class Drive {
 
     public void autoDrivePose(Pose pose, double driveSpeed) {
 
-        int orientationInch = 0;
-        if (pose.orientation == 45) { orientationInch = 9; }
+        double orientationInch = pose.orientation * (0.2);
+
 
         int forwardTarget = (int) (pose.y * COUNTS_PER_INCH);
         int rightTarget = (int) (pose.x * COUNTS_PER_INCH);
