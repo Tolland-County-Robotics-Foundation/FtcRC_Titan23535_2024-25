@@ -31,18 +31,20 @@ public class Color_Sensor_v2 {
         int red = red();
         int blue = blue();
         int yellow = yellow();
+        String color = "none";
 
         if (distance.getDistance(DistanceUnit.INCH) < 2) {
             if (red > 100 && red > blue && red > yellow) {
-                return "red";
+                color = "red";
             } else if (blue > 100 && blue > red && blue > yellow) {
-                return "blue";
+                color = "blue";
             } else if (yellow > 100 && yellow > blue && yellow > red) {
-                return "yellow";
+                color = "yellow";
             }
-        } else {
-            return "none";
         }
-        return "none";
+        if (red > 300 && blue > 300 && yellow > 300) {
+            color = "none";
+        }
+        return color;
     }
 }
