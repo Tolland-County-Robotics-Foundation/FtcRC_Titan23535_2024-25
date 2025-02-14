@@ -61,11 +61,15 @@ public class LongArm {
         rightArmLift.setPower(-ARM_POWER);
     }
 
-    public void stopLinearSlide()
-    {
+    public void stopLinearSlide() {
+
         leftArmLift.setPower(0);
         rightArmLift.setPower(0);
+
+        leftArmLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightArmLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+
 
     public void autoLiftLinearSlide()
     {
@@ -95,11 +99,11 @@ public class LongArm {
     }
 
     public boolean isLinearSlideBusy() {
-        boolean busy = true;
-        if (!leftArmLift.isBusy() && !rightArmLift.isBusy()) {
-            busy = false;
+
+        if (leftArmLift.isBusy() || !rightArmLift.isBusy()) {
+            return true;
         }
-        return busy;
+        return false;
     }
 
 
