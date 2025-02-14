@@ -240,13 +240,15 @@ public class Windsor_FullGameCode_V5 extends OpMode {
         if (hookGrabRungButton) {
             hook.grabRung();
             hookStates = HookStates.GRAB;
+            telemetry.addData("Hook: ", hookStates);
         } else if (hookResetButton) {
             hook.reset();
             hookStates = HookStates.RESET;
-        } else hook.stop(); hookStates = HookStates.STOP;
-
-        telemetry.addData("Hook: ", hookStates);
-
+            telemetry.addData("Hook: ", hookStates);
+        } else {
+            hook.stop();
+            hookStates = HookStates.STOP;
+            telemetry.addData("Hook: ", hookStates); }
 
 
         /*
