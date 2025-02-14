@@ -279,6 +279,7 @@ public class Windsor_FullGameCode_V5 extends OpMode {
         /// Telemetry -----------------------------------------------------------------------------
 
         //Display Runtime
+        /*
         telemetry.addData("Alliance: ", alliance_color);
         telemetry.addData("Sample Color: ", clrSensor.detectColor());
         telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -292,6 +293,8 @@ public class Windsor_FullGameCode_V5 extends OpMode {
 
         telemetry.addData("intake arm power: ", intakeArmPower);
         telemetry.addData("intake claw power: ", intakeClawPower);
+
+         */
 
     }
 }
