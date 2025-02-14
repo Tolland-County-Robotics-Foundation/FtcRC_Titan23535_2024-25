@@ -69,6 +69,10 @@ public class AutoTest3 extends LinearOpMode {
                 telemetry.update();
             }
 
+            drive.stop();
+            intake.stopArm();
+            longArm.stopLinearSlide();
+
             /*
              * -------------------------------
              *  SAMPLE 0 SCORE
@@ -77,9 +81,7 @@ public class AutoTest3 extends LinearOpMode {
              *   1) Move basket to score position
              */
 
-            drive.stop();
-            intake.stopArm();
-            longArm.stopLinearSlide();
+
             longArm.basketScoreSample();
             basketTimer.reset();
             while (basketTimer.milliseconds() < 2000) {
@@ -106,6 +108,9 @@ public class AutoTest3 extends LinearOpMode {
                 telemetry.update();
             }
 
+            drive.stop();
+            longArm.stopLinearSlide();
+
             /*
              * -------------------------------
              *  SAMPLE 1 COLLECT
@@ -113,6 +118,8 @@ public class AutoTest3 extends LinearOpMode {
              * Steps:
              *   1) Close claw for 2 seconds
              */
+
+
 
             clawTimer.reset();
             while (clawTimer.milliseconds() < 2000) {
@@ -129,9 +136,6 @@ public class AutoTest3 extends LinearOpMode {
              *   3) Move basket to reset position (it should be in this position at the beginning)
              *   4) Lift the linear slide
              */
-
-
-
 
         }
     }
