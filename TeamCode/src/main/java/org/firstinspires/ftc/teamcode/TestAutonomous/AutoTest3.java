@@ -64,7 +64,7 @@ public class AutoTest3 extends LinearOpMode {
             longArm.basketReset();
             longArm.autoLiftLinearSlide();
 
-            while (opModeIsActive() && drive.isBusy() && intake.isArmBusy() && longArm.isLinearSlideBusy()) {
+            while (opModeIsActive() || drive.isBusy() || intake.isArmBusy() || longArm.isLinearSlideBusy()) {
                 telemetry.addData("Sample 0: ", "Driving to score position");
                 telemetry.update();
             }
@@ -103,7 +103,7 @@ public class AutoTest3 extends LinearOpMode {
             longArm.autoResetLinearSlide();
             longArm.basketCollectSample();
 
-            while (opModeIsActive() && drive.isBusy() && longArm.isLinearSlideBusy()) {
+            while (opModeIsActive() || drive.isBusy() || longArm.isLinearSlideBusy()) {
                 telemetry.addData("Sample 1: ", "Driving to sample 1 collect");
                 telemetry.update();
             }
