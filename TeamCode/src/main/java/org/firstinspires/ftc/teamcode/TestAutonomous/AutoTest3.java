@@ -137,6 +137,8 @@ public class AutoTest3 extends LinearOpMode {
              *   4) Lift the linear slide
              */
 
+            intake.autoMoveArm(Intake.Mode.DEPOSIT);
+
         }
     }
 }
