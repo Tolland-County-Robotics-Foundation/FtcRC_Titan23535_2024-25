@@ -46,7 +46,6 @@ public class Intake {
     // Method to move the intake arm
 
     public void moveArm(double armPower) { arm.setPower(armPower); }
-    public void stopArm() {arm.setPower(0);}
 
     public void autoMoveArm(Mode runMode){
 
@@ -78,12 +77,15 @@ public class Intake {
     }
 
     public boolean isArmBusy() {
-        boolean busy = true;
-        if (!arm.isBusy()) {
-            busy = false;
-        }
 
-        return busy;
+        if (arm.isBusy()) {return true;}
+
+        return false;
+    }
+
+    public void stopArm() {
+        arm.setPower(0);
+        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     /// Claw Mechanisms -------------------------------------------------------------------

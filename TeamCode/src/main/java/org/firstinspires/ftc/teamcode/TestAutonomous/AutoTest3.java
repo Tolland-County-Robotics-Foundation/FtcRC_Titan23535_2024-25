@@ -25,6 +25,7 @@ public class AutoTest3 extends LinearOpMode {
     private ElapsedTime basketTimer = new ElapsedTime();
 
     Pose sample0Pose = new Pose(-9, 2, 45);
+    Pose sample1Pose = new Pose(0, 0, 0);
 
     @Override
     public void runOpMode() {
@@ -47,28 +48,52 @@ public class AutoTest3 extends LinearOpMode {
 
         if (opModeIsActive()) {
 
-            drive.autoDrivePose(sample0Pose, 0.5);
-            longArm.basketReset();
+            /*
+             * -------------------------------
+             *  MOVING TO SAMPLE 0 SCORE
+             * -------------------------------
+             * Steps:
+             *   1) Drive robot to sample scoring position
+             *   2) Move linear slide to collect position
+             *   3) Move basket to reset position (it should be in this position at the beginning)
+             *   4) Lift the linear slide
+             */
 
-            while (opModeIsActive() && drive.isBusy()) {
+            drive.autoDrivePose(sample0Pose, 0.9);
+            intake.autoMoveArm(Intake.Mode.COLLECT);
+            longArm.basketReset();
+            longArm.autoLiftLinearSlide();
+
+            while (opModeIsActive() && drive.isBusy() && intake.isArmBusy() && longArm.isLinearSlideBusy()) {
                 telemetry.addData("Sample 0 Score", "Driving to sample 0 score");
                 telemetry.update();
             }
 
-            drive.stop();
-            intake.autoMoveArm(Intake.Mode.COLLECT);
-            longArm.basketReset();
-            longArm.autoLiftLinearSlide();
-            while (opModeIsActive() && (intake.isArmBusy() || longArm.isLinearSlideBusy())) {
-                telemetry.addData("Sample 0 Score", "Moving Arm & Linear Slide");
-                telemetry.update();
-            }
+            /*
+             * -------------------------------
+             *  SAMPLE 0 SCORE
+             * -------------------------------
+             * Steps:
+             *   1) Move basket to score position
+             */
 
             drive.stop();
             intake.stopArm();
             longArm.stopLinearSlide();
-            telemetry.update();
+            longArm.basketScoreSample();
+            basketTimer.reset();
+            while (basketTimer.milliseconds() < 2000) {
+                telemetry.addData("Scoring: ", "Sample 0");
+                telemetry.update();
+            }
 
+            /*
+             * -------------------------------
+             *  SAMPLE 1 COLLECT
+             * -------------------------------
+             * Steps:
+             *   1) Drive robot to sample 1 collect position
+             */
 
         }
     }
