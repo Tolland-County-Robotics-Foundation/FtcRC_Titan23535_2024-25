@@ -25,7 +25,7 @@ public class Color_Sensor_v2 {
         return color.blue();
     }
     public int yellow() {
-        return color.green() - 50;
+        return color.green();
     }
     public String sampleColor() {
         int red = red();
@@ -33,6 +33,9 @@ public class Color_Sensor_v2 {
         int yellow = yellow();
         String color = "none";
 
+        if (red > 500 || blue > 500 || yellow > 500) {
+            return "collected";
+        }
         if (distance.getDistance(DistanceUnit.INCH) < 2) {
             if (red > 100 && red > blue && red > yellow) {
                 color = "red";
@@ -41,9 +44,6 @@ public class Color_Sensor_v2 {
             } else if (yellow > 100 && yellow > blue && yellow > red) {
                 color = "yellow";
             }
-        }
-        if (red > 300 && blue > 300 && yellow > 300) {
-            color = "none";
         }
         return color;
     }
