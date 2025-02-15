@@ -1,5 +1,3 @@
-// v4 + linear slide timer
-
 package org.firstinspires.ftc.teamcode.TestCodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -44,6 +42,21 @@ public class Windsor_FullGameCode_V6 extends OpMode {
     Color_Sensor_v2 colorB = new Color_Sensor_v2();
     Blinkin_v2 lightB = new Blinkin_v2();
 
+    private enum HookStates {
+        STOP, GRAB, RESET
+    }
+    private HookStates hookStates = HookStates.STOP;
+
+    public double samplePick(Boolean accept, Boolean reject) {
+        if (accept) {
+            return 1.0;
+        } else if (reject) {
+            return -1.0;
+        } else {
+            return 0.0;
+        }
+    }
+
     @Override
     public void init()
     {
@@ -67,16 +80,6 @@ public class Windsor_FullGameCode_V6 extends OpMode {
         // Wait for the game to start (driver presses PLAY)
         telemetry.addData("Status", "Initialized");
 
-    }
-
-    public double samplePick(Boolean accept, Boolean reject) {
-        if (accept) {
-            return 1.0;
-        } else if (reject) {
-            return -1.0;
-        } else {
-            return 0.0;
-        }
     }
 
     @Override
@@ -105,7 +108,6 @@ public class Windsor_FullGameCode_V6 extends OpMode {
 
         // Intake
         double intakeArmPower   = gamepad2.left_stick_y * 0.5;
-        double intakeClawPower  = gamepad2.right_stick_x;
 
         // Long Arm
         double linearSlidePower = gamepad2.left_trigger - gamepad2.right_trigger;
@@ -146,20 +148,16 @@ public class Windsor_FullGameCode_V6 extends OpMode {
 
         /// Drive Controls -----------------------------------------------------------------
         // Set the speed cap for driver 1
-        if (gamepad1.y)
-        {
+        if (gamepad1.y) {
             speedcap = "Max";
             speed_percentage = 90.0;
-        } else if (gamepad1.b)
-        {
+        } else if (gamepad1.b) {
             speedcap = "Fast";
             speed_percentage = 65.0;
-        } else if (gamepad1.x)
-        {
+        } else if (gamepad1.x) {
             speedcap = "Normal";
             speed_percentage = 40.0;
-        } else if (gamepad1.a)
-        {
+        } else if (gamepad1.a) {
             speedcap = "Slow";
             speed_percentage = 25.0;
         }
@@ -216,11 +214,36 @@ public class Windsor_FullGameCode_V6 extends OpMode {
 
         /// Hook Controls ---------------------------------------------------------------------
         if (hookGrabRungButton) {
+            hookStates = HookStates.GRAB;
             hookTimer.reset();
-            while (hookTimer.seconds() < 2.5) { hook.grabRung(); }
         } else if (hookResetButton) {
-            hook.reset();
-        } else hook.stop();
+            hookStates = HookStates.RESET;
+            hookTimer.reset();
+        }
+
+        switch (hookStates) {
+            case STOP: {
+                hook.stop();
+                telemetry.addData("Hook: ", "Stopped");
+                break;
+            }
+            case GRAB: {
+                hook.grabRung();
+                telemetry.addData("Hook: ", "Grab Rung");
+                if (hookTimer.milliseconds() > 2000) {
+                    hookStates = HookStates.STOP;
+                }
+                break;
+            }
+            case RESET: {
+                hook.reset();
+                telemetry.addData("Hook: ", "Reset");
+                if (hookTimer.milliseconds() > 2000) {
+                    hookStates = HookStates.STOP;
+                }
+                break;
+            }
+        }
 
         /// Rev BLINKIN
         lightB.light(redSpy);
@@ -228,20 +251,8 @@ public class Windsor_FullGameCode_V6 extends OpMode {
         /// Telemetry -----------------------------------------------------------------------------
         //Display Runtime
         telemetry.addData("Alliance: ", redSpy);
-        telemetry.addData("Sample Color", colorB.sampleColor());
-        telemetry.addData("Reject?", reject);
-        telemetry.addData("Accept?", accept);
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Axial:", axialButton);
-        telemetry.addData("Lateral:",lateralButton);
-        telemetry.addData("Yaw:", yawButton);
         telemetry.addData("Current Speed Cap", speedcap);
-        telemetry.addData("Speed percentage: ",speed_percentage);
-
-        telemetry.addData("Linear slide power: ", linearSlidePower);
-
-        telemetry.addData("intake arm power: ", intakeArmPower);
-        telemetry.addData("intake claw power: ", intakeClawPower);
-
+        telemetry.addData("Sample Color", colorB.sampleColor());
+        telemetry.addData("Status", "Run Time: " + runtime.toString());
     }
 }
