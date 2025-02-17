@@ -21,8 +21,8 @@ public class Intake {
         COLLECT, DEPOSIT, RESET, HANG
     }
 
-    private int COLLECT_SAMPLE_POSITION = -1381;
-    private int DEPOSIT_SAMPLE_POSITION = 0;
+    private int COLLECT_SAMPLE_POSITION = -1100;
+    private int DEPOSIT_SAMPLE_POSITION = -100;
     private int RESET_ARM_POSITION = -1000;
     private int HANG_SPECIMENT_POSITION = -608;
 

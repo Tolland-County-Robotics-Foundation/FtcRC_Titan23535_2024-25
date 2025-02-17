@@ -15,10 +15,10 @@ public class LongArm {
     private double  BASKET_RESET_POSITION       = 0.45;
     private double  BASKET_SCORE_POSITION       = 1;
     private double  BASKET_COLLECT_POSITION     = 0.6;
-    private int     LEFT_ARM_SCORE_POSITION      = -6000;
-    private int     RIGHT_ARM_SCORE_POSITION     = -6000;
-    private int     LEFT_ARM_COLLECT_POSITION = 0;
-    private int     RIGHT_ARM_COLLECT_POSITION = 0;
+    private int     LEFT_ARM_SCORE_POSITION      = -6050;
+    private int     RIGHT_ARM_SCORE_POSITION     = -6050;
+    private int     LEFT_ARM_COLLECT_POSITION = -350;
+    private int     RIGHT_ARM_COLLECT_POSITION = -350;
 
     // Public copies of linear slides score position
     public int left_arm_score_position = LEFT_ARM_SCORE_POSITION;
