@@ -21,8 +21,8 @@ public class Intake {
         COLLECT, DEPOSIT, RESET, HANG
     }
 
-    private int COLLECT_GAMEPIECE_POSITION = -1381;
-    private int DEPOSIT_GAMEPIECE_POSITION = 0;
+    private int COLLECT_SAMPLE_POSITION = -1381;
+    private int DEPOSIT_SAMPLE_POSITION = 0;
     private int RESET_ARM_POSITION = -1000;
     private int HANG_SPECIMENT_POSITION = -608;
 
@@ -53,11 +53,11 @@ public class Intake {
 
         if (runMode == Mode.COLLECT){
 
-            newIntakeArmTarget = COLLECT_GAMEPIECE_POSITION;
+            newIntakeArmTarget = COLLECT_SAMPLE_POSITION;
             
         } else if (runMode == Mode.DEPOSIT) {
 
-            newIntakeArmTarget = DEPOSIT_GAMEPIECE_POSITION;
+            newIntakeArmTarget = DEPOSIT_SAMPLE_POSITION;
             
         } else if (runMode == Mode.RESET) {
 

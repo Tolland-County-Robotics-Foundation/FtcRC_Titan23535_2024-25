@@ -17,8 +17,12 @@ public class LongArm {
     private double  BASKET_COLLECT_POSITION     = 0.6;
     private int     LEFT_ARM_SCORE_POSITION      = -6000;
     private int     RIGHT_ARM_SCORE_POSITION     = -6000;
-    private int     LEFT_ARM_RESET_POSITION     = 0;
-    private int     RIGHT_ARM_RESET_POSITION    = 0;
+    private int     LEFT_ARM_COLLECT_POSITION = 0;
+    private int     RIGHT_ARM_COLLECT_POSITION = 0;
+
+    // Public copies of linear slides score position
+    public int left_arm_score_position = LEFT_ARM_SCORE_POSITION;
+    public int right_arm_score_position = RIGHT_ARM_SCORE_POSITION;
 
 
     public void init(HardwareMap hwMap)
@@ -86,8 +90,8 @@ public class LongArm {
 
     public void autoResetLinearSlide()
     {
-        leftArmLift.setTargetPosition(LEFT_ARM_RESET_POSITION);
-        rightArmLift.setTargetPosition(RIGHT_ARM_RESET_POSITION);
+        leftArmLift.setTargetPosition(LEFT_ARM_COLLECT_POSITION);
+        rightArmLift.setTargetPosition(RIGHT_ARM_COLLECT_POSITION);
 
         leftArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -109,7 +113,7 @@ public class LongArm {
 
     public boolean isLinearSlideBusy() {
 
-        if (leftArmLift.isBusy() || !rightArmLift.isBusy()) {
+        if (leftArmLift.isBusy() || rightArmLift.isBusy()) {
             return true;
         }
         return false;
