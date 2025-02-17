@@ -210,16 +210,17 @@ public class Windsor_FullGameCode_V7 extends OpMode {
         // Linear slide controls
 
         /*
-
-        if      (linearSlideResetButton)    { longArm.autoResetArm();   }
-        else if (linearSlideLiftButton)     { longArm.autoLiftArm();    }
-        else if (linerSlideStopButton)     { longArm.stopArm();        }
-
+         * Control 1: If linear slide goes above score position, linear slide power = 0
+         * Control 2: If linear slide goes below collect position, linear slide power = 0
+         * Control 3: Move linear slide based on gamepad input
          */
 
-        longArm.moveLinearSlide(linearSlidePower);
-        if (longArm.leftLSPosition() > Math.abs(longArm.left_arm_score_position)) {
+        if (Math.abs(longArm.leftLSPosition()) > Math.abs(longArm.left_arm_score_position)) {
             longArm.stopLinearSlide();
+        } else if (Math.abs(longArm.leftLSPosition())  < Math.abs(longArm.left_arm_collect_position)) {
+            longArm.stopLinearSlide();
+        } else {
+            longArm.moveLinearSlide(linearSlidePower);
         }
 
         if (linearSlideLiftButton) {longArm.autoLiftLinearSlide(); }

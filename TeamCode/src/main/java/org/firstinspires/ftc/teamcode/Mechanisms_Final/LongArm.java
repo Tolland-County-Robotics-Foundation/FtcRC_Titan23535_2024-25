@@ -24,6 +24,8 @@ public class LongArm {
     public int left_arm_score_position = LEFT_ARM_SCORE_POSITION;
     public int right_arm_score_position = RIGHT_ARM_SCORE_POSITION;
 
+    public int left_arm_collect_position = LEFT_ARM_COLLECT_POSITION;
+
 
     public void init(HardwareMap hwMap)
     {
