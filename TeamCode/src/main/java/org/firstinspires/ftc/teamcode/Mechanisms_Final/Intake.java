@@ -26,6 +26,9 @@ public class Intake {
     private int RESET_ARM_POSITION = -1000;
     private int HANG_SPECIMENT_POSITION = -608;
 
+    public int collect_sample_position = COLLECT_SAMPLE_POSITION;
+
+    public int deposit_sample_position= DEPOSIT_SAMPLE_POSITION;
 
     public void init(HardwareMap hwMap)
     {
@@ -75,6 +78,11 @@ public class Intake {
 
         arm.setPower(0.3);
     }
+
+
+    public int intakePosition(){ return arm.getCurrentPosition();
+    }
+
 
     public boolean isArmBusy() {
 

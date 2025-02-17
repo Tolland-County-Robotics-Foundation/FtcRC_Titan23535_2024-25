@@ -157,7 +157,7 @@ public class Windsor_AutoSpecaminTest1 extends OpMode {
                     case 0:{
                         if (!initializedSample1CollectStep[0]){
                             longArm.basketReset();
-                            longArm.autoResetLinearSlide();
+                            longArm.autoCollectLinearSlide();
                             initializedSample1CollectStep[0] = true;
                         }
 

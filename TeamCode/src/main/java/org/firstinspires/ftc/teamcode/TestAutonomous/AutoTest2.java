@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.TestAutonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -103,7 +102,7 @@ public class AutoTest2 extends LinearOpMode {
 
             // Step 1) Reset basket + reset linear slide
             longArm.basketReset();
-            longArm.autoResetLinearSlide();
+            longArm.autoCollectLinearSlide();
             while (opModeIsActive() && longArm.isLinearSlideBusy()) {
                 telemetry.addData("Sample 1 Collect", "Resetting linear slide");
                 telemetry.update();

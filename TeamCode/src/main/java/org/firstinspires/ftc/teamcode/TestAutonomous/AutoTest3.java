@@ -120,7 +120,7 @@ public class AutoTest3 extends LinearOpMode {
              */
 
             drive.autoDrivePose(sample1CollectPose, 0.3);
-            longArm.autoResetLinearSlide();
+            longArm.autoCollectLinearSlide();
             longArm.basketCollectSample();
 
             while (drive.isBusy() || longArm.isLinearSlideBusy()) {

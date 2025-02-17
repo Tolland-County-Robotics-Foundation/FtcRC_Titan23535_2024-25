@@ -192,9 +192,13 @@ public class Windsor_FullGameCode_V7 extends OpMode {
 
         /// Intake Controls ----------------------------------------------------------------------
 
-        // Intake arm controls
-
-        intake.moveArm(intakeArmPower);
+        if (Math.abs(intake.intakePosition()) > Math.abs(intake.deposit_sample_position)) {
+            intake.stopArm();
+        } else if (Math.abs(intake.intakePosition()) < Math.abs(intake.collect_sample_position)) {
+            intake.stopArm();
+        } else {
+            intake.moveArm(intakeArmPower);
+        }
 
         // Intake claw controls
 
@@ -224,7 +228,7 @@ public class Windsor_FullGameCode_V7 extends OpMode {
         }
 
         if (linearSlideLiftButton) {longArm.autoLiftLinearSlide(); }
-        else if (linearSlideResetButton) {longArm.autoResetLinearSlide(); }
+        else if (linearSlideResetButton) {longArm.autoCollectLinearSlide(); }
 
 /*
         if (basketScoreButton) {

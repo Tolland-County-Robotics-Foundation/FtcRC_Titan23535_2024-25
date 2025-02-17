@@ -90,7 +90,7 @@ public class LongArm {
 
     }
 
-    public void autoResetLinearSlide()
+    public void autoCollectLinearSlide()
     {
         leftArmLift.setTargetPosition(LEFT_ARM_COLLECT_POSITION);
         rightArmLift.setTargetPosition(RIGHT_ARM_COLLECT_POSITION);
@@ -103,8 +103,7 @@ public class LongArm {
 
     }
 
-    public int leftLSPosition(){
-        return leftArmLift.getCurrentPosition();
+    public int leftLSPosition(){ return leftArmLift.getCurrentPosition();
     }
 
     public int rightLSPosition(){
