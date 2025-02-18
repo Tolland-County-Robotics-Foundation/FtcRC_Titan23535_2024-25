@@ -72,8 +72,8 @@ public class LongArm {
         leftLinearSlide.setPower(0);
         rightLinearSlide.setPower(0);
 
-        leftLinearSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightLinearSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftLinearSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightLinearSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
 
