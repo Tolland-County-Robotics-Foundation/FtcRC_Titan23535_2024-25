@@ -50,7 +50,7 @@ public class Windsor_FullGameCode_V9 extends OpMode {
     }
 
     private enum LinearSlideStates {
-        START, SCORE, COLLECT, RESET
+        START, SCORE, COLLECT, RESET, TELEOP
     }
 
     private HookStates hookStates = HookStates.STOP;
@@ -222,6 +222,7 @@ public class Windsor_FullGameCode_V9 extends OpMode {
 
         switch (lsStates) {
             case START: {
+                telemetry.addData("LS: ", lsStates);
                 if (linearSlideLiftButton) {
                     longArm.basketReset();
                     longArm.autoLiftLinearSlide();
@@ -231,6 +232,7 @@ public class Windsor_FullGameCode_V9 extends OpMode {
                 break;
             }
             case SCORE: {
+                telemetry.addData("LS: ", lsStates);
                 if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_score_position) < 5) {
                     longArm.basketScoreSample();
                     basketTimer.reset();
@@ -239,6 +241,7 @@ public class Windsor_FullGameCode_V9 extends OpMode {
                 break;
             }
             case COLLECT: {
+                telemetry.addData("LS: ", lsStates);
                 if (basketTimer.milliseconds() >= 4000) {
                     longArm.basketCollectSample();
                     longArm.autoCollectLinearSlide();
@@ -247,11 +250,23 @@ public class Windsor_FullGameCode_V9 extends OpMode {
                 break;
             }
             case RESET: {
+                telemetry.addData("LS: ", lsStates);
                 if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_collect_position) < 5) {
                     lsStates = LinearSlideStates.START;
                 }
                 break;
             }
+            case TELEOP: {
+                telemetry.addData("LS: ", lsStates);
+                if (linearSlidePower < 0.1) {
+                    lsStates = LinearSlideStates.START;
+                }
+                longArm.moveLinearSlide(linearSlidePower);
+            }
+        }
+
+        if (linearSlidePower > 0.2) {
+            lsStates = LinearSlideStates.TELEOP;
         }
 
 /*
