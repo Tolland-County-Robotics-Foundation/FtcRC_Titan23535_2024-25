@@ -49,12 +49,12 @@ public class Windsor_FullGameCode_V9 extends OpMode {
         STOP, GRAB, RESET
     }
 
-    private enum LinearSlideStates {
+    private enum LongArmStates {
         START, SCORE, COLLECT, RESET, TELEOP
     }
 
     private HookStates hookStates = HookStates.STOP;
-    private LinearSlideStates lsStates = LinearSlideStates.START;
+    private LongArmStates laStates = LongArmStates.START;
 
 
     @Override
@@ -220,58 +220,58 @@ public class Windsor_FullGameCode_V9 extends OpMode {
 
         // Linear slide controls
 
-        switch (lsStates) {
+        switch (laStates) {
             case START: {
-                telemetry.addData("LS: ", lsStates);
+                telemetry.addData("LS: ", laStates);
                 telemetry.addData("LS position: ", longArm.leftLSPosition());
                 if (linearSlideLiftButton) {
                     longArm.basketReset();
                     longArm.autoLiftLinearSlide();
-                    lsStates = LinearSlideStates.SCORE;
+                    laStates = LongArmStates.SCORE;
                     intake.autoMoveArm(Intake.Mode.COLLECT);
                 }
                 break;
             }
             case SCORE: {
-                telemetry.addData("LS: ", lsStates);
+                telemetry.addData("LS: ", laStates);
                 telemetry.addData("LS position: ", longArm.leftLSPosition());
                 if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_score_position) < 5) {
                     longArm.basketScoreSample();
                     basketTimer.reset();
-                    lsStates = LinearSlideStates.COLLECT;
+                    laStates = LongArmStates.COLLECT;
                 }
                 break;
             }
             case COLLECT: {
-                telemetry.addData("LS: ", lsStates);
+                telemetry.addData("LS: ", laStates);
                 telemetry.addData("LS position: ", longArm.leftLSPosition());
                 if (basketTimer.milliseconds() >= 2000) {
                     longArm.basketCollectSample();
                     longArm.autoCollectLinearSlide();
-                    lsStates = LinearSlideStates.RESET;
+                    laStates = LongArmStates.RESET;
                 }
                 break;
             }
             case RESET: {
-                telemetry.addData("LS: ", lsStates);
+                telemetry.addData("LS: ", laStates);
                 telemetry.addData("LS position: ", longArm.leftLSPosition());
                 if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_collect_position) < 5) {
-                    lsStates = LinearSlideStates.START;
+                    laStates = LongArmStates.START;
                 }
                 break;
             }
             case TELEOP: {
-                telemetry.addData("LS: ", lsStates);
+                telemetry.addData("LS: ", laStates);
                 telemetry.addData("LS position: ", longArm.leftLSPosition());
                 if (linearSlidePower < 0.1) {
-                    lsStates = LinearSlideStates.START;
+                    laStates = LongArmStates.START;
                 }
                 longArm.moveLinearSlide(linearSlidePower);
             }
         }
 
         if (linearSlidePower > 0.2) {
-            lsStates = LinearSlideStates.TELEOP;
+            laStates = LongArmStates.TELEOP;
         }
 
 /*

@@ -50,11 +50,11 @@ public class Windsor_FullGameCode_V10 extends OpMode {
     }
 
     private enum LinearSlideStates {
-        START, SCORE, COLLECT, RESET, TELEOP
+        LIFT, COLLECT, TELEOP
     }
 
     private HookStates hookStates = HookStates.STOP;
-    private LinearSlideStates lsStates = LinearSlideStates.START;
+    private LinearSlideStates lsStates = LinearSlideStates.TELEOP;
 
 
     @Override
@@ -219,9 +219,38 @@ public class Windsor_FullGameCode_V10 extends OpMode {
         /// Long arm Controls ------------------------------------------------------------------
 
         // Linear slide controls
+        /*
 
         if (linearSlidePower > 0.2) {longArm.autoLiftLinearSlide(); }
         else if (linearSlidePower < -0.2) {longArm.autoCollectLinearSlide(); }
+
+         */
+
+        switch (lsStates) {
+            case TELEOP: {
+                telemetry.addData("LS: ", lsStates);
+                longArm.stopLinearSlide();
+                if (Math.abs(linearSlidePower) > 0) {
+                    longArm.moveLinearSlide(linearSlidePower);
+                }
+                break;
+            }
+            case LIFT: {
+                telemetry.addData("LS: ", lsStates);
+                longArm.autoLiftLinearSlide();
+                break;
+            }
+            case COLLECT: {
+                telemetry.addData("LS: ", lsStates);
+                longArm.autoCollectLinearSlide();
+                break;
+            }
+        }
+
+        if (linearSlidePower > 0.2) { lsStates = LinearSlideStates.TELEOP; }
+        else if (linearSlideLiftButton) { lsStates = LinearSlideStates.LIFT; }
+        else if (linearSlideCollectButton) { lsStates = LinearSlideStates.COLLECT; }
+
 
 
 /*
@@ -237,6 +266,7 @@ public class Windsor_FullGameCode_V10 extends OpMode {
 
         if (basketScoreButton) {linearSlideTimer.reset();}
         if (linearSlideTimer.milliseconds() == 1500) {longArm.stopLinearSlide();}
+
 
         // Basket controls
 
