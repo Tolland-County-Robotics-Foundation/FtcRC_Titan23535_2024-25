@@ -1,4 +1,4 @@
-// v7 + switch statements
+// linear slide v11 type
 
 package org.firstinspires.ftc.teamcode.TestCodes;
 
@@ -13,9 +13,9 @@ import org.firstinspires.ftc.teamcode.Mechanisms_Final.Intake;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
 
 
-@TeleOp(name = "Full Teleop 9", group = "AWindsor")
+@TeleOp(name = "Full Teleop 10", group = "AWindsor")
 
-public class Windsor_FullGameCode_V9 extends OpMode {
+public class Windsor_FullGameCode_V10 extends OpMode {
 
     /// Necessary objects and variable creation --------------------------------------------------
 
@@ -220,54 +220,9 @@ public class Windsor_FullGameCode_V9 extends OpMode {
 
         // Linear slide controls
 
-        switch (lsStates) {
-            case START: {
-                telemetry.addData("LS: ", lsStates);
-                if (linearSlideLiftButton) {
-                    longArm.basketReset();
-                    longArm.autoLiftLinearSlide();
-                    lsStates = LinearSlideStates.SCORE;
-                    intake.autoMoveArm(Intake.Mode.COLLECT);
-                }
-                break;
-            }
-            case SCORE: {
-                telemetry.addData("LS: ", lsStates);
-                if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_score_position) < 5) {
-                    longArm.basketScoreSample();
-                    basketTimer.reset();
-                    lsStates = LinearSlideStates.COLLECT;
-                }
-                break;
-            }
-            case COLLECT: {
-                telemetry.addData("LS: ", lsStates);
-                if (basketTimer.milliseconds() >= 2000) {
-                    longArm.basketCollectSample();
-                    longArm.autoCollectLinearSlide();
-                    lsStates = LinearSlideStates.RESET;
-                }
-                break;
-            }
-            case RESET: {
-                telemetry.addData("LS: ", lsStates);
-                if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_collect_position) < 5) {
-                    lsStates = LinearSlideStates.START;
-                }
-                break;
-            }
-            case TELEOP: {
-                telemetry.addData("LS: ", lsStates);
-                if (linearSlidePower < 0.1) {
-                    lsStates = LinearSlideStates.START;
-                }
-                longArm.moveLinearSlide(linearSlidePower);
-            }
-        }
+        if (linearSlidePower > 0.2) {longArm.autoLiftLinearSlide(); }
+        else if (linearSlidePower < -0.2) {longArm.autoCollectLinearSlide(); }
 
-        if (linearSlidePower > 0.2) {
-            lsStates = LinearSlideStates.TELEOP;
-        }
 
 /*
         if (basketScoreButton) {
