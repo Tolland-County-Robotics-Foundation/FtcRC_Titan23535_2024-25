@@ -23,6 +23,7 @@ public class Windsor_FullGameCode_V9 extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private ElapsedTime hookTimer = new ElapsedTime();
     private ElapsedTime linearSlideTimer = new ElapsedTime();
+    private ElapsedTime basketTimer = new ElapsedTime();
 
     //Creating two variables for capping the speed
     String speedcap = "Normal";
@@ -63,6 +64,7 @@ public class Windsor_FullGameCode_V9 extends OpMode {
         runtime.reset();
         hookTimer.reset();
         linearSlideTimer.reset();
+        basketTimer.reset();
 
         /// Initialization ------------------------------------------------------------------------
 
@@ -218,7 +220,38 @@ public class Windsor_FullGameCode_V9 extends OpMode {
 
         // Linear slide controls
 
-
+        switch (lsStates) {
+            case START: {
+                if (linearSlideLiftButton) {
+                    longArm.basketReset();
+                    longArm.autoLiftLinearSlide();
+                    lsStates = LinearSlideStates.SCORE;
+                }
+                break;
+            }
+            case SCORE: {
+                if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_score_position) < 10) {
+                    longArm.basketScoreSample();
+                    basketTimer.reset();
+                    lsStates = LinearSlideStates.COLLECT;
+                }
+                break;
+            }
+            case COLLECT: {
+                if (basketTimer.milliseconds() > 2000) {
+                    longArm.basketCollectSample();
+                    longArm.autoCollectLinearSlide();
+                    lsStates = LinearSlideStates.RESET;
+                }
+                break;
+            }
+            case RESET: {
+                if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_collect_position) < 10) {
+                    lsStates = LinearSlideStates.START;
+                }
+                break;
+            }
+        }
 
 /*
         if (basketScoreButton) {

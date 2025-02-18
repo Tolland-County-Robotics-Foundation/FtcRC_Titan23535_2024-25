@@ -221,7 +221,7 @@ public class Windsor_FullGameCode_V7 extends OpMode {
         if (linearSlideLiftButton)                  {lsStates = LinearSlideStates.AUTO_LIFT; }
         else if (linearSlideCollectButton)          {lsStates = LinearSlideStates.AUTO_COLLECT; }
         else if (Math.abs(linearSlidePower) > 0.2)  {lsStates = LinearSlideStates.TELEOP; }
-        else                                        {lsStates = LinearSlideStates.STOP; }
+        else if (Math.abs(linearSlidePower) < 0.1)  {lsStates = LinearSlideStates.STOP; }
 
         switch (lsStates) {
             case STOP: {

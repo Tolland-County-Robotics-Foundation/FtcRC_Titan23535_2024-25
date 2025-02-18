@@ -103,7 +103,8 @@ public class LongArm {
 
     }
 
-    public int leftLSPosition(){ return leftArmLift.getCurrentPosition();
+    public int leftLSPosition(){
+        return leftArmLift.getCurrentPosition();
     }
 
     public int rightLSPosition(){
