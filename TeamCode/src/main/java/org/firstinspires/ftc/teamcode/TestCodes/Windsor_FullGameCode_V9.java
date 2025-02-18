@@ -226,11 +226,12 @@ public class Windsor_FullGameCode_V9 extends OpMode {
                     longArm.basketReset();
                     longArm.autoLiftLinearSlide();
                     lsStates = LinearSlideStates.SCORE;
+                    intake.autoMoveArm(Intake.Mode.COLLECT);
                 }
                 break;
             }
             case SCORE: {
-                if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_score_position) < 10) {
+                if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_score_position) < 5) {
                     longArm.basketScoreSample();
                     basketTimer.reset();
                     lsStates = LinearSlideStates.COLLECT;
@@ -238,7 +239,7 @@ public class Windsor_FullGameCode_V9 extends OpMode {
                 break;
             }
             case COLLECT: {
-                if (basketTimer.milliseconds() > 2000) {
+                if (basketTimer.milliseconds() >= 4000) {
                     longArm.basketCollectSample();
                     longArm.autoCollectLinearSlide();
                     lsStates = LinearSlideStates.RESET;
@@ -246,7 +247,7 @@ public class Windsor_FullGameCode_V9 extends OpMode {
                 break;
             }
             case RESET: {
-                if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_collect_position) < 10) {
+                if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_collect_position) < 5) {
                     lsStates = LinearSlideStates.START;
                 }
                 break;
