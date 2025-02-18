@@ -1,4 +1,4 @@
-// v5 + soft limits
+// v7 + switch statements
 
 package org.firstinspires.ftc.teamcode.TestCodes;
 
@@ -13,9 +13,9 @@ import org.firstinspires.ftc.teamcode.Mechanisms_Final.Intake;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
 
 
-@TeleOp(name = "Full Teleop 7", group = "AWindsor")
+@TeleOp(name = "Full Teleop 9", group = "AWindsor")
 
-public class Windsor_FullGameCode_V7 extends OpMode {
+public class Windsor_FullGameCode_V9 extends OpMode {
 
     /// Necessary objects and variable creation --------------------------------------------------
 
@@ -49,11 +49,11 @@ public class Windsor_FullGameCode_V7 extends OpMode {
     }
 
     private enum LinearSlideStates {
-        AUTO_LIFT, AUTO_COLLECT, TELEOP, STOP
+        START, SCORE, COLLECT, RESET
     }
 
     private HookStates hookStates = HookStates.STOP;
-    private LinearSlideStates lsStates = LinearSlideStates.STOP;
+    private LinearSlideStates lsStates = LinearSlideStates.START;
 
 
     @Override
@@ -218,30 +218,7 @@ public class Windsor_FullGameCode_V7 extends OpMode {
 
         // Linear slide controls
 
-        if (linearSlideLiftButton)                  {lsStates = LinearSlideStates.AUTO_LIFT; }
-        else if (linearSlideCollectButton)          {lsStates = LinearSlideStates.AUTO_COLLECT; }
-        else if (Math.abs(linearSlidePower) > 0.2)  {lsStates = LinearSlideStates.TELEOP; }
-        else                                        {lsStates = LinearSlideStates.STOP; }
 
-        switch (lsStates) {
-            case STOP: {
-                longArm.stopLinearSlide();
-                break;
-            }
-            case AUTO_LIFT: {
-                longArm.autoLiftLinearSlide();
-                break;
-            }
-            case AUTO_COLLECT: {
-                longArm.autoCollectLinearSlide();
-                break;
-            }
-            case TELEOP: {
-                longArm.stopLinearSlide();
-                longArm.moveLinearSlide(linearSlidePower);
-                break;
-            }
-        }
 
 /*
         if (basketScoreButton) {
