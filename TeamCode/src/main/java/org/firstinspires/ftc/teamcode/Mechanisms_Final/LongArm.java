@@ -8,98 +8,117 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class LongArm {
 
     private Servo   basket           = null;
-    private DcMotor leftArmLift      = null;
-    private DcMotor rightArmLift     = null;
+    private DcMotor leftLinearSlide = null;
+    private DcMotor rightLinearSlide = null;
 
-    private double  ARM_POWER                   = 0.7;
+    private double  ARM_POWER                   = 1;
     private double  BASKET_RESET_POSITION       = 0.45;
     private double  BASKET_SCORE_POSITION       = 1;
     private double  BASKET_COLLECT_POSITION     = 0.6;
-    private int     LEFT_ARM_SCORE_POSITION      = -6050;
-    private int     RIGHT_ARM_SCORE_POSITION     = -6050;
-    private int     LEFT_ARM_RESET_POSITION     = 0;
-    private int     RIGHT_ARM_RESET_POSITION    = 0;
+    private int     LEFT_ARM_SCORE_POSITION      = -4050;
+    private int     RIGHT_ARM_SCORE_POSITION     = -4050;
+    private int     LEFT_ARM_COLLECT_POSITION = -350;
+    private int     RIGHT_ARM_COLLECT_POSITION = -350;
+
+    // Public copies of linear slides score position
+    public int left_arm_score_position = LEFT_ARM_SCORE_POSITION;
+    public int right_arm_score_position = RIGHT_ARM_SCORE_POSITION;
+
+    public int left_arm_collect_position = LEFT_ARM_COLLECT_POSITION;
 
 
     public void init(HardwareMap hwMap)
     {
         basket          = hwMap.get(Servo.class, "BasketArm");
-        leftArmLift     = hwMap.get(DcMotor.class, "LeftArmLift");
-        rightArmLift    = hwMap.get(DcMotor.class, "RightArmLift");
+        leftLinearSlide = hwMap.get(DcMotor.class, "LeftArmLift");
+        rightLinearSlide = hwMap.get(DcMotor.class, "RightArmLift");
 
         basket.setDirection(Servo.Direction.FORWARD);
-        leftArmLift.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightArmLift.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftLinearSlide.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightLinearSlide.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        leftArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightArmLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftLinearSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightLinearSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        leftArmLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightArmLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftLinearSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightLinearSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightArmLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftLinearSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightLinearSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
 
     /// Long Arm ---------------------------------------------------------------------------------
 
     public void moveLinearSlide(double power){
-        leftArmLift.setPower(power);
-        rightArmLift.setPower(power);
+        leftLinearSlide.setPower(power);
+        rightLinearSlide.setPower(power);
     }
 
     public void liftLinearSlide()
     {
-        leftArmLift.setPower(ARM_POWER);
-        rightArmLift.setPower(ARM_POWER);
+        leftLinearSlide.setPower(ARM_POWER);
+        rightLinearSlide.setPower(ARM_POWER);
     }
 
     public void resetLinearSlide()
     {
-        leftArmLift.setPower(-ARM_POWER);
-        rightArmLift.setPower(-ARM_POWER);
+        leftLinearSlide.setPower(-ARM_POWER);
+        rightLinearSlide.setPower(-ARM_POWER);
     }
 
-    public void stopLinearSlide()
-    {
-        leftArmLift.setPower(0);
-        rightArmLift.setPower(0);
+    public void stopLinearSlide() {
+
+        leftLinearSlide.setPower(0);
+        rightLinearSlide.setPower(0);
+
+        leftLinearSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightLinearSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+
 
     public void autoLiftLinearSlide()
     {
-        leftArmLift.setTargetPosition(LEFT_ARM_SCORE_POSITION);
-        rightArmLift.setTargetPosition(RIGHT_ARM_SCORE_POSITION);
+        leftLinearSlide.setTargetPosition(LEFT_ARM_SCORE_POSITION);
+        rightLinearSlide.setTargetPosition(RIGHT_ARM_SCORE_POSITION);
 
-        leftArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        leftArmLift.setPower(ARM_POWER);
-        rightArmLift.setPower(ARM_POWER);
+        leftLinearSlide.setPower(ARM_POWER);
+        rightLinearSlide.setPower(ARM_POWER);
 
     }
 
-    public void autoResetLinearSlide()
+    public void autoCollectLinearSlide()
     {
-        leftArmLift.setTargetPosition(LEFT_ARM_RESET_POSITION);
-        rightArmLift.setTargetPosition(RIGHT_ARM_RESET_POSITION);
+        leftLinearSlide.setTargetPosition(LEFT_ARM_COLLECT_POSITION);
+        rightLinearSlide.setTargetPosition(RIGHT_ARM_COLLECT_POSITION);
 
-        leftArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightArmLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        leftArmLift.setPower(ARM_POWER);
-        rightArmLift.setPower(ARM_POWER);
-
+        leftLinearSlide.setPower(ARM_POWER);
+        rightLinearSlide.setPower(ARM_POWER);
 
     }
+
+    public int leftLSPosition(){
+        return leftLinearSlide.getCurrentPosition();
+    }
+
+    public int rightLSPosition(){
+        return rightLinearSlide.getCurrentPosition();
+    }
+
+
 
     public boolean isLinearSlideBusy() {
-        boolean busy = true;
-        if (!leftArmLift.isBusy() && !rightArmLift.isBusy()) {
-            busy = false;
+
+        if (leftLinearSlide.isBusy() || rightLinearSlide.isBusy()) {
+            return true;
         }
-        return busy;
+        return false;
     }
 
 

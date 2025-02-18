@@ -1,4 +1,4 @@
-// v4 + linear slide timer
+// v7 + switch statements
 
 package org.firstinspires.ftc.teamcode.TestCodes;
 
@@ -13,9 +13,9 @@ import org.firstinspires.ftc.teamcode.Mechanisms_Final.Intake;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
 
 
-@TeleOp(name = "Full Teleop 5", group = "AWindsor")
+@TeleOp(name = "Full Teleop 9", group = "AWindsor")
 
-public class Windsor_FullGameCode_V5 extends OpMode {
+public class Windsor_FullGameCode_V9 extends OpMode {
 
     /// Necessary objects and variable creation --------------------------------------------------
 
@@ -23,6 +23,7 @@ public class Windsor_FullGameCode_V5 extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private ElapsedTime hookTimer = new ElapsedTime();
     private ElapsedTime linearSlideTimer = new ElapsedTime();
+    private ElapsedTime basketTimer = new ElapsedTime();
 
     //Creating two variables for capping the speed
     String speedcap = "Normal";
@@ -48,7 +49,12 @@ public class Windsor_FullGameCode_V5 extends OpMode {
         STOP, GRAB, RESET
     }
 
+    private enum LongArmStates {
+        START, SCORE, COLLECT, RESET, TELEOP
+    }
+
     private HookStates hookStates = HookStates.STOP;
+    private LongArmStates laStates = LongArmStates.START;
 
 
     @Override
@@ -58,6 +64,7 @@ public class Windsor_FullGameCode_V5 extends OpMode {
         runtime.reset();
         hookTimer.reset();
         linearSlideTimer.reset();
+        basketTimer.reset();
 
         /// Initialization ------------------------------------------------------------------------
 
@@ -122,6 +129,8 @@ public class Windsor_FullGameCode_V5 extends OpMode {
         // Long Arm
 
         double linearSlidePower = gamepad2.left_trigger - gamepad2.right_trigger;
+        boolean linearSlideLiftButton = gamepad2.x;
+        boolean linearSlideCollectButton = gamepad2.b;
 
         boolean basketScoreButton   = gamepad2.dpad_down;
         boolean basketCollectButton = gamepad2.dpad_up;
@@ -190,9 +199,13 @@ public class Windsor_FullGameCode_V5 extends OpMode {
 
         /// Intake Controls ----------------------------------------------------------------------
 
-        // Intake arm controls
-
-        intake.moveArm(intakeArmPower);
+        if (Math.abs(intake.intakePosition()) > Math.abs(intake.deposit_sample_position)) {
+            intake.stopArm();
+        } else if (Math.abs(intake.intakePosition()) < Math.abs(intake.collect_sample_position)) {
+            intake.stopArm();
+        } else {
+            intake.moveArm(intakeArmPower);
+        }
 
         // Intake claw controls
 
@@ -207,23 +220,73 @@ public class Windsor_FullGameCode_V5 extends OpMode {
 
         // Linear slide controls
 
-        /*
+        switch (laStates) {
+            case START: {
+                telemetry.addData("LS: ", laStates);
+                telemetry.addData("LS position: ", longArm.leftLSPosition());
+                if (linearSlideLiftButton) {
+                    longArm.basketReset();
+                    longArm.autoLiftLinearSlide();
+                    laStates = LongArmStates.SCORE;
+                    intake.autoMoveArm(Intake.Mode.COLLECT);
+                }
+                break;
+            }
+            case SCORE: {
+                telemetry.addData("LS: ", laStates);
+                telemetry.addData("LS position: ", longArm.leftLSPosition());
+                if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_score_position) < 5) {
+                    longArm.basketScoreSample();
+                    basketTimer.reset();
+                    laStates = LongArmStates.COLLECT;
+                }
+                break;
+            }
+            case COLLECT: {
+                telemetry.addData("LS: ", laStates);
+                telemetry.addData("LS position: ", longArm.leftLSPosition());
+                if (basketTimer.milliseconds() >= 2000) {
+                    longArm.basketCollectSample();
+                    longArm.autoCollectLinearSlide();
+                    laStates = LongArmStates.RESET;
+                }
+                break;
+            }
+            case RESET: {
+                telemetry.addData("LS: ", laStates);
+                telemetry.addData("LS position: ", longArm.leftLSPosition());
+                if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_collect_position) < 5) {
+                    laStates = LongArmStates.START;
+                }
+                break;
+            }
+            case TELEOP: {
+                telemetry.addData("LS: ", laStates);
+                telemetry.addData("LS position: ", longArm.leftLSPosition());
+                if (linearSlidePower < 0.1) {
+                    laStates = LongArmStates.START;
+                }
+                longArm.moveLinearSlide(linearSlidePower);
+            }
+        }
 
-        if      (linearSlideResetButton)    { longArm.autoResetArm();   }
-        else if (linearSlideLiftButton)     { longArm.autoLiftArm();    }
-        else if (linerSlideStopButton)     { longArm.stopArm();        }
+        if (linearSlidePower > 0.2) {
+            laStates = LongArmStates.TELEOP;
+        }
 
-         */
-
-        longArm.moveLinearSlide(linearSlidePower);
-
-
+/*
         if (basketScoreButton) {
             linearSlideTimer.reset();
+            longArm.stopLinearSlide();
             if (linearSlideTimer.milliseconds() < 1500) {
                 longArm.moveLinearSlide(0.1);
             }
         }
+
+ */
+
+        if (basketScoreButton) {linearSlideTimer.reset();}
+        if (linearSlideTimer.milliseconds() == 1500) {longArm.stopLinearSlide();}
 
         // Basket controls
 
@@ -235,24 +298,9 @@ public class Windsor_FullGameCode_V5 extends OpMode {
         if (intakeArmPower > 0.1) {longArm.basketCollectSample();}
 
 
+
+
         /// Hook Controls ---------------------------------------------------------------------
-
-        /*
-        if (hookGrabRungButton) {
-            hook.grabRung();
-            hookStates = HookStates.GRAB;
-            telemetry.addData("Hook: ", hookStates);
-        } else if (hookResetButton) {
-            hook.reset();
-            hookStates = HookStates.RESET;
-            telemetry.addData("Hook: ", hookStates);
-        } else {
-            hook.stop();
-            hookStates = HookStates.STOP;
-            telemetry.addData("Hook: ", hookStates); }
-
-         */
-
 
         if (hookGrabRungButton) {
             hookStates = HookStates.GRAB;

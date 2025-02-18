@@ -21,11 +21,14 @@ public class Intake {
         COLLECT, DEPOSIT, RESET, HANG
     }
 
-    private int COLLECT_GAMEPIECE_POSITION = -1381;
-    private int DEPOSIT_GAMEPIECE_POSITION = 0;
+    private int COLLECT_SAMPLE_POSITION = -1100;
+    private int DEPOSIT_SAMPLE_POSITION = -100;
     private int RESET_ARM_POSITION = -1000;
     private int HANG_SPECIMENT_POSITION = -608;
 
+    public int collect_sample_position = COLLECT_SAMPLE_POSITION;
+
+    public int deposit_sample_position= DEPOSIT_SAMPLE_POSITION;
 
     public void init(HardwareMap hwMap)
     {
@@ -46,7 +49,6 @@ public class Intake {
     // Method to move the intake arm
 
     public void moveArm(double armPower) { arm.setPower(armPower); }
-    public void stopArm() {arm.setPower(0);}
 
     public void autoMoveArm(Mode runMode){
 
@@ -54,11 +56,11 @@ public class Intake {
 
         if (runMode == Mode.COLLECT){
 
-            newIntakeArmTarget = COLLECT_GAMEPIECE_POSITION;
+            newIntakeArmTarget = COLLECT_SAMPLE_POSITION;
             
         } else if (runMode == Mode.DEPOSIT) {
 
-            newIntakeArmTarget = DEPOSIT_GAMEPIECE_POSITION;
+            newIntakeArmTarget = DEPOSIT_SAMPLE_POSITION;
             
         } else if (runMode == Mode.RESET) {
 
@@ -74,16 +76,24 @@ public class Intake {
 
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        arm.setPower(0.5);
+        arm.setPower(0.3);
     }
 
-    public boolean isArmBusy() {
-        boolean busy = true;
-        if (!arm.isBusy()) {
-            busy = false;
-        }
 
-        return busy;
+    public int intakePosition(){ return arm.getCurrentPosition();
+    }
+
+
+    public boolean isArmBusy() {
+
+        if (arm.isBusy()) {return true;}
+
+        return false;
+    }
+
+    public void stopArm() {
+        arm.setPower(0);
+        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     /// Claw Mechanisms -------------------------------------------------------------------

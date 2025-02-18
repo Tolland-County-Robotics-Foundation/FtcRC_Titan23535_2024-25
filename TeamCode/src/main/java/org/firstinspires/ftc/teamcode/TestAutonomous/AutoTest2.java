@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.TestAutonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -82,7 +81,7 @@ public class AutoTest2 extends LinearOpMode {
             // Step 4) Move basket to score sample (wait 3s)
             longArm.basketScoreSample();
             basketTimer.reset();
-            while (opModeIsActive() && basketTimer.milliseconds() < 3000) {
+            while (opModeIsActive() && basketTimer.milliseconds() < 2500) {
                 telemetry.addData("Sample 0 Score", "Scoring sample...");
                 telemetry.update();
             }
@@ -103,7 +102,7 @@ public class AutoTest2 extends LinearOpMode {
 
             // Step 1) Reset basket + reset linear slide
             longArm.basketReset();
-            longArm.autoResetLinearSlide();
+            longArm.autoCollectLinearSlide();
             while (opModeIsActive() && longArm.isLinearSlideBusy()) {
                 telemetry.addData("Sample 1 Collect", "Resetting linear slide");
                 telemetry.update();
@@ -111,15 +110,13 @@ public class AutoTest2 extends LinearOpMode {
 
             // Step 2) Turn LEFT 9 inches
             drive.autoDrive(Drive.Mode.TURNLEFT, 9.0, 0.5);
-            intake.openClaw();
             while (opModeIsActive() && drive.isBusy()) {
                 telemetry.addData("Sample 1 Collect", "Turning LEFT");
                 telemetry.update();
             }
 
             // Step 3) Drive FORWARD 7 inches
-            drive.autoDrive(Drive.Mode.FORWARD, 7.0, 0.9);
-            intake.openClaw();
+            drive.autoDrive(Drive.Mode.FORWARD, 6.5, 0.2);
             while (opModeIsActive() && drive.isBusy()) {
                 telemetry.addData("Sample 1 Collect", "Driving FORWARD 7 in");
                 telemetry.update();
@@ -185,7 +182,9 @@ public class AutoTest2 extends LinearOpMode {
 
             // Step 2) Drive BACKWARD 7 inches
             drive.autoDrive(Drive.Mode.BACKWARD, 7, 0.9);
+            longArm.basketReset();
             while (opModeIsActive() && drive.isBusy()) {
+
                 telemetry.addData("Sample 1 Score", "Driving BACKWARD 7 in");
                 telemetry.update();
             }
