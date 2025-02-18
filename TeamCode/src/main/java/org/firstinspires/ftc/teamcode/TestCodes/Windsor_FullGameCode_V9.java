@@ -223,6 +223,7 @@ public class Windsor_FullGameCode_V9 extends OpMode {
         switch (lsStates) {
             case START: {
                 telemetry.addData("LS: ", lsStates);
+                telemetry.addData("LS position: ", longArm.leftLSPosition());
                 if (linearSlideLiftButton) {
                     longArm.basketReset();
                     longArm.autoLiftLinearSlide();
@@ -233,6 +234,7 @@ public class Windsor_FullGameCode_V9 extends OpMode {
             }
             case SCORE: {
                 telemetry.addData("LS: ", lsStates);
+                telemetry.addData("LS position: ", longArm.leftLSPosition());
                 if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_score_position) < 5) {
                     longArm.basketScoreSample();
                     basketTimer.reset();
@@ -242,6 +244,7 @@ public class Windsor_FullGameCode_V9 extends OpMode {
             }
             case COLLECT: {
                 telemetry.addData("LS: ", lsStates);
+                telemetry.addData("LS position: ", longArm.leftLSPosition());
                 if (basketTimer.milliseconds() >= 2000) {
                     longArm.basketCollectSample();
                     longArm.autoCollectLinearSlide();
@@ -251,6 +254,7 @@ public class Windsor_FullGameCode_V9 extends OpMode {
             }
             case RESET: {
                 telemetry.addData("LS: ", lsStates);
+                telemetry.addData("LS position: ", longArm.leftLSPosition());
                 if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_collect_position) < 5) {
                     lsStates = LinearSlideStates.START;
                 }
@@ -258,6 +262,7 @@ public class Windsor_FullGameCode_V9 extends OpMode {
             }
             case TELEOP: {
                 telemetry.addData("LS: ", lsStates);
+                telemetry.addData("LS position: ", longArm.leftLSPosition());
                 if (linearSlidePower < 0.1) {
                     lsStates = LinearSlideStates.START;
                 }
