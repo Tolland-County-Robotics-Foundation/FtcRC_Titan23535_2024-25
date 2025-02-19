@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms_Final.Intake;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
 
 
-@TeleOp(name = "Final_TeleOp_v2", group = "AState")
+@TeleOp(name = "Final_TeleOp_v3", group = "AState")
 
 public class Final_TeleOp_v3 extends OpMode {
 

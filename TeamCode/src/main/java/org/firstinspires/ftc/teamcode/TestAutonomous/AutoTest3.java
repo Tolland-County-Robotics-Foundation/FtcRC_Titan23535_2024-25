@@ -25,7 +25,8 @@ public class AutoTest3 extends LinearOpMode {
     private ElapsedTime basketTimer = new ElapsedTime();
 
     Pose sample0ScorePose = new Pose(-8, -5, 0);
-    Pose sample1CollectPose = new Pose(4.5, -3, -23);
+    Pose sample1CollectPose = new Pose(4.5, 0, -23);
+    Pose sample1DepositPose = new Pose(-4.5, -0, 23);
 
     @Override
     public void runOpMode() {
@@ -145,7 +146,12 @@ public class AutoTest3 extends LinearOpMode {
             }
 
             intake.stopClaw();
+            intake.autoMoveArm(Intake.Mode.DEPOSIT);
+            drive.autoDrivePose(sample1DepositPose, 0.5);
 
+            while (drive.isBusy()) {
+                telemetry.addData("Driving: ", "Deposit 2 position");
+            }
 
             telemetry.addData("Mission: ","Completed");
 
