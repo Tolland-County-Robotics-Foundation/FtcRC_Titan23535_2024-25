@@ -246,7 +246,7 @@ public class Final_TeleOp_v2 extends OpMode {
             case SCORE: {
                 telemetry.addData("LS: ", laStates);
                 telemetry.addData("LS position: ", longArm.leftLSPosition());
-                if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_score_position) < 5) {
+                if (Math.abs(longArm.leftLSPosition() - longArm.left_arm_score_position) < 10) {
                     longArm.basketScoreSample();
                     basketTimer.reset();
                     laStates = LongArmStates.COLLECT;
@@ -266,7 +266,7 @@ public class Final_TeleOp_v2 extends OpMode {
             case RESET: {
                 telemetry.addData("LS: ", laStates);
                 telemetry.addData("LS position: ", longArm.leftLSPosition());
-                if (Math.abs(longArm.leftLSPosition()) - Math.abs(longArm.left_arm_collect_position) < 5) {
+                if (Math.abs(longArm.leftLSPosition() - longArm.left_arm_collect_position) < 10) {
                     laStates = LongArmStates.START;
                 }
                 break;
