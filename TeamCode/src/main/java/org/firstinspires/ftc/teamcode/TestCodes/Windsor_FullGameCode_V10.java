@@ -13,7 +13,6 @@ import org.firstinspires.ftc.teamcode.Mechanisms_Final.Drive;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.Intake;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
 
-@Disabled
 @TeleOp(name = "Full Teleop 10", group = "AWindsor")
 
 public class Windsor_FullGameCode_V10 extends OpMode {
