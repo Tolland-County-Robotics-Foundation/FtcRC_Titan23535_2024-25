@@ -57,7 +57,7 @@ public class AutoTest3 extends LinearOpMode {
              *   2) Move basket to reset position (it should be in this position at the beginning)
              */
 
-            drive.autoDrivePose(sample0ScorePose, 0.3);
+            drive.autoDrivePose(sample0ScorePose, 0.9);
             longArm.basketReset();
 
             while (drive.isBusy()) {
@@ -66,7 +66,7 @@ public class AutoTest3 extends LinearOpMode {
                 telemetry.update();
             }
 
-            drive.stop();
+            // drive.stop();
 
             /*
              * -------------------------------
@@ -94,12 +94,12 @@ public class AutoTest3 extends LinearOpMode {
 
             /*
              * -------------------------------
-             *  PARKING
+             *  Reset
              * -------------------------------
              * Steps:
              *   1) Reset basket
              *   2) Drop the linear slide
-             *   3) Move intake arm to deposit
+             *
              */
 
             longArm.basketReset();
@@ -108,10 +108,27 @@ public class AutoTest3 extends LinearOpMode {
 
             while (longArm.isLinearSlideBusy()) {
                 telemetry.addData("Linear Slide busy: ", longArm.isLinearSlideBusy());
-                telemetry.addData("Reseting: ", "Linear slide");
+                telemetry.addData("Reset: ", "Long Arm");
             }
 
-            intake.autoMoveArm(Intake.Mode.DEPOSIT);
+            /*
+             * -------------------------------
+             *  MOVING TO SAMPLE 1 COLLECT
+             * -------------------------------
+             * Steps:
+             *   1) Drive robot to sample 1 COLLECT position
+             *
+             */
+
+            drive.autoDrivePose(sample1CollectPose, 0.3);
+
+            while (drive.isBusy()) {
+                telemetry.addData("Sample 1: ", "MOVING TO SAMPLE 1 COLLECT");
+                telemetry.addData("Drive busy: ", drive.isBusy());
+                telemetry.update();
+            }
+
+            telemetry.addData("Mission: ","Completed");
 
         }
     }

@@ -1,5 +1,5 @@
 /*
-    Simple TeleOp + Long Arm Automation.
+    v2 + color sensor
  */
 
 package org.firstinspires.ftc.teamcode.Final_TeleOp;
@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.Climb;
+import org.firstinspires.ftc.teamcode.Mechanisms_Final.ColorDistanceSensor;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.Drive;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.Intake;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
@@ -16,7 +17,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
 
 @TeleOp(name = "Final_TeleOp_v2", group = "AState")
 
-public class Final_TeleOp_v2 extends OpMode {
+public class Final_TeleOp_v3 extends OpMode {
 
     /// Necessary objects and variable creation --------------------------------------------------
 
@@ -31,12 +32,17 @@ public class Final_TeleOp_v2 extends OpMode {
 
     double speed_percentage = 50.0;
 
+    String alliance_color ="Not Selected";
+    String sample_color = "Not Selected";
+    String wrong_sample_color = "Not Selected";
+
     // Creating objects from Drive_V1, Intake_v1, and LongArm_v2 class
 
     Climb hook      = new Climb();
     Drive drive     = new Drive();
     Intake intake   = new Intake();
     LongArm longArm = new LongArm();
+    ColorDistanceSensor clrSensor = new ColorDistanceSensor();
 
     // Hook states enums
 
@@ -69,6 +75,7 @@ public class Final_TeleOp_v2 extends OpMode {
         intake.init(hardwareMap);
         longArm.init(hardwareMap);
         hook.init(hardwareMap);
+        clrSensor.init(hardwareMap);
 
         /// Telemetry -----------------------------------------------------------------------------
 
@@ -142,8 +149,25 @@ public class Final_TeleOp_v2 extends OpMode {
         boolean hookResetButton = gamepad2.y;
         boolean hookGrabRungButton = gamepad2.a;
 
+        // Alliance color
+        boolean allianceRedButton = gamepad1.left_bumper;
+        boolean allianceBlueButton = gamepad1.right_bumper;
+
 
         /// Mechanisms ------------------------------------------------------------------------
+
+        /// Alliance selection --------------------------------------------------
+
+        if (allianceRedButton) { alliance_color = "red"; wrong_sample_color = "blue"; }
+        else if (allianceBlueButton) { alliance_color = "blue"; wrong_sample_color = "red"; }
+
+        telemetry.addData("Alliance color: ", alliance_color);
+        telemetry.addData("wrong color: ", wrong_sample_color);
+
+        /// Color sensor -----------------------------------------------------------------
+
+        sample_color = clrSensor.detectColor();
+        telemetry.addData("Sample color: ", sample_color);
 
         /// Drive Controls -----------------------------------------------------------------
 
