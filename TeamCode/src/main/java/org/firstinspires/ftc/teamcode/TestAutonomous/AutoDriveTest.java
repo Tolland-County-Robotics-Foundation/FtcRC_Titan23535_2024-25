@@ -47,7 +47,7 @@ public class AutoDriveTest extends LinearOpMode {
         clawTimer.reset();
         basketTimer.reset();
 
-        if (opModeIsActive()) {
+        if (opModeIsActive() && runtime.seconds() <= 30) {
 
            drive.autoDrivePose(sample0ScorePose,0.9);
            while(drive.isBusy()) {

@@ -46,7 +46,7 @@ public class AutoTest3 extends LinearOpMode {
         clawTimer.reset();
         basketTimer.reset();
 
-        if (opModeIsActive()) {
+        if (opModeIsActive() && runtime.seconds() <=30) {
 
             /*
              * -------------------------------
@@ -54,54 +54,37 @@ public class AutoTest3 extends LinearOpMode {
              * -------------------------------
              * Steps:
              *   1) Drive robot to sample 0 scoring position
-             *   2) Move linear slide to collect position
-             *   3) Move basket to reset position (it should be in this position at the beginning)
-             *   4) Lift the linear slide
+             *   2) Move basket to reset position (it should be in this position at the beginning)
              */
 
             drive.autoDrivePose(sample0ScorePose, 0.3);
-            intake.autoMoveArm(Intake.Mode.COLLECT);
             longArm.basketReset();
-            longArm.autoLiftLinearSlide();
-            /*
 
-            while (drive.isBusy() || intake.isArmBusy() || longArm.isLinearSlideBusy()) {
-                telemetry.addData("Sample 0: ", "Driving to score position");
+            while (drive.isBusy()) {
+                telemetry.addData("Sample 0: ", "MOVING TO SAMPLE 0 SCORE");
                 telemetry.addData("Drive busy: ", drive.isBusy());
-                telemetry.addData("Intake busy: ", intake.isArmBusy());
-                telemetry.addData("Linear Slide busy: ", longArm.isLinearSlideBusy());
-                telemetry.addData("Left LS: ", longArm.leftLSPosition());
-                telemetry.addData("Right LS: ", longArm.rightLSPosition());
                 telemetry.update();
             }
-
-             */
-
-            while (drive.isBusy() || intake.isArmBusy() || longArm.leftLSPosition() > -6000) {
-                telemetry.addData("Sample 0: ", "Driving to score position");
-                telemetry.addData("Drive busy: ", drive.isBusy());
-                telemetry.addData("Intake busy: ", intake.isArmBusy());
-                telemetry.addData("Linear Slide busy: ", longArm.isLinearSlideBusy());
-                telemetry.addData("Left LS: ", longArm.leftLSPosition());
-                telemetry.addData("Right LS: ", longArm.rightLSPosition());
-                telemetry.update();
-            }
-
-
 
             drive.stop();
-            intake.stopArm();
-            longArm.stopLinearSlide();
 
             /*
              * -------------------------------
-             *  SAMPLE 0 SCORE
+             *  SCORING SAMPLE 0
              * -------------------------------
              * Steps:
-             *   1) Move basket to score position
+             *   1) Move intake arm to collect position
+             *   2) Lift the linear slide
+             *   3) Move basket to score position after lift linear slide complete
              */
 
+            intake.autoMoveArm(Intake.Mode.COLLECT);
+            longArm.autoLiftLinearSlide();
 
+            while (longArm.isLinearSlideBusy()) {
+                telemetry.addData("Linear Slide busy: ", longArm.isLinearSlideBusy());
+                telemetry.addData("Sample 0: ", "Lifting linear slide");
+            }
             longArm.basketScoreSample();
             basketTimer.reset();
             while (basketTimer.milliseconds() < 2000) {
@@ -111,51 +94,22 @@ public class AutoTest3 extends LinearOpMode {
 
             /*
              * -------------------------------
-             *  MOVING TO SAMPLE 1 COLLECT
+             *  PARKING
              * -------------------------------
              * Steps:
-             *   1) Drive robot to sample 1 collect position
-             *   2) Drop linear slide
-             *   3) Move basket to collect
+             *   1) Reset basket
+             *   2) Drop the linear slide
+             *   3) Move intake arm to deposit
              */
 
-            drive.autoDrivePose(sample1CollectPose, 0.3);
+            longArm.basketReset();
             longArm.autoCollectLinearSlide();
-            longArm.basketCollectSample();
 
-            while (drive.isBusy() || longArm.isLinearSlideBusy()) {
-                telemetry.addData("Sample 1: ", "Driving to sample 1 collect");
-                telemetry.update();
+
+            while (longArm.isLinearSlideBusy()) {
+                telemetry.addData("Linear Slide busy: ", longArm.isLinearSlideBusy());
+                telemetry.addData("Reseting: ", "Linear slide");
             }
-
-            drive.stop();
-            longArm.stopLinearSlide();
-
-            /*
-             * -------------------------------
-             *  SAMPLE 1 COLLECT
-             * -------------------------------
-             * Steps:
-             *   1) Close claw for 2 seconds
-             */
-
-
-
-            clawTimer.reset();
-            while (clawTimer.milliseconds() < 2000) {
-                intake.closeClaw();
-            }
-
-            /*
-             * -------------------------------
-             *  MOVING TO SAMPLE 1 SCORE
-             * -------------------------------
-             * Steps:
-             *   1) Drive robot to sample 1 scoring position
-             *   2) Move linear slide to deposit position
-             *   3) Move basket to reset position (it should be in this position at the beginning)
-             *   4) Lift the linear slide
-             */
 
             intake.autoMoveArm(Intake.Mode.DEPOSIT);
 

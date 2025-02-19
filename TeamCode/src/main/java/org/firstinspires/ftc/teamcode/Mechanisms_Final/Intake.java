@@ -26,6 +26,7 @@ public class Intake {
     private int RESET_ARM_POSITION = -1000;
     private int HANG_SPECIMENT_POSITION = -608;
 
+
     public int collect_sample_position = COLLECT_SAMPLE_POSITION;
 
     public int deposit_sample_position= DEPOSIT_SAMPLE_POSITION;
