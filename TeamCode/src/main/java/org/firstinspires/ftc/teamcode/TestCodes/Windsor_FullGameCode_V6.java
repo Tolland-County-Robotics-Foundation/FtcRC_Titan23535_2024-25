@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.TestCodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -12,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Blinkin_v2;
 import org.firstinspires.ftc.teamcode.Sensor_Mechanisms.Color_Sensor_v2;
 
 import java.util.Objects;
-
+@Disabled
 @TeleOp(name = "Full TeleOp 6", group = "AWindsor")
 
 public class Windsor_FullGameCode_V6 extends OpMode {

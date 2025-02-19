@@ -2,6 +2,7 @@
 
 package org.firstinspires.ftc.teamcode.TestCodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -12,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms_Final.Drive;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.Intake;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
 
-
+@Disabled
 @TeleOp(name = "Full Teleop 4", group = "AWindsor")
 
 public class Windsor_FullGameCode_V4 extends OpMode {
