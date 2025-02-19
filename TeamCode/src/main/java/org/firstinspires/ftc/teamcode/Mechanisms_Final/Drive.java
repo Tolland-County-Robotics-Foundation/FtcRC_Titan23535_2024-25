@@ -21,7 +21,6 @@ public class Drive {
     static final double     WHEEL_DIAMETER_INCHES   =  2.95276;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.25;
 
     public enum Mode {
         FORWARD, BACKWARD, LEFT, RIGHT, TURNLEFT, TURNRIGHT
@@ -111,32 +110,32 @@ public class Drive {
     }
 
     /// Drive straight forward, backward, left, and right teleop
-    public void teleOpForward(){
-        leftFrontDrive.setPower(MOTOR_POWER);
-        rightFrontDrive.setPower(MOTOR_POWER);
-        leftBackDrive.setPower(MOTOR_POWER);
-        rightBackDrive.setPower(MOTOR_POWER);
+    public void teleOpForward(double motorPower){
+        leftFrontDrive.setPower(motorPower);
+        rightFrontDrive.setPower(motorPower);
+        leftBackDrive.setPower(motorPower);
+        rightBackDrive.setPower(motorPower);
     }
 
-    public void teleOpBackward(){
-        leftFrontDrive.setPower(-MOTOR_POWER);
-        rightFrontDrive.setPower(-MOTOR_POWER);
-        leftBackDrive.setPower(-MOTOR_POWER);
-        rightBackDrive.setPower(-MOTOR_POWER);
+    public void teleOpBackward(double motorPower){
+        leftFrontDrive.setPower(-motorPower);
+        rightFrontDrive.setPower(-motorPower);
+        leftBackDrive.setPower(-motorPower);
+        rightBackDrive.setPower(-motorPower);
     }
 
-    public void teleOpLeft(){
-        leftFrontDrive.setPower(-MOTOR_POWER);
-        rightFrontDrive.setPower(MOTOR_POWER);
-        leftBackDrive.setPower(MOTOR_POWER);
-        rightBackDrive.setPower(-MOTOR_POWER);
+    public void teleOpLeft(double motorPower){
+        leftFrontDrive.setPower(-motorPower);
+        rightFrontDrive.setPower(motorPower);
+        leftBackDrive.setPower(motorPower);
+        rightBackDrive.setPower(-motorPower);
     }
 
-    public void teleOpRight(){
-        leftFrontDrive.setPower(MOTOR_POWER);
-        rightFrontDrive.setPower(-MOTOR_POWER);
-        leftBackDrive.setPower(-MOTOR_POWER);
-        rightBackDrive.setPower(MOTOR_POWER);
+    public void teleOpRight(double motorPower){
+        leftFrontDrive.setPower(motorPower);
+        rightFrontDrive.setPower(-motorPower);
+        leftBackDrive.setPower(-motorPower);
+        rightBackDrive.setPower(motorPower);
     }
 
     public void autoDrive(Drive.Mode driveMode, double distance, double drive_speed){

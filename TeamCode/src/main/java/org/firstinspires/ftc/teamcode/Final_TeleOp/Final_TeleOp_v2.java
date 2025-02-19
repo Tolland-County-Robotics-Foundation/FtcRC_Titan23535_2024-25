@@ -179,13 +179,13 @@ public class Final_TeleOp_v2 extends OpMode {
         // Control 2
 
         if (goForwardButton) {
-            drive.teleOpForward();
+            drive.teleOpForward(speed_percentage / 100);
         } else if (goBackwardButton) {
-            drive.teleOpBackward();
+            drive.teleOpBackward(speed_percentage / 100);
         } else if (goLeftButton) {
-            drive.teleOpLeft();
+            drive.teleOpLeft(speed_percentage / 100);
         } else if (goRightButton) {
-            drive.teleOpRight();
+            drive.teleOpRight(speed_percentage / 100);
         }
 
 
