@@ -158,15 +158,7 @@ public class Windsor_FullGameCode_V3 extends OpMode {
 
         drive.setDriveMotorPower(axialButton, lateralButton, yawButton, speed_percentage);
 
-        if (goForwardButton) {
-            drive.teleOpForward();
-        } else if (goBackwardButton) {
-            drive.teleOpBackward();
-        } else if (goLeftButton) {
-            drive.teleOpLeft();
-        } else if (goRightButton) {
-            drive.teleOpRight();
-        }
+
 
 
         /// intake mechanism ----------------------------------------------------------------------

@@ -166,15 +166,6 @@ public class Windsor_FullGameCode_V4 extends OpMode {
 
         // Control for driving straight forward, backward, left and right
 
-        if (goForwardButton) {
-            drive.teleOpForward();
-        } else if (goBackwardButton) {
-            drive.teleOpBackward();
-        } else if (goLeftButton) {
-            drive.teleOpLeft();
-        } else if (goRightButton) {
-            drive.teleOpRight();
-        }
 
 
         /// intake mechanism ----------------------------------------------------------------------
