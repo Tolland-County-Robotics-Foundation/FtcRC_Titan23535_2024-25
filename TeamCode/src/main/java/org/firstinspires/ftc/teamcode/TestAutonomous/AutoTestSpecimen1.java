@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.TestAutonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.Drive;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.Intake;
 import org.firstinspires.ftc.teamcode.Mechanisms_Final.LongArm;
-
+@Disabled
 @Autonomous(name="Auto Test Specimen 1", group="Autonomous")
 
 public class AutoTestSpecimen1 extends LinearOpMode {

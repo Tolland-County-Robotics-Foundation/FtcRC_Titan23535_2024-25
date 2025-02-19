@@ -24,9 +24,9 @@ public class AutoTest3 extends LinearOpMode {
     private ElapsedTime clawTimer   = new ElapsedTime();
     private ElapsedTime basketTimer = new ElapsedTime();
 
-    Pose sample0ScorePose = new Pose(-8, -5, 0);
-    Pose sample1CollectPose = new Pose(4.5, 0, -23);
-    Pose sample1DepositPose = new Pose(-4.5, -0, 23);
+    Pose sample1ScorePose = new Pose(-8, -5, 0);
+    Pose sample2CollectPose = new Pose(4.5, 0, -23);
+    Pose sample2DepositPose = new Pose(-4.5, -0, 23);
 
     @Override
     public void runOpMode() {
@@ -51,27 +51,25 @@ public class AutoTest3 extends LinearOpMode {
 
             /*
              * -------------------------------
-             *  MOVING TO SAMPLE 0 SCORE
+             *  MOVING TO SAMPLE 1 SCORE
              * -------------------------------
              * Steps:
-             *   1) Drive robot to sample 0 scoring position
+             *   1) Drive robot to sample 1 scoring position
              *   2) Move basket to reset position (it should be in this position at the beginning)
              */
 
-            drive.autoDrivePose(sample0ScorePose, 0.9);
+            drive.autoDrivePose(sample1ScorePose, 0.9);
             longArm.basketReset();
 
             while (drive.isBusy()) {
-                telemetry.addData("Sample 0: ", "MOVING TO SAMPLE 0 SCORE");
+                telemetry.addData("Sample 1: ", "MOVING TO SAMPLE 1 SCORE");
                 telemetry.addData("Drive busy: ", drive.isBusy());
                 telemetry.update();
             }
 
-            // drive.stop();
-
             /*
              * -------------------------------
-             *  SCORING SAMPLE 0
+             *  SAMPLE 1 SCORE
              * -------------------------------
              * Steps:
              *   1) Move intake arm to collect position
@@ -84,12 +82,12 @@ public class AutoTest3 extends LinearOpMode {
 
             while (longArm.isLinearSlideBusy()) {
                 telemetry.addData("Linear Slide busy: ", longArm.isLinearSlideBusy());
-                telemetry.addData("Sample 0: ", "Lifting linear slide");
+                telemetry.addData("Sample 1: ", "Lifting linear slide");
             }
             longArm.basketScoreSample();
             basketTimer.reset();
             while (basketTimer.milliseconds() < 2000) {
-                telemetry.addData("Sample 0: ", "Scoring");
+                telemetry.addData("Sample 1: ", "Scoring");
                 telemetry.update();
             }
 
@@ -100,12 +98,10 @@ public class AutoTest3 extends LinearOpMode {
              * Steps:
              *   1) Reset basket
              *   2) Drop the linear slide
-             *
              */
 
             longArm.basketReset();
             longArm.autoCollectLinearSlide();
-
 
             while (longArm.isLinearSlideBusy()) {
                 telemetry.addData("Linear Slide busy: ", longArm.isLinearSlideBusy());
@@ -119,10 +115,9 @@ public class AutoTest3 extends LinearOpMode {
              * -------------------------------
              * Steps:
              *   1) Drive robot to sample 2 COLLECT position
-             *
              */
 
-            drive.autoDrivePose(sample1CollectPose, 0.3);
+            drive.autoDrivePose(sample2CollectPose, 0.9);
 
             while (drive.isBusy()) {
                 telemetry.addData("Driving: ", "SAMPLE 2 COLLECT");
@@ -135,25 +130,63 @@ public class AutoTest3 extends LinearOpMode {
              *  SAMPLE 2 COLLECT
              * -------------------------------
              * Steps:
-             *   1) close claw
-             *
+             *   1) Close claw for 2 seconds
              */
 
             intake.closeClaw();
             clawTimer.reset();
             while (clawTimer.milliseconds() < 2000) {
                 telemetry.addData("Collecting: ", "Sample 2");
+                telemetry.update();
             }
+
+            /*
+             * -------------------------------
+             *  SAMPLE 2 DEPOSIT
+             * -------------------------------
+             * Steps:
+             *   1) Stop claw after 2 seconds
+             *   2) Move intake arm to deposit position
+             *   3) Move basket to collect position
+             *   4) Drive to score sample 2
+             */
 
             intake.stopClaw();
             intake.autoMoveArm(Intake.Mode.DEPOSIT);
-            drive.autoDrivePose(sample1DepositPose, 0.5);
+            longArm.basketCollectSample();
+            drive.autoDrivePose(sample2DepositPose, 0.9);
 
             while (drive.isBusy()) {
                 telemetry.addData("Driving: ", "Deposit 2 position");
+                telemetry.update();
             }
 
-            telemetry.addData("Mission: ","Completed");
+            /*
+             * -------------------------------
+             *  SAMPLE 2 SCORE
+             * -------------------------------
+             * Steps:
+             *   1) Move intake arm to collect position
+             *   2) Move basket to reset position
+             *   3) Lift linear slide
+             *   4)
+             *
+             */
+
+            intake.autoMoveArm(Intake.Mode.COLLECT);
+            longArm.basketReset();
+            longArm.autoLiftLinearSlide();
+
+            while (longArm.isLinearSlideBusy()) {
+                telemetry.addData("Linear Slide busy: ", longArm.isLinearSlideBusy());
+                telemetry.addData("Sample 2: ", "Lifting linear slide");
+                telemetry.update();
+            }
+
+            longArm.basketScoreSample();
+
+            telemetry.addData("Mission: ","Complete");
+            telemetry.update();
 
         }
     }
