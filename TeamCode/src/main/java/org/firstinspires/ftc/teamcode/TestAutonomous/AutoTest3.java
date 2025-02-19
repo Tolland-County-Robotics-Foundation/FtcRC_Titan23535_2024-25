@@ -147,9 +147,6 @@ public class AutoTest3 extends LinearOpMode {
             intake.stopClaw();
 
 
-
-
-
             telemetry.addData("Mission: ","Completed");
 
         }
