@@ -24,7 +24,7 @@ public class AutoTest3 extends LinearOpMode {
     private ElapsedTime clawTimer   = new ElapsedTime();
     private ElapsedTime basketTimer = new ElapsedTime();
 
-    Pose sample0ScorePose = new Pose(-10, -6, 0);
+    Pose sample0ScorePose = new Pose(-8, -5, 0);
     Pose sample1CollectPose = new Pose(4.5, -3, -23);
 
     @Override
@@ -109,24 +109,46 @@ public class AutoTest3 extends LinearOpMode {
             while (longArm.isLinearSlideBusy()) {
                 telemetry.addData("Linear Slide busy: ", longArm.isLinearSlideBusy());
                 telemetry.addData("Reset: ", "Long Arm");
+                telemetry.update();
             }
 
             /*
              * -------------------------------
-             *  MOVING TO SAMPLE 1 COLLECT
+             *  MOVING TO SAMPLE 2 COLLECT
              * -------------------------------
              * Steps:
-             *   1) Drive robot to sample 1 COLLECT position
+             *   1) Drive robot to sample 2 COLLECT position
              *
              */
 
             drive.autoDrivePose(sample1CollectPose, 0.3);
 
             while (drive.isBusy()) {
-                telemetry.addData("Sample 1: ", "MOVING TO SAMPLE 1 COLLECT");
+                telemetry.addData("Driving: ", "SAMPLE 2 COLLECT");
                 telemetry.addData("Drive busy: ", drive.isBusy());
                 telemetry.update();
             }
+
+            /*
+             * -------------------------------
+             *  SAMPLE 2 COLLECT
+             * -------------------------------
+             * Steps:
+             *   1) close claw
+             *
+             */
+
+            intake.closeClaw();
+            clawTimer.reset();
+            while (clawTimer.milliseconds() < 2000) {
+                telemetry.addData("Collecting: ", "Sample 2");
+            }
+
+            intake.stopClaw();
+
+
+
+
 
             telemetry.addData("Mission: ","Completed");
 
