@@ -199,15 +199,17 @@ public class Windsor_FullGameCode_V10 extends OpMode {
 
         /// Intake Controls ----------------------------------------------------------------------
 
-        if (Math.abs(intake.intakePosition()) > Math.abs(intake.deposit_sample_position)) {
+        /*if (Math.abs(intake.intakePosition()) > Math.abs(intake.deposit_sample_position)) {
             intake.stopArm();
         } else if (Math.abs(intake.intakePosition()) < Math.abs(intake.collect_sample_position)) {
             intake.stopArm();
         } else {
             intake.moveArm(intakeArmPower);
-        }
+        }*/
 
         // Intake claw controls
+
+        intake.moveArm(intakeArmPower);
 
         intake.moveClaw(intakeClawPower);
 
