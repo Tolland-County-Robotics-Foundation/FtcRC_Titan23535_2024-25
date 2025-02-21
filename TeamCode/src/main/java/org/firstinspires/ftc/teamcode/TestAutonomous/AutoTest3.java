@@ -24,9 +24,9 @@ public class AutoTest3 extends LinearOpMode {
     private ElapsedTime clawTimer   = new ElapsedTime();
     private ElapsedTime basketTimer = new ElapsedTime();
 
-    Pose sample1ScorePose = new Pose(-8.5, -5.75, 0);
-    Pose sample2CollectPose = new Pose(4.5, 1.5, -38);
-    Pose sample2DepositPose = new Pose(-4.5, 2, 15);
+    Pose sample1ScorePose = new Pose(-8.75, -6, 0);
+    Pose sample2CollectPose = new Pose(4.5, 1.75, -35);
+    Pose sample2DepositPose = new Pose(-4.5, 2, 18);
 
     @Override
     public void runOpMode() {
@@ -155,10 +155,24 @@ public class AutoTest3 extends LinearOpMode {
             longArm.basketCollectSample();
             drive.autoDrivePose(sample2DepositPose, 0.5);
 
-            while (drive.isBusy()) {
+            while (intake.isArmBusy()) {
+                telemetry.addData("Deposit: ", "Sample 2");
+            }
+            intake.openClaw();
+
+            clawTimer.reset();
+            while (clawTimer.milliseconds() < 2000) {
+                telemetry.addData("Collecting: ", "Sample 2");
+                telemetry.update();
+            }
+            intake.stopClaw();
+
+         /*   while (drive.isBusy()) {
                 telemetry.addData("Driving: ", "Deposit 2 position");
                 telemetry.update();
             }
+
+          */
 
             /*
              * -------------------------------
@@ -188,5 +202,9 @@ public class AutoTest3 extends LinearOpMode {
             telemetry.update();
 
         }
+        else {
+            telemetry.addData("Out of time:", "Boom");
+        }
+
     }
 }
