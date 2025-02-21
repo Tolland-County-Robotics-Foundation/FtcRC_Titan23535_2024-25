@@ -66,7 +66,6 @@ public class AutoTest3 extends LinearOpMode {
                 telemetry.addData("Drive busy: ", drive.isBusy());
                 telemetry.update();
             }
-
             /*
              * -------------------------------
              *  SAMPLE 1 SCORE
@@ -90,7 +89,6 @@ public class AutoTest3 extends LinearOpMode {
                 telemetry.addData("Sample 1: ", "Scoring");
                 telemetry.update();
             }
-
             /*
              * -------------------------------
              *  Reset
@@ -108,7 +106,6 @@ public class AutoTest3 extends LinearOpMode {
                 telemetry.addData("Reset: ", "Long Arm");
                 telemetry.update();
             }
-
             /*
              * -------------------------------
              *  MOVING TO SAMPLE 2 COLLECT
